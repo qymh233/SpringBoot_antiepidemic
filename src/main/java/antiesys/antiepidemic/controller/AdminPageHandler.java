@@ -2,6 +2,7 @@ package antiesys.antiepidemic.controller;
 
 import antiesys.antiepidemic.pojo.Goods;
 import antiesys.antiepidemic.pojo.Manager;
+import antiesys.antiepidemic.pojo.Message;
 import antiesys.antiepidemic.pojo.Users;
 import antiesys.antiepidemic.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@SessionAttributes(value = {"manager","nummap","userlist","goodslist","admuser","good"})
+@SessionAttributes(value = {"manager","nummap","userlist","goodslist","admuser","good","msglist"})
 public class AdminPageHandler {
     @Autowired
     AdminService adminService;
@@ -46,7 +47,9 @@ public class AdminPageHandler {
         return "views/ManagerReleaseInformationPage-Release";
     }
     @RequestMapping("/ManagerRecordPage")
-    public String ManagerRecordPage(){
+    public String ManagerRecordPage(Model model){
+        List<Message> messageList=adminService.FindMessageAll();
+        model.addAttribute("msglist",messageList);
         return "views/ManagerRecordPage";
     }
     @RequestMapping("/ManagerNotificationPreventionTimePage")
