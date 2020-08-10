@@ -2,6 +2,7 @@ package antiesys.antiepidemic.controller;
 
 import antiesys.antiepidemic.pojo.*;
 import antiesys.antiepidemic.service.AdminService;
+import antiesys.antiepidemic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +26,7 @@ public class AdminHandler {
 
     @Autowired
     AdminService adminService;
+
     @RequestMapping("/adminSignInPage")
     public String adminSignInPage(){
         return "views/ManagerSignInPage";

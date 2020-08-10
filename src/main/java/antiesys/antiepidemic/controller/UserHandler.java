@@ -1,5 +1,6 @@
 package antiesys.antiepidemic.controller;
 
+import antiesys.antiepidemic.pojo.Message;
 import antiesys.antiepidemic.pojo.Report;
 import antiesys.antiepidemic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,12 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
-@SessionAttributes(value = {"user","nummap","number"})
+@SessionAttributes(value = {"user","nummap","umsglist","usermessage"})
 public class UserHandler {
     @Autowired
     UserService userService;
@@ -112,21 +114,7 @@ public class UserHandler {
 
         return "注册成功 您的id为："+ id +",您的初始密码为：" + num;
     }
-    //用户登录
-    @RequestMapping(path="/userLogin")
-    public String UserLogin(@RequestParam(name = "userId") int userId, @RequestParam(name = "userPW") String userPW, HttpSession session, Model model){
 
-        boolean isLogin = userService.UserLogin(userId, userPW);
-
-        if(!isLogin)
-            return "UserLoginPage";
-        session.setAttribute("userId", userId);
-        Users user=userService.FindUserOne(userId);
-        int num = (int)(Math.random()*1000);
-        model.addAttribute("number",num);
-        model.addAttribute("user",user);
-        return "UserMainPage";
-    }
     @RequestMapping("/getnumpage")
     public String getnum(Model model){
         Users user=(Users)model.getAttribute("user");
@@ -139,34 +127,22 @@ public class UserHandler {
         model.addAttribute("nummap",nummap);
         return "views/UserSerialNumber";
     }
-//    //生成序列号
-//    @RequestMapping(path="/getNumber", produces="text/html;charset=utf-8")
-//    @ResponseBody
-//    public String GetNumber(Model model){
-//
-//        return  "您的序列号为："+ num;
-//    }
     //查询疫情防控信息
     @RequestMapping(path="/releaseInformation")
-    public ModelAndView ReleaseInformation(HttpSession session, Model model){
+    public String ReleaseInformation(Model model){
 
-        ModelAndView modelAndView = new ModelAndView();
-
-        String information = (String)session.getAttribute("information");
-
-        if(information == null)
-            modelAndView.setViewName("ErrorPage");
-
-        modelAndView.setViewName("UserViewEpidemicPreventionInformationPage");
-        modelAndView.addObject("information",information);
-
-        return modelAndView;
+        List<Message> messageList=userService.FindMessageAll();
+        model.addAttribute("umsglist",messageList);
+        return "views/UserViewEpidemicPreventionInformationPage";
     }
-    //退出controller
-    @RequestMapping(path = "/userExit")
-    public String toMain(HttpSession session, Model model){
-        session.removeAttribute("userId");
-        return "redirect:/index.jsp";
+    //查看具体防控信息
+    @RequestMapping(path = "/taskCompletion")
+    public String TaskCompletion(@RequestParam(name = "meId") Integer meId, Model model){
+
+        Message message=userService.FindMessageOne(meId);
+        model.addAttribute("usermessage",message);
+
+        return "views/UserRecordPage-Details";
     }
 
 }

@@ -1,8 +1,10 @@
 package antiesys.antiepidemic.service;
 
+import antiesys.antiepidemic.mapper.MessageInter;
 import antiesys.antiepidemic.mapper.ReportInter;
 import antiesys.antiepidemic.mapper.UserInter;
 
+import antiesys.antiepidemic.pojo.Message;
 import antiesys.antiepidemic.pojo.Report;
 import antiesys.antiepidemic.pojo.Users;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class UserServiceImpl implements UserService{
     UserInter userInter;
     @Autowired
     ReportInter reportInter;
+    @Autowired
+    MessageInter messageInter;
     //外来人员注册
     @Override
     public boolean UserRegister(Users user) {
@@ -133,5 +137,24 @@ public class UserServiceImpl implements UserService{
             return null;
         }
         return report;
+    }
+
+    @Override
+    public Message FindMessageOne(Integer meID) {
+        //直接查询
+        Message message=messageInter.SelectOne(meID);
+        if(message==null){
+            return  null;
+        }
+        return message;
+    }
+
+    @Override
+    public List<Message> FindMessageAll() {
+        List<Message> messageList=messageInter.SelectMessage();
+        if(messageList==null||messageList.isEmpty()){
+            return  null;
+        }
+        return messageList;
     }
 }

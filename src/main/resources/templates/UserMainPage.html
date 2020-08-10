@@ -22,7 +22,6 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" th:text="${user.getUserName()}"></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="">帮助中心</a></dd>
                         <dd><a href="/u">退出</a></dd>
                     </dl>
                 </li>
@@ -41,21 +40,14 @@
 							<em>查看个人信息</em>
                         </a>
                     </li>
-                    <li class="layui-nav-item" >
-                        <a href="/user/getnumpage">
-                            <i class="layui-icon">&#xe663;</i>
-							<em>查看序列号</em>
-                        </a>
-                    </li>
                     <li class="layui-nav-item">
                         <a href="/user/changeUserPage">
                             <i class="layui-icon">&#xe653;</i>
                             <em>修改信息</em>
                         </a>
-                        
 					</li>
 					<li class="layui-nav-item" >
-                        <a href="views/UserViewEpidemicPreventionInformationPage.html">
+                        <a href="/user/releaseInformation">
                             <i class="layui-icon">&#xe663;</i>
 							<em>疫情防控信息查询</em>
                         </a>

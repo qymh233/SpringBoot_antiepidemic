@@ -5,6 +5,7 @@ import antiesys.antiepidemic.pojo.Manager;
 import antiesys.antiepidemic.pojo.Message;
 import antiesys.antiepidemic.pojo.Users;
 import antiesys.antiepidemic.service.AdminService;
+import antiesys.antiepidemic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,10 +20,12 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@SessionAttributes(value = {"manager","nummap","userlist","goodslist","admuser","good","msglist"})
+@SessionAttributes(value = {"user","manager","nummap","userlist","goodslist","admuser","good","msglist"})
 public class AdminPageHandler {
     @Autowired
     AdminService adminService;
+    @Autowired
+    UserService userService;
     //管理员登录
     @RequestMapping(path="/adminLogin")
     public String AdminLogin(@RequestParam(name = "adminId") int adminId, @RequestParam(name = "adminPW") String adminPW, HttpSession session, Model model){
@@ -41,6 +44,18 @@ public class AdminPageHandler {
             return "ManagerLoginPage";
 
         return "ManagerMainPage";
+    }
+    //用户登录
+    @RequestMapping(path="/userLogin")
+    public String UserLogin(@RequestParam(name = "userId") int userId, @RequestParam(name = "userPW") String userPW, Model model){
+
+        boolean isLogin = userService.UserLogin(userId, userPW);
+
+        if(!isLogin)
+            return "UserLoginPage";
+        Users user=userService.FindUserOne(userId);
+        model.addAttribute("user",user);
+        return "UserMainPage";
     }
     @RequestMapping("/ManagerReleaseInformationPage_Release")
     public String ManagerReleaseInformationPage_Release(){

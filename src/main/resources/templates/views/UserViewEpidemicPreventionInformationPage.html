@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html>
 <head>
     <meta charset="UTF-8">
@@ -36,23 +37,17 @@
 						  </thead>
 						  <tbody>
 						  <!--#循环打印<tr>标签 修改删除向后端传递数据 id值#-->
-						  <tr th:each="message:${messages}">
-							  <td th:text="${message.title}"></td>
-							  <td th:text="${message.puBer}"></td>
-							  <td th:text="${message.puDate}"></td>
+						  <tr th:each="message:${umsglist}">
+							  <td th:text="${message.getTitle()}"></td>
+							  <td th:text="${message.getPuBer()}"></td>
+							  <td th:text="${#dates.format(message.getPuDate(),'yyyy-MM-dd')}"></td>
 							  <td>
 								  <div class="layui-table-cell laytable-cell-1-0-10">
 									  <!--#添加脚本#-->
-									  <a class="layui-btn layui-btn-normal layui-btn-xs update">查看</a>
+									  <a th:href="@{/user/taskCompletion(meId=${message.getMeID()})}" class="layui-btn layui-btn-normal layui-btn-xs update">查看</a>
 								  </div>
 							  </td>
-							  <td>
-								  <div class="layui-table-cell laytable-cell-1-0-10">
-									  <!--#添加脚本#-->
-									  <a th:if="${message.stat == '未完成'}" value="完成" class="layui-btn layui-btn-normal layui-btn-xs update">完成</a>
-									  <span th:if="${message.stat == '已完成'}" value="已完成"></span>
-								  </div>
-							  </td>
+							  <td th:text="${message.getStat()}"></td>
 						  </tr>
 						  </tbody>
 					</table>
