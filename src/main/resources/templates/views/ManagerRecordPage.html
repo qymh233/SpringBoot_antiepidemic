@@ -14,7 +14,7 @@
     	<div class="mianb">
     		<div class="mblf layui-col-xs6 layui-col-md6">
     			 <i class="layui-icon">&#xe656;</i>
-    			 <p>首页管理 > <span>防控任务完成情况</span></p>
+    			 <p>首页管理 > <span>防控信息发布</span></p>
     		</div>
     		<div class="mbrt layui-col-xs6 layui-col-md6">
     			<a href="javascript:;" class="layui-btn layui-btn-normal" id="fabu">添加报告</a>    			     			 
@@ -27,55 +27,33 @@
 			 		  <table class="layui-table" lay-skin="line" lay-size="lg" id="table">						  
 						  <thead>
 						    <tr>
-						      <!--<th>ID</th>-->
-						      <th>完成情况</th>
-							  <th>使用物资ID</th>
-							  <th>使用数量</th>	
-						      <!--<th>悬赏积分</th>-->
-						      <!--<th>执行时间</th>-->
-						      <th>操作</th>
+						      <th>消息标题</th>
+							  <th>发布者</th>
+							  <th>发布时间</th>	
+						      <th>&nbsp&nbsp&nbsp&nbsp操作</th>
+							  <th>&nbsp&nbsp&nbsp&nbsp状态</th>
 						    </tr> 
 						  </thead>
 						  <tbody>
 							<!--#循环打印<tr>标签 修改删除向后端传递数据 id值#-->	
-							<tr th:each="task:{$applicationScope.tasks}">
-								<td th:text="${task.completion}"></td>
-								<td th:text="${task.goodsId}"></td>
-								<td th:text="${task.useCount}"></td>
+							<tr th:each="message:${messages}">
+								<td th:text="${message.title}"></td>
+								<td th:text="${message.puBer}"></td>
+								<td th:text="${message.puDate}"></td>
 								<td>
 						      	  <div class="layui-table-cell laytable-cell-1-0-10"> 
 										<!--#添加脚本#-->	
-							      	  	<a class="layui-btn layui-btn-normal layui-btn-xs update">修改</a> 
-							      	  	<a class="layui-btn layui-btn-danger layui-btn-xs delete">删除</a> 
+							      	  	<a class="layui-btn layui-btn-normal layui-btn-xs update">查看</a> 
 						      	  </div>
 						      	</td>
+								<td>
+									<div class="layui-table-cell laytable-cell-1-0-10"> 
+										<!--#添加脚本#-->	
+							      	  	<a th:if="${message.stat == '未完成'}" value="完成" class="layui-btn layui-btn-normal layui-btn-xs update">完成</a> 
+										<span th:if="${message.stat == '已完成'}" value="已完成"></span>
+									</div>
+								</td>
 							</tr>
-						    <tr>
-						      <!--<td>01</td>-->
-						      <td>国庆节放假七天！</td>
-						      <td>国庆节放假七天国庆节放假七天</td>
-						      <!--<td></td>-->
-						      <td>2019-11-29</td>					      						     
-						      <td>
-						      	  <div class="layui-table-cell laytable-cell-1-0-10"> 							      	  	 
-							      	  	<a class="layui-btn layui-btn-normal layui-btn-xs">修改</a> 
-							      	  	<a class="layui-btn layui-btn-danger layui-btn-xs delete">删除</a> 
-						      	  </div>
-						      </td>
-						    </tr>
-						    <tr>
-						      <!--<td>01</td>-->
-						      <td>国庆节放假七天！</td>
-						      <td>国庆节放假七天国庆节放假七天</td>
-						      <!--<td></td>-->
-						      <td>2019-11-29</td>					      						     
-						      <td>
-						      	  <div class="layui-table-cell laytable-cell-1-0-10"> 							      	  	 
-							      	  	<a href="" class="layui-btn layui-btn-normal layui-btn-xs">修改</a> 
-							      	  	<a class="layui-btn layui-btn-danger layui-btn-xs delete">删除</a> 
-						      	  </div>
-						      </td>
-						    </tr>
 						  </tbody>
 					</table>
 			 	</div>
