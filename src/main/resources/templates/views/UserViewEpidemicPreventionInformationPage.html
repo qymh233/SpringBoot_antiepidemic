@@ -27,25 +27,33 @@
 			 		  <table class="layui-table" lay-skin="line" lay-size="lg" id="table">						  
 						  <thead>
 						    <tr>
-						      <th>信息</th>
+						      <th>消息标题</th>
 						      <th>发布者</th>	
 						      <th>发布时间</th>
-								<th>发布时间</th>
-						      <th>操作</th>
+							  <th>&nbsp&nbsp&nbsp&nbsp操作</th>
+							  <th>&nbsp&nbsp&nbsp&nbsp状态</th>
 						    </tr> 
 						  </thead>
 						  <tbody>
-						  	<tr th:each="u : ${list}">
-					            <td th:text="${u.id}">每日登录</td>
-					            <td th:text="${u.name}">10</td>
-					            <td th:text="${u.age}">2019-11-29</td>
-								<td th:text="${u.age}">2019-11-29</td>
-					            <td>
-						      	  <div class="layui-table-cell laytable-cell-1-0-10"> 							      	  	 
-							      	  	<a href="用户查看具体防疫信息.html" class="layui-btn layui-btn-normal layui-btn-xs">查看</a>
-						      	  </div>
-						      </td>
-					        </tr>
+						  <!--#循环打印<tr>标签 修改删除向后端传递数据 id值#-->
+						  <tr th:each="message:${messages}">
+							  <td th:text="${message.title}"></td>
+							  <td th:text="${message.puBer}"></td>
+							  <td th:text="${message.puDate}"></td>
+							  <td>
+								  <div class="layui-table-cell laytable-cell-1-0-10">
+									  <!--#添加脚本#-->
+									  <a class="layui-btn layui-btn-normal layui-btn-xs update">查看</a>
+								  </div>
+							  </td>
+							  <td>
+								  <div class="layui-table-cell laytable-cell-1-0-10">
+									  <!--#添加脚本#-->
+									  <a th:if="${message.stat == '未完成'}" value="完成" class="layui-btn layui-btn-normal layui-btn-xs update">完成</a>
+									  <span th:if="${message.stat == '已完成'}" value="已完成"></span>
+								  </div>
+							  </td>
+						  </tr>
 						  </tbody>
 					</table>
 			 	</div>
