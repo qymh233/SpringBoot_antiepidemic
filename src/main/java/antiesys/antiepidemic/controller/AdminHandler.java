@@ -1,9 +1,6 @@
 package antiesys.antiepidemic.controller;
 
-import antiesys.antiepidemic.pojo.Goods;
-import antiesys.antiepidemic.pojo.Manager;
-import antiesys.antiepidemic.pojo.Report;
-import antiesys.antiepidemic.pojo.Users;
+import antiesys.antiepidemic.pojo.*;
 import antiesys.antiepidemic.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +20,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/admin")
-@SessionAttributes(value = {"manager","nummap","admuser","goodslist","good","userlist"})
+@SessionAttributes(value = {"manager","nummap","admuser","goodslist","good","userlist","msglist"})
 public class AdminHandler {
 
     @Autowired
@@ -330,11 +327,20 @@ public class AdminHandler {
     //TODO 以下三个修改信息格式
     //发布疫情防控信息
     @RequestMapping(path = "/releaseInformation")
-    public String ReleaseInformation(@RequestParam(name = "information") String information, HttpSession session, Model model){
-
-        session.getServletContext().setAttribute("information", information);
-
-        return "ManagerReleaseInformationPage";
+    @ResponseBody
+    public String ReleaseInformation(@RequestParam(name = "title") String title, @RequestParam(name = "content") String content,Model model){
+        Manager manager=(Manager)model.getAttribute("manager");
+        Integer i=manager.getAdminId();
+        Message message=new Message();
+        message.setTitle(title);
+        message.setCont(content);
+        message.setPuBer(i.toString());
+        boolean t=adminService.AddMessage(message);
+        if(t==false)
+            return "views/ManagerReleaseInformationPage-Release";
+        List<Message> messageList=adminService.FindMessageAll();
+        model.addAttribute("msglist",messageList);
+        return "views/ManagerRecordPage";
     }
     //防控任务时间通知
     @RequestMapping(path = "/taskTime")
