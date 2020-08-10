@@ -360,8 +360,4 @@ public class AdminHandler {
 
         return "redirect:/index.jsp";
     }
-
-    public String my(){
-        return "gugkgkj";
-    }
 }

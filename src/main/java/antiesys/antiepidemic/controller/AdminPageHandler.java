@@ -43,7 +43,7 @@ public class AdminPageHandler {
     }
     @RequestMapping("/ManagerReleaseInformationPage_Release")
     public String ManagerReleaseInformationPage_Release(){
-        return "views/ManagerGetInformationPage";
+        return "views/ManagerReleaseInformationPage-Release";
     }
     @RequestMapping("/ManagerRecordPage")
     public String ManagerRecordPage(){

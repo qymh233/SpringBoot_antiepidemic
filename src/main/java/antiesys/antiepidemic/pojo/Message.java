@@ -8,6 +8,7 @@ public class Message {
     private String cont;//具体内容
     private Date puDate;//发布时间
     private Integer meID;//编号
+    private String stat;//状态
 
     public Integer getMeID() {
         return meID;
@@ -51,6 +52,14 @@ public class Message {
         this.puDate = puDate;
     }
 
+    public String getStat() {
+        return stat;
+    }
+
+    public void setStat(String stat) {
+        this.stat = stat;
+    }
+
     @Override
     public String toString() {
         return "Message{" +
@@ -58,6 +67,8 @@ public class Message {
                 ", puBer='" + puBer + '\'' +
                 ", cont='" + cont + '\'' +
                 ", puDate=" + puDate +
+                ", meID=" + meID +
+                ", stat='" + stat + '\'' +
                 '}';
     }
 }

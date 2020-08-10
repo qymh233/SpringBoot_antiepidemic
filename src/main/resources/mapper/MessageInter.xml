@@ -17,14 +17,20 @@
 	</delete>
 	<!-- 插入信息 -->
 	<insert id="InsertMessage" parameterType="antiesys.antiepidemic.pojo.Message" >
-		insert into T_MESSAGE(title,puBer,cont,puDate) values(#{title},#{puBer},#{cont},#{puDate,jdbcType=DATE})
+		insert into T_MESSAGE(title,puBer,cont,puDate,stat) values(#{title},#{puBer},#{cont},#{puDate,jdbcType=DATE},#{stat})
 	</insert>
+	<!-- 更新信息 -->
+	<update id="UpdateMessage">
+	  update T_MESSAGE set title=#{message.title} , puBer = #{message.puBer} , cont= #{message.cont} , puDate = #{message.puDate} , stat = #{message.stat} where meID=#{message.meID}
+	</update>
 	<!-- 查询所有信息 -->
 	<resultMap type="antiesys.antiepidemic.pojo.Message" id="SelectAll">
 		<result property="title" column="title"/>
 		<result property="puBer" column="puBer"/>
 		<result property="cont" column="cont"/>
 		<result property="puDate" column="puDate"/>
+		<result property="stat" column="stat"/>
+
 	</resultMap>
 	<select id="SelectMessage" resultMap="SelectAll">
     	select * from T_MESSAGE

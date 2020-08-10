@@ -1,6 +1,7 @@
 package antiesys.antiepidemic.mapper;
 
 import antiesys.antiepidemic.pojo.Message;
+import antiesys.antiepidemic.pojo.Users;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -20,4 +21,6 @@ public interface MessageInter {
     List<Message> SelectMessage();
     //查询记录条数，便于添加记录，自动增加orderNum
     int SelectNum();
+    //更新一个信息
+    int UpdateMessage(@Param("message") Message message);
 }

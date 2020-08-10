@@ -49,4 +49,6 @@ public interface AdminService {
     Message FindMessageOne(Integer meID);
     //查询所有信息
     List<Message> FindMessageAll();
+    //修改信息
+    public int ChangeMessage(Integer MeID);
 }

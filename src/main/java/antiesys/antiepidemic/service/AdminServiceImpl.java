@@ -228,7 +228,8 @@ public class AdminServiceImpl implements AdminService{
             return  false;
         }
         message.setPuDate(new Date());
-        //添加物品
+        message.setStat("未完成");
+        //添加信息
         int t=messageInter.InsertMessage(message);
         if(t==0){
             return false;
@@ -267,5 +268,21 @@ public class AdminServiceImpl implements AdminService{
             return  null;
         }
         return messageList;
+    }
+    //修改信息
+    @Override
+    public int ChangeMessage(Integer MeID) {
+        //判断用户是否存在
+        Message u=messageInter.SelectOne(MeID);
+        if(u==null){
+            return  0;
+        }
+        u.setStat("已完成");
+        //修改信息
+        int t=messageInter.UpdateMessage(u);
+        if(t==0){
+            return 0;
+        }
+        return t;
     }
 }
