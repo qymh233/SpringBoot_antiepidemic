@@ -272,7 +272,7 @@ public class AdminServiceImpl implements AdminService{
     //修改信息
     @Override
     public int ChangeMessage(Integer MeID) {
-        //判断用户是否存在
+        //判断信息是否存在
         Message u=messageInter.SelectOne(MeID);
         if(u==null){
             return  0;

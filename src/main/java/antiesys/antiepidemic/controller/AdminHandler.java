@@ -20,7 +20,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/admin")
-@SessionAttributes(value = {"manager","nummap","admuser","goodslist","good","userlist","msglist"})
+@SessionAttributes(value = {"manager","nummap","admuser","goodslist","good","userlist","msglist","adminmessage"})
 public class AdminHandler {
 
     @Autowired
@@ -327,14 +327,13 @@ public class AdminHandler {
     //TODO 以下三个修改信息格式
     //发布疫情防控信息
     @RequestMapping(path = "/releaseInformation")
-    @ResponseBody
     public String ReleaseInformation(@RequestParam(name = "title") String title, @RequestParam(name = "content") String content,Model model){
         Manager manager=(Manager)model.getAttribute("manager");
         Integer i=manager.getAdminId();
         Message message=new Message();
         message.setTitle(title);
         message.setCont(content);
-        message.setPuBer(i.toString());
+        message.setPuBer(i);
         boolean t=adminService.AddMessage(message);
         if(t==false)
             return "views/ManagerReleaseInformationPage-Release";
@@ -342,23 +341,24 @@ public class AdminHandler {
         model.addAttribute("msglist",messageList);
         return "views/ManagerRecordPage";
     }
-    //防控任务时间通知
-    @RequestMapping(path = "/taskTime")
-    public String TaskTime(@RequestParam(name = "taskTime") String taskTime, HttpServletRequest request, Model model){
-
-        request.setAttribute("taskTime", taskTime);
-
-        return "taskTimeSuccess";
-    }
-    //防控任务完成情况
+    //查看具体防控信息
     @RequestMapping(path = "/taskCompletion")
-    public String TaskCompletion(@RequestParam(name = "taskCompletion") String taskCompletion, HttpServletRequest request, Model model){
+    public String TaskCompletion(@RequestParam(name = "meId") Integer meId, Model model){
 
-        request.setAttribute("taskCompletion", taskCompletion);
+        Message message=adminService.FindMessageOne(meId);
+        model.addAttribute("adminmessage",message);
 
-        return "ManagerRecordPage";
+        return "views/ManagerRecordPage-Details";
     }
+    //修改防控信息状态
+    @RequestMapping(path = "/updateCompletion")
+    public String updateCompletion(@RequestParam(name = "meId") Integer meId, Model model){
+        adminService.ChangeMessage(meId);
 
+        List<Message> messageList=adminService.FindMessageAll();
+        model.addAttribute("msglist",messageList);
+        return "views/ManagerRecordPage";
+    }
     @RequestMapping(path="/adminExit")
     public String toMain(HttpSession session, Model model){
 

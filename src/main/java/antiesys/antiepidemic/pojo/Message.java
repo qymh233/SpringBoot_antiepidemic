@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Message {
     private String title;//标题
-    private String puBer;//发布者
+    private Integer puBer;//发布者
     private String cont;//具体内容
     private Date puDate;//发布时间
     private Integer meID;//编号
@@ -28,11 +28,11 @@ public class Message {
         this.title = title;
     }
 
-    public String getPuBer() {
+    public Integer getPuBer() {
         return puBer;
     }
 
-    public void setPuBer(String puBer) {
+    public void setPuBer(Integer puBer) {
         this.puBer = puBer;
     }
 
