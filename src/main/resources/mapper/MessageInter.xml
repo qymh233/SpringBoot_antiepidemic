@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="antiesys.antiepidemic.mapper.MessageInter">
+	<!-- 查询一个信息 -->
+	<select id="SelectOne" parameterType="int" resultType="antiesys.antiepidemic.pojo.Message">
+    select * from T_MESSAGE where meID = #{meID}
+  </select>
+	<!--查询有多少信息-->
+	<select id="SelectNum" resultType="int">
+    	select count(*) from T_MESSAGE
+  	</select>
+	<!-- 删除信息 -->
+	<delete id="DeleteMessage">
+		delete from T_MESSAGE where meID=#{meID}
+	</delete>
+	<!-- 插入信息 -->
+	<insert id="InsertMessage" parameterType="antiesys.antiepidemic.pojo.Message" >
+		insert into T_MESSAGE(title,puBer,cont,puDate) values(#{title},#{puBer},#{cont},#{puDate,jdbcType=DATE})
+	</insert>
+	<!-- 查询所有信息 -->
+	<resultMap type="antiesys.antiepidemic.pojo.Message" id="SelectAll">
+		<result property="title" column="title"/>
+		<result property="puBer" column="puBer"/>
+		<result property="cont" column="cont"/>
+		<result property="puDate" column="puDate"/>
+	</resultMap>
+	<select id="SelectMessage" resultMap="SelectAll">
+    	select * from T_MESSAGE
+  	</select>
+</mapper>

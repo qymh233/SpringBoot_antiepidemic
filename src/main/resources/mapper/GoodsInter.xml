@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="antiesys.antiepidemic.mapper.GoodsInter">
+	<!-- 查询一个物品 -->
+	<select id="SelectOne" parameterType="int" resultType="antiesys.antiepidemic.pojo.Goods">
+    select * from T_GOODS where goodsId = #{goodsId}
+  </select>
+	<!--查询有多少物品-->
+	<select id="SelectNum" resultType="int">
+    	select count(*) from T_GOODS
+  	</select>
+	<!-- 删除物品 -->
+	<delete id="DeleteGoods">
+		delete from T_GOODS where goodsId=#{goodsId}
+	</delete>
+	<!-- 插入物品 -->
+	<insert id="InsertGoods" parameterType="antiesys.antiepidemic.pojo.Goods" >
+		insert into T_GOODS(goodsName,goodsNum,goodsSource,goodsInTime) values(#{goodsName},#{goodsNum},#{goodsSource},#{goodsInTime,jdbcType=DATE})
+	</insert>
+	<!-- 更新物品 -->
+	<update id="UpdateGoods">
+	  update T_GOODS set goodsName = #{goods.goodsName} , goodsNum= #{goods.goodsNum} , goodsSource = #{goods.goodsSource} , goodsInTime = #{goods.goodsInTime} ,goodsOutTime = #{goods.goodsOutTime} where goodsId = #{goods.goodsId}
+	</update>
+	<!-- 查询所有物品 -->
+	<resultMap type="antiesys.antiepidemic.pojo.Goods" id="SelectAll">
+		<result property="goodsId" column="goodsId"/>
+		<result property="goodsName" column="goodsName"/>
+		<result property="goodsNum" column="goodsNum"/>
+		<result property="goodsSource" column="goodsSource"/>
+		<result property="goodsInTime" column="goodsInTime"/>
+		<result property="goodsOutTime" column="goodsOutTime"/>
+	</resultMap>
+	<select id="SelectGoods" resultMap="SelectAll">
+    	select * from T_GOODS
+  	</select>
+</mapper>

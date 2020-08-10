@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="antiesys.antiepidemic.mapper.UserInter">
+	<!-- 查询一个用户 -->
+	<select id="SelectOne" parameterType="int" resultType="antiesys.antiepidemic.pojo.Users">
+    select * from T_USERS where userId = #{userId}
+  </select>
+	<!-- 删除用户 -->
+	<delete id="DeleteUser">
+		delete from T_USERS where userId=#{userId}
+	</delete>
+	<!-- 插入用户 -->
+	<insert id="InsertUser" parameterType="antiesys.antiepidemic.pojo.Users">
+		insert into T_USERS(userId,userName,userSex,userAge,userPhone,userPW,userIdCard) values(#{user.userId,jdbcType=NUMERIC},#{user.userName,jdbcType=VARCHAR},#{user.userSex,jdbcType=VARCHAR},#{user.userAge,jdbcType=NUMERIC},#{user.userPhone},#{user.userPW,jdbcType=VARCHAR},#{user.userIdCard,jdbcType=VARCHAR})
+	</insert>
+	<!-- 更新用户 -->
+	<update id="UpdateUser">
+	  update T_USERS set userName=#{user.userName} , usersex = #{user.userSex} , userAge= #{user.userAge} , userPhone = #{user.userPhone} , userPW = #{user.userPW} where userId=#{user.userId}
+	</update>
+	<!-- 查询所有用户 -->
+	<resultMap type="antiesys.antiepidemic.pojo.Users" id="SelectAll">
+		<result property="userId" column="userId"/>
+		<result property="userName" column="userName"/>
+		<result property="userSex" column="userSex"/>
+		<result property="userAge" column="userAge"/>
+		<result property="userPhone" column="userPhone"/>
+		<result property="userPW" column="userPW"/>
+		<result property="userIdCard" column="userIdCard"/>
+	</resultMap>
+	<select id="SelectUsers" resultMap="SelectAll">
+    	select * from T_USERS
+  	</select>
+</mapper>

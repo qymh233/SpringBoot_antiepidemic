@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="antiesys.antiepidemic.mapper.ReportInter">
+    <!-- 删除信息 - -->
+    <delete id="DeleteReport">
+		delete from T_Report where orderNum=#{orderNum}
+	</delete>
+    <!-- 插入信息 - -->
+    <insert id="InsertReport">
+		insert into T_Report(userId,orderNum,inTime,outTime,temperature,remarks) values(#{report.userId,jdbcType=NUMERIC},#{report.orderNum,jdbcType=NUMERIC},#{report.inTime,jdbcType=DATE},#{report.outTime,jdbcType=DATE},#{report.temperature,jdbcType=VARCHAR},#{report.remarks,jdbcType=VARCHAR})
+	</insert>
+    <!--查询有多少信息-->
+    <select id="SelectNum" resultType="int">
+    	select count(*) from T_Report
+  	</select>
+    <!--查询用户最后一次记录-->
+    <select id="SelectLastReport" resultType="antiesys.antiepidemic.pojo.Report">
+        SELECT * FROM V_REPORT WHERE USERID=#{userId} <![CDATA[ AND ROWNUM < 2 ]]> order by ORDERNUM DESC
+  	</select>
+    <!-- 查询所有信息 - -->
+    <resultMap type="antiesys.antiepidemic.pojo.Report" id="SelectAll">
+        <result property="orderNum" column="orderNum"/>
+        <result property="userId" column="userId"/>
+        <result property="userName" column="userName"/>
+        <result property="userId" column="userId"/>
+        <result property="inTime" column="inTime"/>
+        <result property="outTime" column="outTime"/>
+        <result property="temperature" column="temperature"/>
+        <result property="remarks" column="remarks"/>
+    </resultMap>
+    <select id="SelectReport" resultMap="SelectAll">
+    	select * from V_Report order by orderNum
+  	</select>
+    <!-- 查询一个信息 -->
+    <select id="SelectOne" resultMap="SelectAll">
+    	select * from V_Report where userId=#{userId}
+  	</select>
+</mapper>

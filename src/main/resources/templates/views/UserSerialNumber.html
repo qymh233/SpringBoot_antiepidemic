@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>查看序列号</title>
+    <link rel="stylesheet" href="../assets/css/layui.css">    
+    <link rel="stylesheet" href="../assets/css/view.css"/>
+    <link rel="stylesheet" href="../assets/css/admin.css"/>  
+    <link rel="stylesheet" href="../assets/css/style.css"/> 
+</head>
+<body class="layui-view-body">
+    <div class="layui-content">
+    	<!--面包屑导航-->
+    	<div class="mianb">
+    		<div class="mblf layui-col-xs6 layui-col-md6">
+    			 <i class="layui-icon">&#xe656;</i>
+    			 <p>查看序列号</p>
+    		</div>    		
+    	</div>
+    	<!--面包屑导航-->
+    	<div class="layui-row layui-col-space5 linarrow">
+		    <div class="layui-col-md4 linitem">
+		      <div class="grid-demo active">查看序列号</div>
+		    </div>
+		</div>
+		<!--指示条-->
+        <div class="layui-row">        	
+            <div class="layui-card positionbox">            	  
+				    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+					    <legend>查看序列号</legend>
+					</fieldset>
+					<form class="layui-form">
+						 <div class="layui-form-item">
+							    <label class="layui-form-label">当前序列号</label>
+							    <label class="layui-form-label">
+									<span th:text="${number}"></span>
+								</label>
+						  </div>
+					</form>
+            </div>   
+		</div>
+    </div>
+    <script src="../assets/jquery.min.js"></script>
+    <script src="../assets/layui.all.js"></script>   
+    <script>
+	layui.use('layedit', function(){
+	  var layedit = layui.layedit;
+	  layedit.build('demo'); //建立编辑器
+	});
+	layui.use('layedit', function(){
+	  var layedit = layui.layedit;
+	  layedit.build('demo2'); //建立编辑器
+	});	
+	</script>
+</body>
+</html>

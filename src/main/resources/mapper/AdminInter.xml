@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="antiesys.antiepidemic.mapper.AdminInter">
+	<select id="SelectOne" parameterType="int" resultType="antiesys.antiepidemic.pojo.Manager">
+    select * from T_MANAGERS where adminId = #{adminId}
+  </select>
+</mapper>
