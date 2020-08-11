@@ -23,6 +23,12 @@ public class UserHandler {
     UserService userService;
 
     //查询用户信息
+
+    /**
+     * 查询用户信息
+     * @param model 模型
+     * @return 个人信息页面
+     */
     @RequestMapping(path="/findUsesOne")
     public String FindUserOne(Model model){
 
@@ -33,8 +39,13 @@ public class UserHandler {
 
         return "views/UserViewPersonalInformationPage";
     }
-
-    //更新时获取用户信息
+    /**
+     * 获取用户信息
+     * @param userId 用户ID
+     * @param request request
+     * @param model 模型
+     * @return 个人信息界面
+     */
     @RequestMapping(path="/findUsesOneUpdate")
     public String findUsesOneUpdate(@RequestParam(name = "userId") int userId, HttpServletRequest request, Model model){
 
@@ -47,8 +58,15 @@ public class UserHandler {
 
         return "UserModifyPersonalInformationPage";
     }
-
-    //修改用户信息
+    /**
+     * 修改用户信息
+     * @param userName 用户名
+     * @param userAge 年龄
+     * @param userPhone 电话
+     * @param userSex 性别
+     * @param model 模型
+     * @return 个人信息界面
+     */
     @RequestMapping(path="/changeUser")
     public String ChangeUser(@RequestParam(name = "userName") String userName,@RequestParam(name = "userAge") Integer userAge,@RequestParam(name = "userPhone") Long userPhone,@RequestParam(name = "userSex") String userSex,Model model){
         Users user=(Users) model.getAttribute("user");
@@ -69,18 +87,33 @@ public class UserHandler {
         return "views/UserViewPersonalInformationPage";
     }
     //修改用户信息页面
+
+    /**
+     * 修改用户页面
+     * @param model 模型
+     * @return 修改用户信息界面
+     */
     @RequestMapping(path="/changeUserPage")
     public String ChangeUserPage(Model model){
 
         return "views/UserModifyPersonalInformationPage";
     }
-    //修改用户密码页面
+    /**
+     * 修改用户密码界面
+     * @param model 模型
+     * @return 修改用户密码界面
+     */
     @RequestMapping(path="/ChangePassWordPage")
     public String ChangePassWordPage(Model model){
 
         return "views/UserChangePasswordPage";
     }
-    //修改用户密码
+    /**
+     * 修改用户密码
+     * @param newPW 新密码
+     * @param model 模型
+     * @return 用户登录界面
+     */
     @RequestMapping(path="/changePassWord")
     public String ChangePassWord(@RequestParam(name = "newPW") String newPW, Model model){
         Users user=(Users) model.getAttribute("user");
@@ -110,6 +143,12 @@ public class UserHandler {
         return "注册成功 您的id为："+ id +",您的初始密码为：" + num;
     }*/
     //查询疫情防控信息
+
+    /**
+     * 查询疫情防控信息
+     * @param model 模型
+     * @return 疫情防控信息界面
+     */
     @RequestMapping(path="/releaseInformation")
     public String ReleaseInformation(Model model){
 
@@ -117,7 +156,12 @@ public class UserHandler {
         model.addAttribute("umsglist",messageList);
         return "views/UserViewEpidemicPreventionInformationPage";
     }
-    //查看具体防控信息
+    /**
+     * 查看具体防控信息
+     * @param meId 信息ID
+     * @param model 模型
+     * @return 具体防疫信息界面
+     */
     @RequestMapping(path = "/taskCompletion")
     public String TaskCompletion(@RequestParam(name = "meId") Integer meId, Model model){
 

@@ -21,12 +21,20 @@ public class AdminHandler {
 
     @Autowired
     AdminService adminService;
-    //管理员签到页面跳转
+    /**
+     * 管理员签到页面跳转
+     * @return 管理员签到页面
+     */
     @RequestMapping("/adminSignInPage")
     public String adminSignInPage(){
         return "views/ManagerSignInPage";
     }
-    //管理员签到
+    /**
+     * 管理员签到
+     * @param temperature 体温
+     * @param model 模型
+     * @return 签到结果
+     */
     @RequestMapping(path="/adminSignIn", produces="text/html;charset=utf-8")
     @ResponseBody
     public String AdminSignIn(@RequestParam(name = "temperature") String temperature, Model model){
@@ -37,7 +45,14 @@ public class AdminHandler {
 
         return "签到成功";
     }
-    //添加物品
+    /**
+     * 添加物品
+     * @param goodsName 物品名称
+     * @param goodsNum 物品数量
+     * @param goodsSource 物品来源
+     * @param model 模型
+     * @return 物资显示页面
+     */
     @RequestMapping(path="/addGoods")
     public String AddGoods(@RequestParam(name = "goodsName") String goodsName, @RequestParam(name = "goodsNum") Integer goodsNum,@RequestParam(name = "goodsSource") String goodsSource,Model model){
 
@@ -65,7 +80,12 @@ public class AdminHandler {
 
         return "views/ManagerMaterialInformationDisplayPage";
     }
-    //删除物品
+    /**
+     * 删除物品
+     * @param goodsId 物品ID
+     * @param model 模型
+     * @return
+     */
     @RequestMapping(path="/deleteGoods")
     public String DeleteGoods(@RequestParam(name = "goodsId") int goodsId, Model model){
 
@@ -85,7 +105,15 @@ public class AdminHandler {
 
         return "views/ManagerMaterialInformationDisplayPage";
     }
-    //修改物品
+    /**
+     * 修改物品
+     * @param goodsName 物品名称
+     * @param goodsNum 物品数量
+     * @param goodsSource 物品来源
+     * @param intime 入库时间
+     * @param model 模型
+     * @return 物品信息显示界面
+     */
     @RequestMapping(path="/changeGoods")
     public String ChangeGoods(@RequestParam(name = "goodsName") String goodsName,@RequestParam(name = "goodsNum") Integer goodsNum,@RequestParam(name = "goodsSource") String goodsSource,@RequestParam(name = "intime") String intime, Model model){
         Goods goods=(Goods)model.getAttribute("good");
@@ -113,7 +141,13 @@ public class AdminHandler {
 
         return "views/ManagerMaterialInformationDisplayPage";
     }
-    //查询一个物品
+    /**
+     * 查询一个物品
+     * @param goodsId 物品ID
+     * @param request request
+     * @param model 模型
+     * @return 物品更新页面
+     */
     @RequestMapping(path="/findGoodsOne")
     public String FindGoodsOne(@RequestParam(name = "goodsId") int goodsId, HttpServletRequest request, Model model){
 
@@ -128,7 +162,12 @@ public class AdminHandler {
 
         return "ManagerMaterialUpdatePage";
     }
-    //查询所有物品
+    /**
+     * 查询所有物品
+     * @param request request
+     * @param model 模型
+     * @return 物品显示界面
+     */
     @RequestMapping(path="/findGoodsAll")
     public String FindGoodsAll(HttpServletRequest request, Model model){
 
@@ -151,7 +190,13 @@ public class AdminHandler {
 
         return "ManagerMaterialInformationDisplayPage";
     }
-    //查询一个用户
+    /**
+     * 查询一个用户
+     * @param userId 用户ID
+     * @param request request
+     * @param model 模型
+     * @return
+     */
     @RequestMapping(path="/findUseOne")
     public String FindUserOne(@RequestParam(name = "userId") Integer userId, HttpServletRequest request, Model model){
 
@@ -164,7 +209,12 @@ public class AdminHandler {
 
         return "views/ManagerViewUserInformationPage-Details";
     }
-    //查询所有用户
+    /**
+     * 查询所有用户
+     * @param request request
+     * @param model 模型
+     * @return
+     */
     @RequestMapping(path="/findUserAll")
     public String FindUserAll(HttpServletRequest request, Model model){
 
@@ -187,7 +237,15 @@ public class AdminHandler {
         return "ManagerShowUserListPage";
     }
     //TODO 获取用户性别有误
-    //修改用户信息
+    /**
+     * 修改用户信息
+     * @param userName 用户名
+     * @param userAge 年龄
+     * @param userPhone 电话
+     * @param userSex 性别
+     * @param model 模型
+     * @return 用户信息界面
+     */
     @RequestMapping(path="/changeUser")
     public String ChangeUser(@RequestParam(name = "userName") String userName,@RequestParam(name = "userAge") Integer userAge,@RequestParam(name = "userPhone") Long userPhone,@RequestParam(name = "userSex") String userSex, Model model){
 
@@ -213,7 +271,13 @@ public class AdminHandler {
 
         return "views/ManagerViewUserInformationPage";
     }
-    //修改用户密码
+    /**
+     * 修改用户密码
+     * @param mpassword 管理员密码
+     * @param newPassword 新的用户密码
+     * @param model 模型
+     * @return 管理员查看用户信息界面
+     */
     @RequestMapping(path="/changePassword", produces="text/html;charset=utf-8")
     public String ChangePassword(@RequestParam(name = "mpassword") String mpassword, @RequestParam(name = "newPassword") String newPassword, Model model){
         Manager manager=(Manager)model.getAttribute("manager");
@@ -236,7 +300,15 @@ public class AdminHandler {
 
         return "views/ManagerViewUserInformationPage";
     }
-    //添加报表信息
+    /**
+     * 添加报表信息
+     * @param userId 用户ID
+     * @param temperature 体温
+     * @param remarks 备注
+     * @param indoor 是进还是出
+     * @param model 模型
+     * @return 管理员输入状态界面
+     */
     @RequestMapping(path="/addReport", produces="text/html;charset=utf-8")
     public String AddReport(@RequestParam("userId") Integer userId, @RequestParam("temperature") String temperature,@RequestParam("remarks") String remarks,@RequestParam("indoor") String indoor, Model model){
         Report report=new Report();
@@ -260,7 +332,12 @@ public class AdminHandler {
 
         return "views/ManagerSignInPage";
     }
-    //删除报表信息
+    /**
+     * 删除报表信息
+     * @param reportId 报表ID
+     * @param model 模型
+     * @return 删除结果界面
+     */
     @RequestMapping(path="/deleteReport")
     public String DeleteReport(@RequestParam(name = "reportId") int reportId, Model model){
 
@@ -271,7 +348,13 @@ public class AdminHandler {
 
         return "deleteReportSuccess";
     }
-    //查询报表信息
+    /**
+     * 查询报表信息
+     * @param userId 用户ID
+     * @param request request
+     * @param model 模型
+     * @return 查询结果界面
+     */
     @RequestMapping(path="/findReportOne")
     public String FindReportOne(@RequestParam(name = "userId") int userId, HttpServletRequest request, Model model){
 
@@ -286,7 +369,12 @@ public class AdminHandler {
 
         return "findReportOneAdminSuccess";
     }
-    //查询所有报表信息
+    /**
+     * 查询所有报表信息
+     * @param request request
+     * @param model 模型
+     * @return 报表显示界面
+     */
     @RequestMapping(path="/findReportAll")
     public String FindReportAll(HttpServletRequest request, Model model){
 
@@ -309,7 +397,13 @@ public class AdminHandler {
 
         return "ManagerShowReportPage";
     }
-    //发布疫情防控信息
+    /**
+     * 发布疫情防控信息
+     * @param title 信息标题
+     * @param content 消息内容
+     * @param model 模型
+     * @return 防控信息界面
+     */
     @RequestMapping(path = "/releaseInformation")
     public String ReleaseInformation(@RequestParam(name = "title") String title, @RequestParam(name = "content") String content,Model model){
         Manager manager=(Manager)model.getAttribute("manager");
@@ -326,7 +420,12 @@ public class AdminHandler {
         model.addAttribute("msglist",messageList);
         return "views/ManagerRecordPage";
     }
-    //查看具体防控信息
+    /**
+     * 查看具体防疫信息
+     * @param meId 信息ID
+     * @param model 模型
+     * @return 具体信息界面
+     */
     @RequestMapping(path = "/taskCompletion")
     public String TaskCompletion(@RequestParam(name = "meId") Integer meId, Model model){
 
@@ -335,7 +434,12 @@ public class AdminHandler {
 
         return "views/ManagerRecordPage-Details";
     }
-    //修改防控信息状态
+    /**
+     * 修改防控信息状态
+     * @param meId 信息ID
+     * @param model 模型
+     * @return 记录界面
+     */
     @RequestMapping(path = "/updateCompletion")
     public String updateCompletion(@RequestParam(name = "meId") Integer meId, Model model){
         adminService.ChangeMessage(meId);
