@@ -2,7 +2,6 @@ package antiesys.antiepidemic.controller;
 
 import antiesys.antiepidemic.pojo.*;
 import antiesys.antiepidemic.service.AdminService;
-import antiesys.antiepidemic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +12,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.*;
 
 
@@ -26,7 +22,7 @@ public class AdminHandler {
 
     @Autowired
     AdminService adminService;
-
+    //管理员签到页面跳转
     @RequestMapping("/adminSignInPage")
     public String adminSignInPage(){
         return "views/ManagerSignInPage";
@@ -191,9 +187,9 @@ public class AdminHandler {
 
         return "ManagerShowUserListPage";
     }
+    //TODO 获取用户性别有误
     //修改用户信息
-    @RequestMapping(path="/changeUser", produces="text/html;charset=utf-8")
-	@ResponseBody
+    @RequestMapping(path="/changeUser")
     public String ChangeUser(@RequestParam(name = "userName") String userName,@RequestParam(name = "userAge") Integer userAge,@RequestParam(name = "userPhone") Long userPhone,@RequestParam(name = "userSex") String userSex, Model model){
 
         Users user=(Users) model.getAttribute("admuser");
@@ -204,14 +200,19 @@ public class AdminHandler {
         }
         if(userPhone!=null)
             user.setUserPhone(userPhone);
+
+        System.out.println(userSex);
         if(userSex!=null)
             user.setUserSex(userSex);
         int numbers = adminService.ChangeUser(user);
 
         if(numbers == 0)
-            return "修改成功";
+            return "views/ManagerModifyUserInformationPage";
+        //重新获取数据
+        List<Users> userlist= adminService.FindUserAll();
+        model.addAttribute("userlist",userlist);
 
-        return "修改失败";
+        return "views/ManagerViewUserInformationPage";
     }
     //修改用户密码
     @RequestMapping(path="/changePassword", produces="text/html;charset=utf-8")
@@ -238,7 +239,6 @@ public class AdminHandler {
     }
     //添加报表信息
     @RequestMapping(path="/addReport", produces="text/html;charset=utf-8")
-    @ResponseBody
     public String AddReport(@RequestParam("userId") Integer userId, @RequestParam("temperature") String temperature,@RequestParam("remarks") String remarks,@RequestParam("indoor") String indoor, Model model){
         Report report=new Report();
         if(userId!=null)
@@ -257,9 +257,9 @@ public class AdminHandler {
         int numbers = adminService.AddReport(report);
 
         if(numbers == 0)
-            return "录入失败";
+            return "views/ManagerEnterStatisticsPage";
 
-        return "录入成功";
+        return "views/ManagerSignInPage";
     }
     //删除报表信息
     @RequestMapping(path="/deleteReport")
@@ -310,23 +310,6 @@ public class AdminHandler {
 
         return "ManagerShowReportPage";
     }
-    //验证序列号
-    @RequestMapping(path="/findNumber", produces="text/html;charset=utf-8")
-	@ResponseBody
-    public String FindNumber(@RequestParam(name = "serialNum") int serialNum, HttpSession session, Model model){
-
-        int userId = 0;
-
-        Map<Integer,Integer> map = (HashMap)session.getServletContext().getAttribute("map");
-
-        if(map != null) {
-            userId = map.get(serialNum);
-            session.getServletContext().removeAttribute("map");
-        }
-
-        return "用户" + userId + "验证成功";
-    }
-    //TODO 以下三个修改信息格式
     //发布疫情防控信息
     @RequestMapping(path = "/releaseInformation")
     public String ReleaseInformation(@RequestParam(name = "title") String title, @RequestParam(name = "content") String content,Model model){
@@ -339,6 +322,7 @@ public class AdminHandler {
         boolean t=adminService.AddMessage(message);
         if(t==false)
             return "views/ManagerReleaseInformationPage-Release";
+        //重新获取数据
         List<Message> messageList=adminService.FindMessageAll();
         model.addAttribute("msglist",messageList);
         return "views/ManagerRecordPage";
@@ -360,12 +344,5 @@ public class AdminHandler {
         List<Message> messageList=adminService.FindMessageAll();
         model.addAttribute("msglist",messageList);
         return "views/ManagerRecordPage";
-    }
-    @RequestMapping(path="/adminExit")
-    public String toMain(HttpSession session, Model model){
-
-        session.removeAttribute("adminId");
-
-        return "redirect:/index.jsp";
     }
 }
