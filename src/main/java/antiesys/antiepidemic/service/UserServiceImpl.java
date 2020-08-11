@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService{
     ReportInter reportInter;
     @Autowired
     MessageInter messageInter;
-    //外来人员注册
+
     @Override
     public boolean UserRegister(Users user) {
         //判断是否存在这个用户
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService{
         }
         return true;
     }
-    //用户登录
+
     @Override
     public boolean UserLogin(int userId, String userPW) {
         //查询用户
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService{
         }
         return true;
     }
-    //查询用户信息
+
     @Override
     public Users FindUserOne(int userId) {
         //直接查询
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService{
         }
         return user;
     }
-    //修改用户信息
+
     @Override
     public int ChangeUser(Users user) {
         //判断是否存在
@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService{
         }
         return t;
     }
-    //修改密码
+
     @Override
     public boolean ChangePassword(int userId, String userPW, String newPW) {
     	Users u=userInter.SelectOne(userId);
@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService{
         }
         return true;
     }
-    //生成序列号
+
     @Override
     public int GetNumber(Map<Integer,Integer> map) {
     	Random r = new Random();
@@ -124,7 +124,7 @@ public class UserServiceImpl implements UserService{
     	}
         return number;
     }
-    //查询一个用户报表信息
+
     @Override
     public Report FindReportOne(int userId) {
         //判断用户是否存在

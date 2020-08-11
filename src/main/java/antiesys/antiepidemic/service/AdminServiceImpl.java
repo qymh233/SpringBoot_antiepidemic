@@ -21,7 +21,8 @@ public class AdminServiceImpl implements AdminService{
     @Autowired
     MessageInter messageInter;
 
-    //获取管理员信息
+
+    @Override
     public Manager selectManagerById(int adminId){
         return adminInter.SelectOne(adminId);
     }
@@ -39,7 +40,7 @@ public class AdminServiceImpl implements AdminService{
         }
         return true;
     }
-    //签到
+
     @Override
     public boolean AdminSignIn(String emperature) {
     	Double emp= Double.valueOf(emperature.toString());
@@ -48,7 +49,7 @@ public class AdminServiceImpl implements AdminService{
     	}
     	return true;
     }
-    //添加物品
+
     @Override
     public boolean AddGoods(Goods goods) {
         if(goods==null){
@@ -62,7 +63,7 @@ public class AdminServiceImpl implements AdminService{
         }
         return true;
     }
-    //删除物品
+
     @Override
     public boolean DeleteGoods(int goodsId) {
         Goods g=goodsInter.SelectOne(goodsId);
@@ -76,7 +77,7 @@ public class AdminServiceImpl implements AdminService{
         }
         return true;
     }
-    //修改物品
+
     @Override
     public boolean ChangeGoods(Goods goods) {
         //判断物品存在
@@ -91,7 +92,7 @@ public class AdminServiceImpl implements AdminService{
         }
         return true;
     }
-    //查询一个物品
+
     @Override
     public Goods FindGoodsOne(int goodsId) {
         //直接查询
@@ -101,7 +102,7 @@ public class AdminServiceImpl implements AdminService{
         }
         return goods;
     }
-    //查询所有物品
+
     @Override
     public List<Goods> FindGoodsAll() {
         List<Goods> goodsList=goodsInter.SelectGoods();
@@ -110,7 +111,7 @@ public class AdminServiceImpl implements AdminService{
         }
         return goodsList;
     }
-    //查询一个用户信息
+
     @Override
     public Users FindUserOne(int userId) {
         Users user=userInter.SelectOne(userId);
@@ -119,7 +120,7 @@ public class AdminServiceImpl implements AdminService{
         }
         return user;
     }
-    //查询所有用户信息
+
     @Override
     public List<Users> FindUserAll() {
         List<Users> users=userInter.SelectUsers();
@@ -128,7 +129,7 @@ public class AdminServiceImpl implements AdminService{
         }
         return users;
     }
-    //修改用户信息
+
     @Override
     public int ChangeUser(Users user) {
         //判断用户是否存在
@@ -146,7 +147,7 @@ public class AdminServiceImpl implements AdminService{
         }
         return t;
     }
-    //修改用户密码
+
     @Override
     public boolean ChangePassword(Manager admin, int userId, String newPW) {
     	Users u=userInter.SelectOne(userId);
@@ -157,7 +158,7 @@ public class AdminServiceImpl implements AdminService{
         }
         return true;
     }
-    //添加报表信息
+
     @Override
     public int AddReport(Report report) {
         //报表不做存在判断,但需要在这里添加报表序号
@@ -170,7 +171,7 @@ public class AdminServiceImpl implements AdminService{
         }
         return t;
     }
-    //删除报表信息
+
     @Override
     public int DeleteReport(int reportId) {
         //直接进行删除
@@ -180,7 +181,7 @@ public class AdminServiceImpl implements AdminService{
         }
         return t;
     }
-    //查询一个用户报表信息
+
     @Override
     public List<Report> FindReportOne(int userId) {
         //判断用户是否存在
@@ -195,7 +196,7 @@ public class AdminServiceImpl implements AdminService{
         }
         return userList;
     }
-    //查询所有报表信息
+
     @Override
     public List<Report> FindReportAll() {
         List<Report> reports=reportInter.SelectReport();
@@ -204,7 +205,7 @@ public class AdminServiceImpl implements AdminService{
         }
         return reports;
     }
-    //查询序列号
+
     @Override
     public boolean FindNumber(Map<Integer, Integer> map, int serialNum) {
     	Set set=map.keySet();
@@ -221,7 +222,7 @@ public class AdminServiceImpl implements AdminService{
     	}
     	return true;
     }
-    //添加信息
+
     @Override
     public boolean AddMessage(Message message) {
         if(message==null){
@@ -236,7 +237,7 @@ public class AdminServiceImpl implements AdminService{
         }
         return true;
     }
-    //删除信息
+
     @Override
     public boolean DeleteMessage(Integer meID) {
         Message g=messageInter.SelectOne(meID);
@@ -250,7 +251,7 @@ public class AdminServiceImpl implements AdminService{
         }
         return true;
     }
-    //查找信息
+
     @Override
     public Message FindMessageOne(Integer meID) {
         //直接查询
@@ -260,7 +261,7 @@ public class AdminServiceImpl implements AdminService{
         }
         return message;
     }
-    //查找所有信息
+
     @Override
     public List<Message> FindMessageAll() {
         List<Message> messageList=messageInter.SelectMessage();
@@ -269,7 +270,7 @@ public class AdminServiceImpl implements AdminService{
         }
         return messageList;
     }
-    //修改信息
+
     @Override
     public int ChangeMessage(Integer MeID) {
         //判断信息是否存在
