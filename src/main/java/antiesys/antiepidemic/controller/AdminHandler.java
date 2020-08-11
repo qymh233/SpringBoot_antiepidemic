@@ -258,7 +258,7 @@ public class AdminHandler {
         if(userPhone!=null)
             user.setUserPhone(userPhone);
 
-        System.out.println(userSex);
+        //System.out.println(userSex);
         if(userSex!=null)
             user.setUserSex(userSex);
         int numbers = adminService.ChangeUser(user);
