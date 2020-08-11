@@ -19,19 +19,18 @@
                 </label>
             </div>
             <div class="input-group">
-                <input type="text" id="userSex" name="userSex" class="input-field">
-                <label for="userSex" class="input-label">
-                    <span class="label-title">性别</span>
-                </label>
+                <a>&nbsp;性别：&emsp;&emsp;</a>
+                <input type="radio" id="userSex" name="userSex" value="男" checked="checked"> 男&emsp;&emsp;
+                <input type="radio" id="userSex" name="userSex" value="女"> 女
             </div>
             <div class="input-group">
-                <input type="text" id="userAge" name="userAge" class="input-field">
+                <input type="number" id="userAge" name="userAge" class="input-field">
                 <label for="userAge" class="input-label">
                     <span class="label-title">年龄</span>
                 </label>
             </div>
             <div class="input-group">
-                <input type="text" id="userPhone" name="userPhone" class="input-field">
+                <input type="number" id="userPhone" name="userPhone" class="input-field">
                 <label for="userPhone" class="input-label">
                     <span class="label-title">电话</span>
                 </label>
@@ -48,7 +47,7 @@
                     <span class="label-title">关联账号</span>
                 </label>
             </div>
-            <button type="button" formaction="/userRegister" class="login-button">注册<i class="ai ai-enter"></i></button>
+            <button type="submit" formaction="/userRegister" class="login-button">注册<i class="ai ai-enter"></i></button>
         </form>
     </div>
 </body>

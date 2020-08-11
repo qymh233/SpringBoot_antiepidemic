@@ -30,11 +30,18 @@ public class UserServiceImpl implements UserService{
     public boolean UserRegister(Users user) {
         //判断是否存在这个用户
         int uid=user.getUserId();
-        Users u=userInter.SelectOne(uid);
-        //用户存在
-        if(u!=null){
+        Users u1=userInter.SelectOne(uid);
+        //关联用户不存在
+        if(u1==null){
             return false;
         }
+        Users u2 = new Users();
+        while(u2!=null) {
+            uid+=10;
+            u2 = userInter.SelectOne(uid);
+        }
+        user.setUserId(uid);
+        user.setUserPW("111111");
         //插入
         int t=userInter.InsertUser(user);
         //插入失败

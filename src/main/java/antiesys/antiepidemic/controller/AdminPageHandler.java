@@ -58,7 +58,6 @@ public class AdminPageHandler {
      */
     @RequestMapping(path="/userLogin")
     public String UserLogin(@RequestParam(name = "userId") int userId, @RequestParam(name = "userPW") String userPW, Model model){
-
         boolean isLogin = userService.UserLogin(userId, userPW);
 
         if(!isLogin)
@@ -80,21 +79,20 @@ public class AdminPageHandler {
      */
     @RequestMapping(path="/userRegister")
     public String UserRegister(@RequestParam(name = "userName") String userName, @RequestParam(name = "userSex") String userSex, @RequestParam(name = "userAge") int userAge, @RequestParam(name = "userPhone") Long userPhone, @RequestParam(name = "userIdCard") String userIdCard, @RequestParam(name = "userId") int userId, Model model){
-
-        Users user=new Users();
-        user.setUserName(userName);
-        user.setUserSex(userSex);
-        user.setUserAge(userAge);
-        user.setUserPhone(userPhone);
-        user.setUserIdCard(userIdCard);
-        user.setUserId(userId);
-        boolean isRegister = userService.UserRegister(user);
+        Users users=new Users();
+        users.setUserName(userName);
+        users.setUserSex(userSex);
+        users.setUserAge(userAge);
+        users.setUserPhone(userPhone);
+        users.setUserIdCard(userIdCard);
+        users.setUserId(userId);
+        boolean isRegister = userService.UserRegister(users);
 
         if(!isRegister)
-            return "UserLoginPage";
-        Users users=userService.FindUserOne(userId);
-        model.addAttribute("user",users);
-        return "UserMainPage";
+            return "RegistrationOfOutsidersPage";
+        Users user=userService.FindUserOne(users.getUserId());
+        model.addAttribute("user",user);
+        return "OutsidersLogin";
     }
     /**
      * 跳转发布防控信息
