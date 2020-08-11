@@ -72,39 +72,7 @@
 		    }
 		  });	 
 		});
-		
-		//弹框		
-		$('#fabu').on('click', function(){			
-		  layui.use('layer', function(){
-          var layer = layui.layer;
-          layer.open({
-                type: 2,
-                title: '发布完成情况',
-                fix: false,
-                shadeClose: true,
-                shade: 0.8,
-                area: ['660px', '420px'],
-                content: 'ManagerRecordPage-Release.html',
-                end: function () {
-                   location.reload();
-                }
-            });
-        });
-      })
-		
-		//判断弹框
-		$(".delete").click(function(){
-			var obj = document.elementFromPoint(event.clientX,event.clientY).parentNode.parentNode.parentNode;
-			layer.confirm('确定要删除此任务？', {
-			  btn: ['是','否'] //按钮
-			}, function(){
-			  obj.parentNode.removeChild(obj);
-			  layer.msg('已删除', {icon: 1});
-			}, function(){
-			  layer.msg('已取消',  {icon: 2});
-			});
-		})			
-		
+
 		 layui.use('form', function(){
 		  var form = layui.form; 
 		  form.render();

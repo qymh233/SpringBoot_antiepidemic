@@ -172,19 +172,11 @@ public class AdminPageHandler {
      */
     @RequestMapping("/ManagerMaterialInformationDisplayPage")
     public String ManagerMaterialInformationDisplayPage(Model model){
-        List<Goods> goods;
-
-        goods = adminService.FindGoodsAll();
+        List<Goods> goods= adminService.FindGoodsAll();
 
         if(goods == null)
             return "ErrorPage";
-
-        List<Goods> newGoodsList = new ArrayList<>();
-
-            for (int i = 0; i < goods.size(); i++) {
-                newGoodsList.add(goods.get(i));
-            }
-        model.addAttribute("goodslist",newGoodsList);
+        model.addAttribute("goodslist",goods);
         return "views/ManagerMaterialInformationDisplayPage";
     }
     //跳转查看单个用户信息
