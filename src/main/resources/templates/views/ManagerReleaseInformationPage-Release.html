@@ -8,9 +8,17 @@
 		<link rel="stylesheet" href="../assets/css/layui.css">
 	    <link rel="stylesheet" href="../assets/css/view.css"/>
 	    <link rel="stylesheet" href="../assets/css/style.css"/>
+		<link rel="stylesheet" href="../assets/css/admin.css"/>
 	</head>
 	<body class="layui-tank">
-		 <div class="layui-card">
+	<div class="layui-content">
+		<div class="mianb">
+			<div class="mblf layui-col-xs6 layui-col-md6">
+				<i class="layui-icon">&#xe656;</i>
+				<p>首页管理 > <span>防控信息发布</span></p>
+			</div>
+		</div>
+		<div class="layui-card">
 		 	<form class="layui-form" action="" method="POST">
 			   <div class="layui-form-item">
 				    <label class="layui-form-label">防控信息</label>
@@ -26,11 +34,12 @@
 						<!--<button type="button" class="layui-btn layui-btn-danger" id="test7">上传信息</button>-->
 				    </div>
 				</div>
-				<div class="tkbtnfxd">
-					<button type="submit" formaction="/admin/releaseInformation" class="layui-btn  layui-btn-normal float-right">确定</button>
+				<div >
+					<button type="submit" formaction="/admin/releaseInformation" class="layui-btn layui-btn-normal float-right">确定</button>
 				</div>
-			</form>	
-		 </div>
+			</form>
+		</div>
+	</div>
 
 	    
 	<script src="../assets/layui.all.js"></script>    
