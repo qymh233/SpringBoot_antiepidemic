@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.*;
 
 
@@ -87,7 +86,7 @@ public class AdminHandler {
         return "views/ManagerMaterialInformationDisplayPage";
     }
     //修改物品
-    @RequestMapping(path="/changeGoods", produces="text/html;charset=utf-8")
+    @RequestMapping(path="/changeGoods")
     public String ChangeGoods(@RequestParam(name = "goodsName") String goodsName,@RequestParam(name = "goodsNum") Integer goodsNum,@RequestParam(name = "goodsSource") String goodsSource,@RequestParam(name = "intime") String intime, Model model){
         Goods goods=(Goods)model.getAttribute("good");
         if(!goodsName.equals("")&&goodsName!=null)

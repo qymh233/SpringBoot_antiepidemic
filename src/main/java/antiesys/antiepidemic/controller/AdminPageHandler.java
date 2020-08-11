@@ -1,9 +1,6 @@
 package antiesys.antiepidemic.controller;
 
-import antiesys.antiepidemic.pojo.Goods;
-import antiesys.antiepidemic.pojo.Manager;
-import antiesys.antiepidemic.pojo.Message;
-import antiesys.antiepidemic.pojo.Users;
+import antiesys.antiepidemic.pojo.*;
 import antiesys.antiepidemic.service.AdminService;
 import antiesys.antiepidemic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@SessionAttributes(value = {"user","manager","userlist","goodslist","admuser","good","msglist"})
+@SessionAttributes(value = {"user","manager","userlist","goodslist","admuser","good","msglist","reportList"})
 public class AdminPageHandler {
     @Autowired
     AdminService adminService;
@@ -134,5 +131,12 @@ public class AdminPageHandler {
 
         model.addAttribute("admuser",user);
         return "views/ManagerModifyUserInformationPage";
+    }
+    //跳转报表页面
+    @RequestMapping("/ManagerGenerateStatisticalReportPage")
+    public String ManagerGenerateStatisticalReportPage(Model model){
+        List<Report> reportList=adminService.FindReportAll();
+        model.addAttribute("reportList",reportList);
+        return "views/ManagerGenerateStatisticalReportPage";
     }
 }
