@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@SessionAttributes(value = {"user","manager","nummap","userlist","goodslist","admuser","good","msglist"})
+@SessionAttributes(value = {"user","manager","userlist","goodslist","admuser","good","msglist"})
 public class AdminPageHandler {
     @Autowired
     AdminService adminService;
@@ -57,54 +57,51 @@ public class AdminPageHandler {
         model.addAttribute("user",user);
         return "UserMainPage";
     }
+    //跳转发布防控疫情
     @RequestMapping("/ManagerReleaseInformationPage_Release")
     public String ManagerReleaseInformationPage_Release(){
         return "views/ManagerReleaseInformationPage-Release";
     }
+    //跳转防控任务完成情况
     @RequestMapping("/ManagerRecordPage")
     public String ManagerRecordPage(Model model){
         List<Message> messageList=adminService.FindMessageAll();
         model.addAttribute("msglist",messageList);
         return "views/ManagerRecordPage";
     }
-    @RequestMapping("/ManagerNotificationPreventionTimePage")
-    public String ManagerNotificationPreventionTimePage(){
-        return "views/ManagerNotificationPreventionTimePage";
-    }
+    //跳转物品修改
     @RequestMapping("/ManagerMaterialInformationDisplayPage_Modifacation")
     public String ManagerMaterialInformationDisplayPage_Modifacation(@RequestParam(name = "goodsId") int goodsId,Model model){
         Goods goods=adminService.FindGoodsOne(goodsId);
         model.addAttribute("good",goods);
         return "views/ManagerMaterialInformationDisplayPage-Modifacation";
     }
+    //跳转修改用户密码
     @RequestMapping("/ManagerModifyUserPasswordPage")
     public String ManagerModifyUserPasswordPage(){
         return "views/ManagerModifyUserPasswordPage";
     }
+    //查看用户信息
     @RequestMapping("/ManagerViewUserInformationPage")
     public String ManagerViewUserInformationPage(Model model){
-        List<Users> users;
-        users = adminService.FindUserAll();
+        List<Users> users= adminService.FindUserAll();
 
         if(users == null)
             return "ErrorPage";
-
-        List<Users> newUsersList = new ArrayList<>();
-
-            for (int i = 0; i < users.size(); i++) {
-                newUsersList.add(users.get(i));
-            }
-        model.addAttribute("userlist",newUsersList);
+        model.addAttribute("userlist",users);
         return "views/ManagerViewUserInformationPage";
     }
+    //跳转录入统计信息
     @RequestMapping("/ManagerEnterStatisticsPage")
     public String ManagerEnterStatisticsPage(){
         return "views/ManagerEnterStatisticsPage";
     }
+    //跳转添加物资信息
     @RequestMapping("/ManagerAddItemPage")
     public String ManagerAddItemPage(){
         return "views/ManagerAddItemPage";
     }
+    //跳转查看所有物资信息
     @RequestMapping("/ManagerMaterialInformationDisplayPage")
     public String ManagerMaterialInformationDisplayPage(Model model){
         List<Goods> goods;
@@ -122,10 +119,12 @@ public class AdminPageHandler {
         model.addAttribute("goodslist",newGoodsList);
         return "views/ManagerMaterialInformationDisplayPage";
     }
+    //跳转查看单个用户信息
     @RequestMapping("/ManagerModifyUserInformationPage")
     public String ManagerModifyUserInformationPage(Model model){
         return "views/ManagerModifyUserInformationPage";
     }
+    //跳转修改用户页面
     @RequestMapping("/ManagerModifyUserInformationPage1")
     public String ManagerModifyUserInformationPage1(@RequestParam(name = "userId") int userId,Model model){
         Users user = adminService.FindUserOne(userId);

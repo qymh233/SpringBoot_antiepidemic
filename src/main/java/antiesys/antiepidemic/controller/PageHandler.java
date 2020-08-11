@@ -26,10 +26,12 @@ public class PageHandler {
     public String mypag(){
         return "hello";
     }
+    //用户登陆界面
     @RequestMapping("/u")
     public String upage(){
         return "UserLoginPage";
     }
+    //管理员登陆界面
     @RequestMapping("/m")
     public String mpage(){
         return "ManagerLoginPage";

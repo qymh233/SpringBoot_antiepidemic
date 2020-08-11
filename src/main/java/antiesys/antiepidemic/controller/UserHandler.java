@@ -11,18 +11,13 @@ import antiesys.antiepidemic.pojo.Users;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
-@SessionAttributes(value = {"user","nummap","umsglist","usermessage"})
+@SessionAttributes(value = {"user","umsglist","usermessage"})
 public class UserHandler {
     @Autowired
     UserService userService;
@@ -113,19 +108,6 @@ public class UserHandler {
             return "注册失败";
 
         return "注册成功 您的id为："+ id +",您的初始密码为：" + num;
-    }
-
-    @RequestMapping("/getnumpage")
-    public String getnum(Model model){
-        Users user=(Users)model.getAttribute("user");
-
-        int num=(Integer)model.getAttribute("number");
-        Map<Integer,Integer> nummap =(Map<Integer, Integer>)model.getAttribute("nummap");
-
-        nummap.put(num,user.getUserId());
-
-        model.addAttribute("nummap",nummap);
-        return "views/UserSerialNumber";
     }
     //查询疫情防控信息
     @RequestMapping(path="/releaseInformation")
