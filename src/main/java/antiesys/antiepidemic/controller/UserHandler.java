@@ -92,7 +92,7 @@ public class UserHandler {
         return "UserLoginPage";
     }
     //用户注册
-    @RequestMapping(path="/userRegister", produces="text/html;charset=utf-8")
+    /*@RequestMapping(path="/userRegister", produces="text/html;charset=utf-8")
     @ResponseBody
     public String UserRegister(Users user, Model model){
 
@@ -108,7 +108,7 @@ public class UserHandler {
             return "注册失败";
 
         return "注册成功 您的id为："+ id +",您的初始密码为：" + num;
-    }
+    }*/
     //查询疫情防控信息
     @RequestMapping(path="/releaseInformation")
     public String ReleaseInformation(Model model){

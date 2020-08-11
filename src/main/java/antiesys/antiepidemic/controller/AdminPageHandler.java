@@ -54,6 +54,25 @@ public class AdminPageHandler {
         model.addAttribute("user",user);
         return "UserMainPage";
     }
+    //用户注册
+    @RequestMapping(path="/userRegister")
+    public String UserRegister(@RequestParam(name = "userName") String userName, @RequestParam(name = "userSex") String userSex, @RequestParam(name = "userAge") int userAge, @RequestParam(name = "userPhone") Long userPhone, @RequestParam(name = "userIdCard") String userIdCard, @RequestParam(name = "userId") int userId, Model model){
+
+        Users user=new Users();
+        user.setUserName(userName);
+        user.setUserSex(userSex);
+        user.setUserAge(userAge);
+        user.setUserPhone(userPhone);
+        user.setUserIdCard(userIdCard);
+        user.setUserId(userId);
+        boolean isRegister = userService.UserRegister(user);
+
+        if(!isRegister)
+            return "UserLoginPage";
+        Users users=userService.FindUserOne(userId);
+        model.addAttribute("user",users);
+        return "UserMainPage";
+    }
     //跳转发布防控疫情
     @RequestMapping("/ManagerReleaseInformationPage_Release")
     public String ManagerReleaseInformationPage_Release(){

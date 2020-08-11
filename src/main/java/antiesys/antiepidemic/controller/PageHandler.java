@@ -20,7 +20,7 @@ public class PageHandler {
 
     @RequestMapping("/")
     public String mypage(){
-        return "login";
+        return "SystemMainPage";
     }
     @RequestMapping("/he")
     public String mypag(){
@@ -33,8 +33,10 @@ public class PageHandler {
     }
     //管理员登陆界面
     @RequestMapping("/m")
-    public String mpage(){
-        return "ManagerLoginPage";
-    }
+    public String mpage(){ return "ManagerLoginPage"; }
+
+    @RequestMapping("/r")
+    public String rpage(){ return "RegistrationOfOutsidersPage"; }
+
 
 }

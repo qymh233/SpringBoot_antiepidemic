@@ -3,11 +3,26 @@ package antiesys.antiepidemic.pojo;
 import java.util.Date;
 
 public class Message {
-    private String title;//标题
-    private Integer puBer;//发布者
-    private String cont;//具体内容
-    private Date puDate;//发布时间
-    private Integer meID;//编号
+    /**
+     * 标题
+     */
+    private String title;
+    /**
+     * 发布者
+     */
+    private Integer puBer;
+    /**
+     * 具体内容
+     */
+    private String cont;
+    /**
+     * 发布时间
+     */
+    private Date puDate;
+    /**
+     * 编号
+     */
+    private Integer meID;
     private String stat;//状态
 
     public Integer getMeID() {
