@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-
+/*
+* 101010201
+* 111111
+* */
 @Controller
 @RequestMapping("/user")
 @SessionAttributes(value = {"user","umsglist","usermessage"})
@@ -122,28 +125,9 @@ public class UserHandler {
         if(!isChange)
             return "views/UserChangePasswordPage";
 
-        return "UserLoginPage";
+        return "redirect:/UserLoginPage.html";
     }
-    //用户注册
-    /*@RequestMapping(path="/userRegister", produces="text/html;charset=utf-8")
-    @ResponseBody
-    public String UserRegister(Users user, Model model){
-
-        int id = (int)(Math.random()*1000000000);
-        String num = "" + (int)(Math.random()*1000000);
-
-        user.setUserPW(num);
-        user.setUserId(id);
-
-        boolean isRegister = userService.UserRegister(user);
-
-        if(!isRegister)
-            return "注册失败";
-
-        return "注册成功 您的id为："+ id +",您的初始密码为：" + num;
-    }*/
     //查询疫情防控信息
-
     /**
      * 查询疫情防控信息
      * @param model 模型

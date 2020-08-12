@@ -58,10 +58,13 @@ public class AdminPageHandler {
      */
     @RequestMapping(path="/userLogin")
     public String UserLogin(@RequestParam(name = "userId") int userId, @RequestParam(name = "userPW") String userPW, Model model){
+        System.out.println(userId+" "+userPW);
         boolean isLogin = userService.UserLogin(userId, userPW);
-
-        if(!isLogin)
+        if(!isLogin){
+            System.out.println("错误密码"+userId+" "+userPW);
             return "UserLoginPage";
+        }
+
         Users user=userService.FindUserOne(userId);
         model.addAttribute("user",user);
         return "UserMainPage";
