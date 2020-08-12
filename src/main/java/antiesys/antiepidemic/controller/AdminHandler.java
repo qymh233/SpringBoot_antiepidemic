@@ -240,7 +240,6 @@ public class AdminHandler {
 
         return "ManagerShowUserListPage";
     }
-    //TODO 获取用户性别有误
     /**
      * 修改用户信息
      * @param userName 用户名

@@ -1,13 +1,11 @@
 package antiesys.antiepidemic.controller;
 
-import antiesys.antiepidemic.pojo.Message;
-import antiesys.antiepidemic.pojo.Report;
+import antiesys.antiepidemic.pojo.*;
 import antiesys.antiepidemic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import antiesys.antiepidemic.pojo.Users;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -20,7 +18,7 @@ import java.util.List;
 * */
 @Controller
 @RequestMapping("/user")
-@SessionAttributes(value = {"user","umsglist","usermessage"})
+@SessionAttributes(value = {"user","umsglist","usermessage","ureportList","opilist"})
 public class UserHandler {
     @Autowired
     UserService userService;
@@ -153,6 +151,42 @@ public class UserHandler {
         model.addAttribute("usermessage",message);
 
         return "views/UserRecordPage-Details";
+    }
+
+    @RequestMapping(path = "/UserFindOneReportPage")
+    public String UserFindOneReportPage(@RequestParam(name = "meId") Integer meId, Model model){
+
+        List<Report> reportList= userService.FindReportAll(meId);
+
+        if(reportList == null)
+            return "views/UserRecordPage-Details";
+
+        model.addAttribute("ureportList", reportList);
+
+        return "views/UserFindOneReportPage";
+    }
+    //跳转意见反馈页面
+    @RequestMapping(path="/feedback")
+    public String feedback(Model model){
+        return "views/UserFeedbackPage";
+    }
+    //意见反馈页面
+    @RequestMapping(path = "/releaseOpinion")
+    public String ReleaseOpinion(@RequestParam(name = "title") String title, @RequestParam(name = "content") String content,Model model){
+        Users users=(Users)model.getAttribute("user");
+        Integer i=users.getUserId();
+        Opinion opinion=new Opinion();
+        opinion.setTitle(title);
+        opinion.setCont(content);
+        opinion.setUserId(i);
+        opinion.setUserName(users.getUserName());
+        boolean t=userService.AddOpinion(opinion);
+        if(t==false)
+            return "views/UserFeedbackPage";
+        //重新获取数据
+        List<Opinion> opinionList=userService.FindOpinionAll();
+        model.addAttribute("opilist",opinionList);
+        return "views/ManagerRecordPage";
     }
 
 }

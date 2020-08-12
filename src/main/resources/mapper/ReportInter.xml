@@ -35,7 +35,7 @@
   	</select>
     <!-- 查询一个信息 -->
     <select id="SelectOne" resultMap="SelectAll">
-    	select * from V_Report where userId=#{userId}
+    	select * from V_Report where userId=#{userId} order by ORDERNUM DESC
   	</select>
     <select id="SelectReportInTime" resultType="antiesys.antiepidemic.pojo.Report">
         select * from V_Report where inTime between #{beginTime} and #{endTime}
