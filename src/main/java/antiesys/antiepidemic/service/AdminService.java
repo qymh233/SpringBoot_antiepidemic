@@ -161,11 +161,16 @@ public interface AdminService {
      * @return 查找到的信息对象
      */
     Opinion FindOpinionOne(Integer meID);
-
     /**
      * 更新意见反馈对象，添加回复
      * @param opinion 意见反馈对象
      * @return 更新结果
      */
     int UpdateOpinion(Opinion opinion);
+    /**
+     * 查找指定用户的反馈
+     * @param UserId 用户ID
+     * @return 查找到的反馈列表
+     */
+    List<Opinion> SelectOpinionOne(Integer UserId);
 }
