@@ -38,6 +38,7 @@
 						  </thead>
 						  <tbody>
 							<tr th:each="report:${reportList}">
+								<td th:text="${report.getUserId()}"></td>
 								<td th:text="${report.getUserName()}"></td>
 								<td th:text="${report.getUserPhone()}"></td>
 								<td th:text="${report.getTemperature()}"></td>
