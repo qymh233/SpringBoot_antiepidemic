@@ -215,8 +215,8 @@ public class UserHandler {
         return "views/UserViewOpinionInformationPage";
     }
     //跳转上一次反馈页面
-    @RequestMapping(path="/RetuenPage")
-    public String RetuenPage(Model model){
+    @RequestMapping(path="/ReturnPage")
+    public String ReturnPage(Model model){
 //        List<Opinion> opinionList=userService.FindOpinionAll();
 //        model.addAttribute("opilist",opinionList);
         return "views/UserViewOpinionInformationPage";
