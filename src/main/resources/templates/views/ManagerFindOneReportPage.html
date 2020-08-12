@@ -18,10 +18,12 @@
     			 <p>管理员首页 > 统计信息管理 > <span>生成统计报表</span></p>
     		</div>
     		<div class="mbrt layui-col-xs6 layui-col-md6">
-				<div class="layui-input-inline" style="width: 200px;">
-					<input type="text" name="userName" placeholder="姓名" autocomplete="off" class="layui-input">
-				</div>
-				<button type="submit" formaction="/admin/addGoods" class="layui-btn layui-btn-normal">搜索</button>
+				<form method="post">
+					<div class="layui-input-inline" style="width: 200px;">
+						<input type="text" name="userId" placeholder="用户ID" autocomplete="off" class="layui-input">
+					</div>
+					<button type="submit" formaction="/admin/findReportOne" class="layui-btn layui-btn-normal">搜索</button>
+				</form>
     		</div>
     	</div>
     	<!--面包屑导航-->
