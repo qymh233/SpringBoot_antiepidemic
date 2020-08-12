@@ -8,10 +8,15 @@
     <link rel="stylesheet" href="../assets/css/login.css">
     <link rel="icon" href="/favicon.ico">
     <title>管理后台</title>
+    <script>
+        if(window != top){
+            top.location.href=location.href;
+        }
+    </script>
 </head>
 <body class="login-wrap">
     <div class="login-container">
-        <form class="login-form" method="post">
+        <form class="login-form" method="post" action="/userLogin">
             <div class="input-group">
                 <input type="text" name="userId" id="userId" class="input-field">
                 <label for="userId" class="input-label">
@@ -26,6 +31,7 @@
             </div>
             <button type="submit" formaction="/userLogin" class="login-button">登录<i class="ai ai-enter"></i></button>
         </form>
+
     </div>
 </body>
 <script src="../assets/layui.js"></script>

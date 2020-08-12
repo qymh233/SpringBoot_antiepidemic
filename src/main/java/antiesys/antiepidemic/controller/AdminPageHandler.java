@@ -62,7 +62,7 @@ public class AdminPageHandler {
         boolean isLogin = userService.UserLogin(userId, userPW);
         if(!isLogin){
             System.out.println("错误密码"+userId+" "+userPW);
-            return "UserLoginPage";
+            return "redirect:/UserLoginPage.html";
         }
 
         Users user=userService.FindUserOne(userId);

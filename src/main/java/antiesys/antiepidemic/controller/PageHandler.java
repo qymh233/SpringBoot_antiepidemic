@@ -37,7 +37,7 @@ public class PageHandler {
      */
     @RequestMapping("/u")
     public String upage(){
-        return "UserLoginPage";
+        return "redirect:UserLoginPage.html";
     }
 
     /**
