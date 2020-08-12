@@ -18,7 +18,7 @@ import java.util.List;
 * */
 @Controller
 @RequestMapping("/user")
-@SessionAttributes(value = {"user","umsglist","usermessage","ureportList","opilist"})
+@SessionAttributes(value = {"user","umsglist","usermessage","ureportList","opilist","Oneopinion","myoplist","oppage"})
 public class UserHandler {
     @Autowired
     UserService userService;
@@ -186,7 +186,40 @@ public class UserHandler {
         //重新获取数据
         List<Opinion> opinionList=userService.FindOpinionAll();
         model.addAttribute("opilist",opinionList);
-        return "views/ManagerRecordPage";
+        return "views/UserViewOpinionInformationPage";
+    }
+    //跳转全部意见反馈页面
+    @RequestMapping(path="/UserViewOpinionInformationPage")
+    public String UserViewOpinionInformationPage(Model model){
+        List<Opinion> opinionList=userService.FindOpinionAll();
+        model.addAttribute("opilist",opinionList);
+        model.addAttribute("oppage","UserViewOpinionInformationPage");
+        return "views/UserViewOpinionInformationPage";
+    }
+    //查看具体反馈
+    @RequestMapping(path = "/taskOpinion")
+    public String taskOpinion(@RequestParam(name = "meId") Integer meId, Model model){
+
+        Opinion opinion=userService.FindOpinionOne(meId);
+        model.addAttribute("Oneopinion",opinion);
+
+        return "views/UserViewOneOpinionInformationPage";
+    }
+    //查看个人反馈页面
+    @RequestMapping(path = "/selfOpinion")
+    public String selfOpinion(Model model){
+        Users users=(Users)model.getAttribute("user");
+        List<Opinion> opinionList=userService.SelectOpinionOne(users.getUserId());
+        model.addAttribute("opilist",opinionList);
+        model.addAttribute("oppage","selfOpinion");
+        return "views/UserViewOpinionInformationPage";
+    }
+    //跳转上一次反馈页面
+    @RequestMapping(path="/RetuenPage")
+    public String RetuenPage(Model model){
+//        List<Opinion> opinionList=userService.FindOpinionAll();
+//        model.addAttribute("opilist",opinionList);
+        return "views/UserViewOpinionInformationPage";
     }
 
 }

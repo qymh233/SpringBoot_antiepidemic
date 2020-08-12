@@ -234,4 +234,13 @@ public class UserServiceImpl implements UserService{
         }
         return t;
     }
+
+    @Override
+    public List<Opinion> SelectOpinionOne(Integer UserId) {
+        List<Opinion> opinionList=opinionInter.SelectOpinionOne(UserId);
+        if(opinionList==null||opinionList.isEmpty()){
+            return  null;
+        }
+        return opinionList;
+    }
 }

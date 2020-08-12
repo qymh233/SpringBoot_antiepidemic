@@ -99,5 +99,7 @@ public interface UserService {
      * @return 修改结果
      */
     int ChangeOpinion(Integer MeID);
+    //查询个人反馈信息
+    List<Opinion> SelectOpinionOne(Integer UserId);
 
 }

@@ -37,6 +37,9 @@
 		<result property="adDate" column="adDate"/>
 	</resultMap>
 	<select id="SelectOpinion" resultMap="SelectAll">
-    	select * from T_OPINION
+    	select * from T_OPINION order by puDate DESC
+  	</select>
+	<select id="SelectOpinionOne" resultMap="SelectAll">
+    	select * from T_OPINION where UserId=#{UserId} order by puDate DESC
   	</select>
 </mapper>
