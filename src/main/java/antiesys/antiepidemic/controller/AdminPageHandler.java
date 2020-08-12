@@ -213,4 +213,10 @@ public class AdminPageHandler {
         model.addAttribute("reportList",reportList);
         return "views/ManagerGenerateStatisticalReportPage";
     }
+    @RequestMapping("/ManagerFindOneReportPage")
+    public String ManagerFineOneReportPage(Model model){
+        List<Report> reportList=null;
+        model.addAttribute("reportList", reportList);
+        return "views/ManagerFindOneReportPage";
+    }
 }

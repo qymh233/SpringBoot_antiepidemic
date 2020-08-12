@@ -356,7 +356,7 @@ public class AdminHandler {
      * @return 查询结果界面
      */
     @RequestMapping(path="/findReportOne")
-    public String FindReportOne(@RequestParam(name = "userId") int userId, HttpServletRequest request, Model model){
+    public String FindReportOne(@RequestParam(name = "userId") int userId, Model model){
 
         List<Report> userList = null;
 
@@ -365,7 +365,7 @@ public class AdminHandler {
         if(userList == null)
             return "findReportOneAdminFail";
 
-        request.setAttribute("userList", userList);
+        model.addAttribute("userList", userList);
 
         return "findReportOneAdminSuccess";
     }

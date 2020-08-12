@@ -62,6 +62,12 @@ layui.define(['element','layer'],function(exports){
 
     Tab.prototype.change = function(url) {
         element.tabChange(this.el, url);
+        var othis = $('.layui-tab-title').find('>li[lay-id="' + url + '"]'),
+        index = othis.parent().children('li').index(othis),
+        parents = othis.parents('.layui-tab').eq(0),
+        item = parents.children('.layui-tab-content').children('.layui-tab-item'),
+        src = item.eq(index).find('iframe').attr("src");
+        item.eq(index).find('iframe').attr("src",src);
     };
 
     Tab.prototype.delete = function(url) {
