@@ -166,8 +166,6 @@ public class AdminPageHandler {
     public String ManagerAddItemPage(){
         return "views/ManagerAddItemPage";
     }
-    //跳转查看所有物资信息
-
     /**
      * 跳转查看所有物资信息
      * @param model 模型
@@ -182,8 +180,6 @@ public class AdminPageHandler {
         model.addAttribute("goodslist",goods);
         return "views/ManagerMaterialInformationDisplayPage";
     }
-    //跳转查看单个用户信息
-
     /**
      * 跳转查看单个用户信息
      * @param model 模型
@@ -193,8 +189,6 @@ public class AdminPageHandler {
     public String ManagerModifyUserInformationPage(Model model){
         return "views/ManagerModifyUserInformationPage";
     }
-    //跳转修改用户页面
-
     /**
      * 跳转修改用户界面
      * @param userId 用户ID
@@ -211,11 +205,21 @@ public class AdminPageHandler {
         model.addAttribute("admuser",user);
         return "views/ManagerModifyUserInformationPage";
     }
-    //跳转报表页面
+    /**
+     * 跳转报表页面
+     * @param model 模型
+     * @return 报表页面
+     */
     @RequestMapping("/ManagerGenerateStatisticalReportPage")
     public String ManagerGenerateStatisticalReportPage(Model model){
         List<Report> reportList=adminService.FindReportAll();
         model.addAttribute("reportList",reportList);
         return "views/ManagerGenerateStatisticalReportPage";
+    }
+    @RequestMapping("/ManagerFindOneReportPage")
+    public String ManagerFineOneReportPage(Model model){
+        List<Report> reportList=null;
+        model.addAttribute("reportList", reportList);
+        return "views/ManagerFindOneReportPage";
     }
 }

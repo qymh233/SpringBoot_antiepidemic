@@ -18,6 +18,10 @@
     			 <p>管理员首页 > 统计信息管理 > <span>生成统计报表</span></p>
     		</div>
     		<div class="mbrt layui-col-xs6 layui-col-md6">
+				<div class="layui-input-inline" style="width: 200px;">
+					<input type="text" name="userName" placeholder="姓名" autocomplete="off" class="layui-input">
+				</div>
+				<button type="submit" formaction="/admin/addGoods" class="layui-btn layui-btn-normal">搜索</button>
     		</div>
     	</div>
     	<!--面包屑导航-->
@@ -27,11 +31,10 @@
 			 		  <table class="layui-table" lay-skin="line" lay-size="lg" id="table">						  
 						  <thead>
 						    <tr>
-							 <th>用户ID</th>
 							 <th>姓名</th>
 							 <th>电话号码</th>
 							 <th>体温</th>
-						     <th>进入小区时间</th>
+							 <th>进入小区时间</th>
 							 <th>出小区时间</th>
 						     <th>备注</th>
 						    </tr> 
