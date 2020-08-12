@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -229,10 +228,32 @@ public class AdminPageHandler {
         return "views/ManagerFindOneReportPage";
     }
 
+    /**
+     * 跳转查找某一时间段内出入记录的页面
+     * @param model 模型
+     * @return 查找某一时间段内出入记录的页面
+     */
     @RequestMapping("/ManagerFindTimeReportPage")
-    public String ManagerFineTimeReportPage(Model model){
+    public String ManagerFinfTimeReportPage(Model model){
         List<Report> reportList=null;
         model.addAttribute("reportList", reportList);
         return "views/ManagerFindTimeReportPage";
+    }
+
+    /**
+     * 跳转显示用户反馈界面
+     * @param model 模型
+     * @return 显示用户反馈界面
+     */
+    @RequestMapping("/ManagerFeedbackDisplayPage")
+    public String ManagerFeedbackDisplayPage(Model model){
+        List<Opinion>  opinionList = adminService.FindOpinionAll();
+        model.addAttribute("opinionList", opinionList);
+        return "views/ManagerFeedbackDisplayPage";
+    }
+
+    @RequestMapping("/ManagerAddReplyPage")
+    public String ManagerAddReplyPage(){
+        return "views/ManagerAddReplyPage";
     }
 }
