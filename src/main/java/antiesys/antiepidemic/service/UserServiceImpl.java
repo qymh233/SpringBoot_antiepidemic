@@ -145,6 +145,15 @@ public class UserServiceImpl implements UserService{
         }
         return report;
     }
+    @Override
+    public List<Report> FindReportAll(Integer meID) {
+        List<Report> reportList=reportInter.SelectOne(meID);
+        if(reportList==null||reportList.isEmpty()){
+            return  null;
+        }
+        return reportList;
+    }
+
 
     @Override
     public Message FindMessageOne(Integer meID) {

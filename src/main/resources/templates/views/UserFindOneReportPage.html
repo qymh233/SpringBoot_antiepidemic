@@ -15,7 +15,7 @@
     	<div class="mianb">
     		<div class="mblf layui-col-xs6 layui-col-md6">
     			 <i class="layui-icon">&#xe656;</i>
-    			 <p>管理员首页 > 统计信息管理 > <span>生成统计报表</span></p>
+    			 <p>用户首页 > 统计信息管理 > <span>生成统计报表</span></p>
     		</div>
     	</div>
     	<!--面包屑导航-->
@@ -34,7 +34,7 @@
 						    </tr> 
 						  </thead>
 						  <tbody>
-							<tr th:each="report:${reportList}">
+							<tr th:each="report:${ureportList}">
 								<td th:text="${report.getUserName()}"></td>
 								<td th:text="${report.getUserPhone()}"></td>
 								<td th:text="${report.getTemperature()}"></td>

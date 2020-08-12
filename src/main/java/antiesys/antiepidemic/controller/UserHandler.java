@@ -20,7 +20,7 @@ import java.util.List;
 * */
 @Controller
 @RequestMapping("/user")
-@SessionAttributes(value = {"user","umsglist","usermessage"})
+@SessionAttributes(value = {"user","umsglist","usermessage","ureportList"})
 public class UserHandler {
     @Autowired
     UserService userService;
@@ -158,10 +158,14 @@ public class UserHandler {
     @RequestMapping(path = "/UserFindOneReportPage")
     public String UserFindOneReportPage(@RequestParam(name = "meId") Integer meId, Model model){
 
-        Message message=userService.FindMessageOne(meId);
-        model.addAttribute("usermessage",message);
+        List<Report> reportList= userService.FindReportAll(meId);
 
-        return "views/UserRecordPage-Details";
+        if(reportList == null)
+            return "views/UserRecordPage-Details";
+
+        model.addAttribute("ureportList", reportList);
+
+        return "views/UserFindOneReportPage";
     }
 
 }

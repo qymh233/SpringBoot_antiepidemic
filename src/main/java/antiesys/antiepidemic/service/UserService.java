@@ -66,4 +66,6 @@ public interface UserService {
      * @return 查询到的信息列表
      */
     List<Message> FindMessageAll();
+    //查询用户所有报表
+    public List<Report> FindReportAll(Integer meID);
 }

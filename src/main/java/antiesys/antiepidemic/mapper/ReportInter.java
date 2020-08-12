@@ -46,4 +46,5 @@ public interface ReportInter {
      * @return 查询到的报表对象
      */
     Report SelectLastReport(@Param("userId")int userId);
+
 }

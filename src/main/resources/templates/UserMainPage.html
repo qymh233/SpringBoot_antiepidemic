@@ -53,7 +53,7 @@
                         </a>
                     </li>
                     <li class="layui-nav-item" >
-                        <a href="/user/UserFindOneReportPage">
+                        <a th:href="@{/user/UserFindOneReportPage(meId=${user.getUserId()})}">
                             <i class="layui-icon">&#xe663;</i>
                             <em>个人出入记录</em>
                         </a>
