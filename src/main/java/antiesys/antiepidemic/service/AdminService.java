@@ -155,4 +155,17 @@ public interface AdminService {
      * @return 查询到的报表信息列表
      */
     List<Opinion> FindOpinionAll();
+    /**
+     * 寻找一条反馈信息
+     * @param meID 信息ID
+     * @return 查找到的信息对象
+     */
+    Opinion FindOpinionOne(Integer meID);
+
+    /**
+     * 更新意见反馈对象，添加回复
+     * @param opinion 意见反馈对象
+     * @return 更新结果
+     */
+    int UpdateOpinion(Opinion opinion);
 }

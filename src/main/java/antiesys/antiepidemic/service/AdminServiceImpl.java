@@ -313,4 +313,30 @@ public class AdminServiceImpl implements AdminService{
         }
         return opinionList;
     }
+
+    @Override
+    public Opinion FindOpinionOne(Integer meID) {
+        //直接查询
+        Opinion opinion=opinionInter.SelectOne(meID);
+        if(opinion==null){
+            return  null;
+        }
+        return opinion;
+    }
+
+    @Override
+    public int UpdateOpinion(Opinion opinion){
+        //判断信息是否存在
+        Opinion o=opinionInter.SelectOne(opinion.getMeID());
+        if(o==null){
+            return  0;
+        }
+        opinion.setStat("已处理");
+        //修改信息
+        int t=opinionInter.UpdateOpinion(opinion);
+        if(t==0){
+            return 0;
+        }
+        return t;
+    }
 }

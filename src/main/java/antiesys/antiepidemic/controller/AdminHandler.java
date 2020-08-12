@@ -469,4 +469,40 @@ public class AdminHandler {
         model.addAttribute("msglist",messageList);
         return "views/ManagerRecordPage";
     }
+
+    /**
+     * 查找一个人的意见反馈
+     * @param meID 反馈ID
+     * @param model 模型
+     * @return 回复界面
+     */
+    @RequestMapping(path = "/findOpinionOne")
+    public String findOpinionOne(@RequestParam(name = "meID") Integer meID, Model model){
+
+        Opinion opinion = adminService.FindOpinionOne(meID);
+        model.addAttribute("opinion", opinion);
+
+        return "views/ManagerAddReplyPage";
+    }
+
+    /**
+     * 添加回复
+     * @param meID 信息ID
+     * @param reply 回复内容
+     * @param adminId 管理员ID
+     * @param model 模型
+     * @return 意见反馈显示界面
+     */
+    @RequestMapping(path = "/addReply")
+    public String addReply(@RequestParam(name = "meID") Integer meID, @RequestParam(name = "reply")String reply, @RequestParam(name = "adminId")Integer adminId, Model model){
+        Opinion opinion = adminService.FindOpinionOne(meID);
+        opinion.setAdCont(reply);
+        opinion.setAdDate(new Date());
+        opinion.setAdminId(adminId);
+        adminService.UpdateOpinion(opinion);
+
+        List<Opinion>  opinionList = adminService.FindOpinionAll();
+        model.addAttribute("opinionList", opinionList);
+        return "views/ManagerFeedbackDisplayPage";
+    }
 }

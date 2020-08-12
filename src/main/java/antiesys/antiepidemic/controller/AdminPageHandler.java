@@ -251,9 +251,4 @@ public class AdminPageHandler {
         model.addAttribute("opinionList", opinionList);
         return "views/ManagerFeedbackDisplayPage";
     }
-
-    @RequestMapping("/ManagerAddReplyPage")
-    public String ManagerAddReplyPage(){
-        return "views/ManagerAddReplyPage";
-    }
 }
