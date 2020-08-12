@@ -351,23 +351,22 @@ public class AdminHandler {
     /**
      * 查询报表信息
      * @param userId 用户ID
-     * @param request request
      * @param model 模型
      * @return 查询结果界面
      */
     @RequestMapping(path="/findReportOne")
     public String FindReportOne(@RequestParam(name = "userId") int userId, Model model){
 
-        List<Report> userList = null;
+        List<Report> reportList = null;
 
-        userList = adminService.FindReportOne(userId);
+        reportList = adminService.FindReportOne(userId);
 
-        if(userList == null)
+        if(reportList == null)
             return "findReportOneAdminFail";
 
-        model.addAttribute("userList", userList);
+        model.addAttribute("reportList", reportList);
 
-        return "findReportOneAdminSuccess";
+        return "views/ManagerFindOneReportPage";
     }
     /**
      * 查询所有报表信息
