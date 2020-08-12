@@ -2,7 +2,6 @@ package antiesys.antiepidemic.controller;
 
 import antiesys.antiepidemic.pojo.*;
 import antiesys.antiepidemic.service.AdminService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
