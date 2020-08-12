@@ -35,45 +35,45 @@
 					<form class="layui-form">
 						 <div class="layui-form-item">
 							    <label class="layui-form-label">标题</label>
-							    <label class="layui-form-label">
+							    <div class="layui-input-block">
 									<span th:text="${Oneopinion.getTitle()}"></span>
-								</label>
+								</div>
 						  </div>
 						  <div class="layui-form-item">
 							    <label class="layui-form-label">发布者</label>
-							    <label class="layui-form-label">
+							    <div class="layui-input-block">
 									<span th:text="${Oneopinion.getUserName()}"></span>
-								</label>
+								</div>
 						  </div>
 						  <div class="layui-form-item">
 							    <label class="layui-form-label">发布时间</label>
-							    <label class="layui-form-label">
+							    <div class="layui-input-block">
 									<span th:text="${#dates.format(Oneopinion.getPuDate(),'yyyy-MM-dd HH:mm:ss')}"></span>
-								</label>
+								</div>
 						  </div>
 						  <div class="layui-form-item">
 							    <label class="layui-form-label">具体内容</label>
-							    <label class="layui-form-label">
+							    <div class="layui-input-block">
 									<span th:text="${Oneopinion.getCont()}"></span>
-								</label>
+								</div>
 						  </div>
 						  <div class="layui-form-item">
 							    <label class="layui-form-label">状态</label>
-							    <label class="layui-form-label">
+							    <div class="layui-input-block">
 									<span th:text="${Oneopinion.getStat()}"></span>
-								</label>
+								</div>
 						  </div>
 						<div class="layui-form-item">
 							<label class="layui-form-label">回复时间</label>
-							<label class="layui-form-label">
+							<div class="layui-input-block">
 								<span th:text="${#dates.format(Oneopinion.getAdDate(),'yyyy-MM-dd HH:mm:ss')}"></span>
-							</label>
+							</div>
 						</div>
 						  <div class="layui-form-item">
 							    <label class="layui-form-label">管理员回复</label>
-							    <label class="layui-form-label">
+							    <div class="layui-input-block">
 									<span th:text="${Oneopinion.getAdCont()}"></span>
-								</label>
+								</div>
 						  </div>
 					</form>
 					<div class="layui-form-item">
