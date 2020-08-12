@@ -155,4 +155,13 @@ public class UserHandler {
         return "views/UserRecordPage-Details";
     }
 
+    @RequestMapping(path = "/UserFindOneReportPage")
+    public String UserFindOneReportPage(@RequestParam(name = "meId") Integer meId, Model model){
+
+        Message message=userService.FindMessageOne(meId);
+        model.addAttribute("usermessage",message);
+
+        return "views/UserRecordPage-Details";
+    }
+
 }
