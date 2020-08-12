@@ -150,4 +150,9 @@ public interface AdminService {
      * @return
      */
     List<Report> FindReportTime(String indoor, String beginTime, String inTime);
+    /**
+     * 查询所有反馈信息
+     * @return 查询到的报表信息列表
+     */
+    List<Opinion> FindOpinionAll();
 }

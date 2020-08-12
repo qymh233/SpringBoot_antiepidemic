@@ -25,7 +25,7 @@ public class Opinion {
      * 编号
      */
     private Integer meID;
-    private String stat;//状态
+    private String stat;
     //管理员id
     private Integer adminId;
     //管理员回复

@@ -20,13 +20,15 @@ public class AdminServiceImpl implements AdminService{
     ReportInter reportInter;
     @Autowired
     MessageInter messageInter;
+    @Autowired
+    OpinionInter opinionInter;
 
 
     @Override
     public Manager selectManagerById(int adminId){
         return adminInter.SelectOne(adminId);
     }
-    //管理员登录
+
     @Override
     public boolean AdminLogin(Manager admin) {
         Manager m=adminInter.SelectOne(admin.getAdminId());
@@ -301,5 +303,14 @@ public class AdminServiceImpl implements AdminService{
             return 0;
         }
         return t;
+    }
+
+    @Override
+    public List<Opinion> FindOpinionAll() {
+        List<Opinion> opinionList=opinionInter.SelectOpinion();
+        if(opinionList==null||opinionList.isEmpty()){
+            return  null;
+        }
+        return opinionList;
     }
 }

@@ -67,8 +67,13 @@ public interface UserService {
      * @return 查询到的信息列表
      */
     List<Message> FindMessageAll();
-    //查询用户所有报表
-    public List<Report> FindReportAll(Integer meID);
+
+    /**
+     * 查询所有的报表信息
+     * @param meID 信息ID
+     * @return 查询到的信息列表
+     */
+    List<Report> FindReportAll(Integer meID);
     /**
      * 添加反馈信息
      * @param opinion 报表信息对象
