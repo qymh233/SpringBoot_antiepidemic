@@ -198,6 +198,22 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
+    public List<Report> FindReportTime(String indoor, String beginTime, String endTime){
+
+        List<Report> reportList;
+        if("进".equals(indoor)) {
+            reportList=reportInter.SelectReportInTime(beginTime, endTime);
+        }else{
+            reportList=reportInter.SelectReportOutTime(beginTime, endTime);
+        }
+
+        if(reportList==null||reportList.isEmpty()){
+            return null;
+        }
+        return reportList;
+    }
+
+    @Override
     public List<Report> FindReportAll() {
         List<Report> reports=reportInter.SelectReport();
         if(reports==null||reports.isEmpty()){

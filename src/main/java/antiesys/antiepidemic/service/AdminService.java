@@ -142,4 +142,12 @@ public interface AdminService {
      * @return 修改结果
      */
     int ChangeMessage(Integer MeID);
+    /**
+     * 查询指定时间段的出入信息
+     * @param indoor 进出选项
+     * @param beginTime 起始时间
+     * @param inTime 终止时间
+     * @return
+     */
+    List<Report> FindReportTime(String indoor, String beginTime, String inTime);
 }

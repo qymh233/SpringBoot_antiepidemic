@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>生成统计报表页面</title>
+    <title>单人出入记录页面</title>
     <link rel="stylesheet" href="../assets/css/layui.css">    
     <link rel="stylesheet" href="../assets/css/view.css"/>
     <link rel="stylesheet" href="../assets/css/admin.css"/>    
@@ -15,7 +15,7 @@
     	<div class="mianb">
     		<div class="mblf layui-col-xs6 layui-col-md6">
     			 <i class="layui-icon">&#xe656;</i>
-    			 <p>管理员首页 > 统计信息管理 > <span>生成统计报表</span></p>
+    			 <p>管理员首页 > 统计信息管理 > <span>单人出入记录</span></p>
     		</div>
     		<div class="mbrt layui-col-xs6 layui-col-md6">
 				<form method="post">
@@ -46,8 +46,8 @@
 								<td th:text="${report.getUserName()}"></td>
 								<td th:text="${report.getUserPhone()}"></td>
 								<td th:text="${report.getTemperature()}"></td>
-								<td th:text="${#dates.format(report.getInTime(),'yyyy-MM-dd')}"></td>
-								<td th:text="${#dates.format(report.getOutTime(),'yyyy-MM-dd')}"></td>
+								<td th:text="${#dates.format(report.getInTime(),'yyyy-MM-dd HH:mm:ss')}"></td>
+								<td th:text="${#dates.format(report.getOutTime(),'yyyy-MM-dd HH:mm:ss')}"></td>
 								<td th:text="${report.getRemarks()}"></td>
 							</tr>
 						  </tbody>
