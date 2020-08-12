@@ -27,7 +27,7 @@ public class Opinion {
     private Integer meID;
     private String stat;//状态
     //管理员id
-    private Integer adId;
+    private Integer adminId;
     //管理员回复
     private String adCont;
     //回复时间
@@ -91,12 +91,12 @@ public class Opinion {
         this.stat = stat;
     }
 
-    public Integer getAdId() {
-        return adId;
+    public Integer getAdminId() {
+        return adminId;
     }
 
-    public void setAdId(Integer adId) {
-        this.adId = adId;
+    public void setAdminId(Integer adminId) {
+        this.adminId = adminId;
     }
 
     public String getAdCont() {
@@ -126,7 +126,7 @@ public class Opinion {
                 ", puDate=" + puDate +
                 ", meID=" + meID +
                 ", stat='" + stat + '\'' +
-                ", adId=" + adId +
+                ", adminId=" + adminId +
                 ", adCont='" + adCont + '\'' +
                 ", adDate=" + adDate +
                 '}';
