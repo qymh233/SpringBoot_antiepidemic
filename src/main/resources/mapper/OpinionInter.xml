@@ -21,7 +21,7 @@
 	</insert>
 	<!-- 更新信息 -->
 	<update id="UpdateOpinion">
-	  update T_OPINION set title=#{opinion.title} , UserId = #{opinion.UserId} , UserName = #{opinion.UserName} ,cont= #{opinion.cont} , puDate = #{opinion.puDate} , stat = #{opinion.stat} where meID=#{opinion.meID}
+	  update T_OPINION set title=#{opinion.title} , UserId = #{opinion.UserId} , UserName = #{opinion.UserName} ,cont= #{opinion.cont} , puDate = #{opinion.puDate} , stat = #{opinion.stat} ,adId= #{opinion.adId} , adCont = #{opinion.adCont} , adDate = #{opinion.adDate} where meID=#{opinion.meID}
 	</update>
 	<!-- 查询所有信息 -->
 	<resultMap type="antiesys.antiepidemic.pojo.Opinion" id="SelectAll">
@@ -30,8 +30,11 @@
 		<result property="UserName" column="UserName"/>
 		<result property="cont" column="cont"/>
 		<result property="puDate" column="puDate"/>
-		<result property="meId" column="meId"/>
+		<result property="meID" column="meID"/>
 		<result property="stat" column="stat"/>
+		<result property="adId" column="adId"/>
+		<result property="adCont" column="adCont"/>
+		<result property="adDate" column="adDate"/>
 	</resultMap>
 	<select id="SelectOpinion" resultMap="SelectAll">
     	select * from T_OPINION

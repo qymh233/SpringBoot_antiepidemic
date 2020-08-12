@@ -26,6 +26,12 @@ public class Opinion {
      */
     private Integer meID;
     private String stat;//状态
+    //管理员id
+    private Integer adId;
+    //管理员回复
+    private String adCont;
+    //回复时间
+    private Date adDate;
 
     public Integer getMeID() {
         return meID;
@@ -85,6 +91,31 @@ public class Opinion {
         this.stat = stat;
     }
 
+    public Integer getAdId() {
+        return adId;
+    }
+
+    public void setAdId(Integer adId) {
+        this.adId = adId;
+    }
+
+    public String getAdCont() {
+        return adCont;
+    }
+
+
+    public void setAdCont(String adCont) {
+        this.adCont = adCont;
+    }
+
+    public Date getAdDate() {
+        return adDate;
+    }
+
+    public void setAdDate(Date adDate) {
+        this.adDate = adDate;
+    }
+
     @Override
     public String toString() {
         return "Opinion{" +
@@ -95,6 +126,9 @@ public class Opinion {
                 ", puDate=" + puDate +
                 ", meID=" + meID +
                 ", stat='" + stat + '\'' +
+                ", adId=" + adId +
+                ", adCont='" + adCont + '\'' +
+                ", adDate=" + adDate +
                 '}';
     }
 }
