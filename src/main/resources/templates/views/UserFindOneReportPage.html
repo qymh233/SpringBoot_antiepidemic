@@ -38,14 +38,13 @@
 								<td th:text="${report.getUserName()}"></td>
 								<td th:text="${report.getUserPhone()}"></td>
 								<td th:text="${report.getTemperature()}"></td>
-								<td th:text="${#dates.format(report.getInTime(),'yyyy-MM-dd')}"></td>
-								<td th:text="${#dates.format(report.getOutTime(),'yyyy-MM-dd')}"></td>
+								<td th:text="${#dates.format(report.getInTime(),'yyyy-MM-dd HH:mm:ss')}"></td>
+								<td th:text="${#dates.format(report.getOutTime(),'yyyy-MM-dd HH:mm:ss')}"></td>
 								<td th:text="${report.getRemarks()}"></td>
 							</tr>
 						  </tbody>
 					</table>
 			 	</div>
-                   
            		<!--分页-->
            		<div id="page"></div>
            		<!--分页-->

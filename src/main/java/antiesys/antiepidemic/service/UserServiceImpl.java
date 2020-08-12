@@ -1,21 +1,18 @@
 package antiesys.antiepidemic.service;
 
 import antiesys.antiepidemic.mapper.MessageInter;
+import antiesys.antiepidemic.mapper.OpinionInter;
 import antiesys.antiepidemic.mapper.ReportInter;
 import antiesys.antiepidemic.mapper.UserInter;
 
 import antiesys.antiepidemic.pojo.Message;
+import antiesys.antiepidemic.pojo.Opinion;
 import antiesys.antiepidemic.pojo.Report;
 import antiesys.antiepidemic.pojo.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -25,6 +22,8 @@ public class UserServiceImpl implements UserService{
     ReportInter reportInter;
     @Autowired
     MessageInter messageInter;
+    @Autowired
+    OpinionInter opinionInter;
 
     @Override
     public boolean UserRegister(Users user) {
@@ -145,6 +144,24 @@ public class UserServiceImpl implements UserService{
         }
         return report;
     }
+
+    @Override
+    public Message FindMessageOne(Integer meID) {
+        Message message=messageInter.SelectOne(meID);
+        if(message==null){
+            return  null;
+        }
+        return message;
+    }
+    @Override
+    public List<Message> FindMessageAll() {
+        List<Message> messageList=messageInter.SelectMessage();
+        if(messageList==null||messageList.isEmpty()){
+            return  null;
+        }
+        return messageList;
+    }
+
     @Override
     public List<Report> FindReportAll(Integer meID) {
         List<Report> reportList=reportInter.SelectOne(meID);
@@ -154,23 +171,67 @@ public class UserServiceImpl implements UserService{
         return reportList;
     }
 
-
     @Override
-    public Message FindMessageOne(Integer meID) {
+    public Opinion FindOpinionOne(Integer meID) {
         //直接查询
-        Message message=messageInter.SelectOne(meID);
-        if(message==null){
+        Opinion opinion=opinionInter.SelectOne(meID);
+        if(opinion==null){
             return  null;
         }
-        return message;
+        return opinion;
     }
 
     @Override
-    public List<Message> FindMessageAll() {
-        List<Message> messageList=messageInter.SelectMessage();
-        if(messageList==null||messageList.isEmpty()){
+    public List<Opinion> FindOpinionAll() {
+        List<Opinion> opinionList=opinionInter.SelectOpinion();
+        if(opinionList==null||opinionList.isEmpty()){
             return  null;
         }
-        return messageList;
+        return opinionList;
+    }
+
+    @Override
+    public boolean AddOpinion(Opinion opinion) {
+        if(opinion==null){
+            return  false;
+        }
+        opinion.setPuDate(new Date());
+        opinion.setStat("未处理");
+        //添加信息
+        int t=opinionInter.InsertOpinion(opinion);
+        if(t==0){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean DeleteOpinion(Integer meID) {
+        Opinion g=opinionInter.SelectOne(meID);
+        //信息不存在
+        if(g==null){
+            return false;
+        }
+        int t=opinionInter.DeleteOpinion(meID);
+        if(t==0){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int ChangeOpinion(Integer MeID) {
+        //判断信息是否存在
+        Opinion u=opinionInter.SelectOne(MeID);
+        if(u==null){
+            return  0;
+        }
+        u.setStat("已完成");
+        //修改信息
+        int t=opinionInter.UpdateOpinion(u);
+        if(t==0){
+            return 0;
+        }
+        return t;
     }
 }
