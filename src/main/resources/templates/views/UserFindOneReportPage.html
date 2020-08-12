@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>单人出入记录页面</title>
+    <title>生成统计报表页面</title>
     <link rel="stylesheet" href="../assets/css/layui.css">    
     <link rel="stylesheet" href="../assets/css/view.css"/>
     <link rel="stylesheet" href="../assets/css/admin.css"/>    
@@ -15,15 +15,7 @@
     	<div class="mianb">
     		<div class="mblf layui-col-xs6 layui-col-md6">
     			 <i class="layui-icon">&#xe656;</i>
-    			 <p>管理员首页 > 统计信息管理 > <span>单人出入记录</span></p>
-    		</div>
-    		<div class="mbrt layui-col-xs6 layui-col-md6">
-				<form method="post">
-					<div class="layui-input-inline" style="width: 200px;">
-						<input type="text" name="userId" placeholder="用户ID" autocomplete="off" class="layui-input">
-					</div>
-					<button type="submit" formaction="/admin/findReportOne" class="layui-btn layui-btn-normal">搜索</button>
-				</form>
+    			 <p>用户首页 > 统计信息管理 > <span>生成统计报表</span></p>
     		</div>
     	</div>
     	<!--面包屑导航-->
@@ -42,7 +34,7 @@
 						    </tr> 
 						  </thead>
 						  <tbody>
-							<tr th:each="report:${reportList}">
+							<tr th:each="report:${ureportList}">
 								<td th:text="${report.getUserName()}"></td>
 								<td th:text="${report.getUserPhone()}"></td>
 								<td th:text="${report.getTemperature()}"></td>
@@ -53,7 +45,6 @@
 						  </tbody>
 					</table>
 			 	</div>
-                   
            		<!--分页-->
            		<div id="page"></div>
            		<!--分页-->

@@ -216,10 +216,23 @@ public class AdminPageHandler {
         model.addAttribute("reportList",reportList);
         return "views/ManagerGenerateStatisticalReportPage";
     }
+
+    /**
+     * 跳转单人出入记录界面
+     * @param model 模型
+     * @return 担任出入记录界面
+     */
     @RequestMapping("/ManagerFindOneReportPage")
     public String ManagerFineOneReportPage(Model model){
         List<Report> reportList=null;
         model.addAttribute("reportList", reportList);
         return "views/ManagerFindOneReportPage";
+    }
+
+    @RequestMapping("/ManagerFindTimeReportPage")
+    public String ManagerFineTimeReportPage(Model model){
+        List<Report> reportList=null;
+        model.addAttribute("reportList", reportList);
+        return "views/ManagerFindTimeReportPage";
     }
 }

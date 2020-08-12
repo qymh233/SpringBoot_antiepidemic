@@ -2,7 +2,9 @@ package antiesys.antiepidemic.controller;
 
 import antiesys.antiepidemic.pojo.*;
 import antiesys.antiepidemic.service.AdminService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -236,7 +240,6 @@ public class AdminHandler {
 
         return "ManagerShowUserListPage";
     }
-    //TODO 获取用户性别有误
     /**
      * 修改用户信息
      * @param userName 用户名
@@ -319,18 +322,19 @@ public class AdminHandler {
         if(remarks!=null&&!remarks.equals(""))
             report.setRemarks(remarks);
         if(indoor.equals("进")){
-            System.out.println(indoor);
             report.setInTime(new Date());
         }
         else
             report.setOutTime(new Date());
+
+        System.out.println(report.getInTime());
 
         int numbers = adminService.AddReport(report);
 
         if(numbers == 0)
             return "views/ManagerEnterStatisticsPage";
 
-        return "views/ManagerSignInPage";
+        return "views/ManagerEnterStatisticsPage";
     }
     /**
      * 删除报表信息
@@ -351,23 +355,41 @@ public class AdminHandler {
     /**
      * 查询报表信息
      * @param userId 用户ID
-     * @param request request
      * @param model 模型
      * @return 查询结果界面
      */
     @RequestMapping(path="/findReportOne")
     public String FindReportOne(@RequestParam(name = "userId") int userId, Model model){
 
-        List<Report> userList = null;
+        List<Report> reportList;
 
-        userList = adminService.FindReportOne(userId);
+        reportList = adminService.FindReportOne(userId);
 
-        if(userList == null)
+        if(reportList == null)
             return "findReportOneAdminFail";
 
-        model.addAttribute("userList", userList);
+        model.addAttribute("reportList", reportList);
 
-        return "findReportOneAdminSuccess";
+        return "views/ManagerFindOneReportPage";
+    }
+
+    /**
+     * 按时间查找出入记录
+     * @param indoor 出入选项
+     * @param beginTime 起始时间
+     * @param endTime 终止时间
+     * @param model 模型
+     * @return 信息显示界面
+     */
+    @RequestMapping(path="/findReportTime")
+    public String FindReportTime(String indoor, String beginTime, String endTime, Model model) {
+        System.out.println(beginTime);
+        System.out.println(endTime);
+        System.out.println(indoor);
+        List<Report> reportList = adminService.FindReportTime(indoor, beginTime, endTime);
+
+        model.addAttribute("reportList", reportList);
+        return "views/ManagerFindTimeReportPage";
     }
     /**
      * 查询所有报表信息

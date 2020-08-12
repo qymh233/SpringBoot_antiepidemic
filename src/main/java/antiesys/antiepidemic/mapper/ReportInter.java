@@ -5,6 +5,7 @@ import antiesys.antiepidemic.pojo.Report;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import sun.awt.SubRegionShowable;
 
 import java.util.List;
 @Repository
@@ -35,6 +36,9 @@ public interface ReportInter {
      * @return 查询到的报表列表
      */
     List<Report> SelectReport();
+
+    List<Report> SelectReportInTime(String beginTime, String endTime);
+    List<Report> SelectReportOutTime(String beginTime, String endTime);
     /**
      * 查询记录条数，便于添加记录，自动增加orderNum
      * @return 查询到的记录条数
@@ -46,4 +50,5 @@ public interface ReportInter {
      * @return 查询到的报表对象
      */
     Report SelectLastReport(@Param("userId")int userId);
+
 }
