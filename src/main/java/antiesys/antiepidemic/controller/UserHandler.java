@@ -364,6 +364,13 @@ public class UserHandler {
     @RequestMapping(path="/UserApplyForVolunteer")
     public String UserApplyForVolunteer(@RequestParam(name = "taskTime") String taskTime,Model model){
         Users users=(Users)model.getAttribute("user");
+        List<Volunte> voluntes=userService.FindVolunterOne(users.getUserId());
+        for (int i=0;i<voluntes.size();i++){
+            if(voluntes.get(i).getTaskTime().equals(taskTime)){
+                model.addAttribute("OneVolunter",voluntes);
+                return "views/GotoVolunterEnd";
+            }
+        }
         Volunte volunte=new Volunte();
         volunte.setTaskTime(taskTime);
         volunte.setUserId(users.getUserId());
