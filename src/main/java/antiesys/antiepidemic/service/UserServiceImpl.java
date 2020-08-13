@@ -1,14 +1,8 @@
 package antiesys.antiepidemic.service;
 
-import antiesys.antiepidemic.mapper.MessageInter;
-import antiesys.antiepidemic.mapper.OpinionInter;
-import antiesys.antiepidemic.mapper.ReportInter;
-import antiesys.antiepidemic.mapper.UserInter;
+import antiesys.antiepidemic.mapper.*;
 
-import antiesys.antiepidemic.pojo.Message;
-import antiesys.antiepidemic.pojo.Opinion;
-import antiesys.antiepidemic.pojo.Report;
-import antiesys.antiepidemic.pojo.Users;
+import antiesys.antiepidemic.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +18,8 @@ public class UserServiceImpl implements UserService{
     MessageInter messageInter;
     @Autowired
     OpinionInter opinionInter;
+    @Autowired
+    SignInInter signInInter;
 
     @Override
     public boolean UserRegister(Users user) {
@@ -242,5 +238,38 @@ public class UserServiceImpl implements UserService{
             return  null;
         }
         return opinionList;
+    }
+
+    @Override
+    public boolean AddSignIn(SignIn signIn) {
+        if(signIn==null){
+            return  false;
+        }
+        signIn.setInTime(new Date());
+        //添加信息
+        int t=signInInter.InsertSignIn(signIn);
+        if(t==0){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public List<SignIn> SelectSignInOne(Integer userId) {
+        List<SignIn> opinionList=signInInter.SelectOne(userId);
+        if(opinionList==null||opinionList.isEmpty()){
+            return  null;
+        }
+        return opinionList;
+    }
+
+    @Override
+    public List<SignIn> FindSignInTime(String beginTime, String inTime, Integer userId) {
+        List<SignIn> reportList=signInInter.SelectSignInInTimeUser(beginTime, inTime,userId);
+
+        if(reportList==null||reportList.isEmpty()){
+            return null;
+        }
+        return reportList;
     }
 }

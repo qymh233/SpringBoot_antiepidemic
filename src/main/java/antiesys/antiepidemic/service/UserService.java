@@ -2,10 +2,7 @@ package antiesys.antiepidemic.service;
 
 
 
-import antiesys.antiepidemic.pojo.Message;
-import antiesys.antiepidemic.pojo.Opinion;
-import antiesys.antiepidemic.pojo.Report;
-import antiesys.antiepidemic.pojo.Users;
+import antiesys.antiepidemic.pojo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -111,5 +108,19 @@ public interface UserService {
      * @return 查询到的信息列表
      */
     List<Opinion> SelectOpinionOne(Integer UserId);
+    /**
+     * 添加签到信息
+     * @param signIn 报表信息对象
+     * @return 添加结果
+     */
+    boolean AddSignIn(SignIn signIn);
+    //查询个人签到信息
+    List<SignIn> SelectSignInOne(Integer userId);
+    /**
+     * 查询指定时间段的签到信息
+     * @param beginTime 起始时间
+     * @param inTime 终止时间
+     */
+    List<SignIn> FindSignInTime(String beginTime, String inTime,Integer userId);
 
 }
