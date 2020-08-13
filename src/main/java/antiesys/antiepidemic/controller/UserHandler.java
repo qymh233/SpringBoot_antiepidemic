@@ -18,7 +18,7 @@ import java.util.List;
 * */
 @Controller
 @RequestMapping("/user")
-@SessionAttributes(value = {"ssign","usigninlist","user","umsglist","usermessage","ureportList","opilist","Oneopinion","myoplist","oppage"})
+@SessionAttributes(value = {"OneVolunter","ssign","usigninlist","user","umsglist","usermessage","ureportList","opilist","Oneopinion","myoplist","oppage"})
 public class UserHandler {
     @Autowired
     UserService userService;
@@ -302,6 +302,29 @@ public class UserHandler {
         model.addAttribute("usigninlist", reportList);
         model.addAttribute("ssign","time");
         return "views/UserViewSignInPage";
+    }
+
+    /**
+     * 跳转申请结果页面
+     * @param model 模型
+     * @return 申请结果页面
+     */
+    @RequestMapping(path="/GotoVolunterEnd")
+    public String GotoVolunterEnd(Model model){
+        Users users=(Users)model.getAttribute("user");
+        List<Volunte> volunteList=userService.FindVolunterOne(users.getUserId());
+        model.addAttribute("OneVolunter",volunteList);
+        return "views/GotoVolunterEnd";
+    }
+
+    /**
+     * 跳转申请志愿页面
+     * @param model 模型
+     * @return 申请结果页面
+     */
+    @RequestMapping(path="/UserApplyForVolunteerPage")
+    public String UserApplyForVolunteerPage(Model model){
+        return "views/UserApplyForVolunteerPage";
     }
 
 }

@@ -34,9 +34,20 @@ public interface VolunteInter {
      */
     int UpdateVolunte(@Param("volunte") Volunte volunte);
     /**
-     * 查询个人反馈信息
+     * 查询个人申请信息
      * @param userId 信息ID
      * @return 查询到的信息对象
      */
     List<Volunte> SelectVolunteOne(@Param("userId")int userId);
+
+    /**
+     * 查询同意信息
+     * @return 查询到的信息对象
+     */
+    List<Volunte> SelectVolunteAgree();
+    /**
+     * 一键拒绝
+     * @return 查询到的信息对象
+     */
+    List<Volunte> UpdateAll();
 }

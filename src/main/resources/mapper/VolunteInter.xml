@@ -15,6 +15,10 @@
 	<update id="UpdateVolunte">
 	  update T_VOLUNTE set userId = #{volunte.userId} , userName = #{volunte.userName} , puDate = #{volunte.puDate} ,taskTime= #{volunte.taskTime} , stat = #{volunte.stat}  where meID=#{opinion.meID}
 	</update>
+	<!-- 更新信息 -->
+	<update id="UpdateAll">
+	  update T_VOLUNTE set stat = '拒绝'
+	</update>
 	<!-- 查询所有信息 -->
 	<resultMap type="antiesys.antiepidemic.pojo.Volunte" id="SelectAll">
 		<result property="userId" column="userId"/>
@@ -29,5 +33,8 @@
   	</select>
 	<select id="SelectVolunteOne" resultMap="SelectAll">
     	select * from T_VOLUNTE where userId=#{userId} order by puDate DESC
+  	</select>
+	<select id="SelectVolunteAgree" resultMap="SelectAll">
+    	select * from T_VOLUNTE where stat='同意' order by puDate DESC
   	</select>
 </mapper>

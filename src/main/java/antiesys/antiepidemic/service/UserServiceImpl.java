@@ -20,6 +20,8 @@ public class UserServiceImpl implements UserService{
     OpinionInter opinionInter;
     @Autowired
     SignInInter signInInter;
+    @Autowired
+    VolunteInter volunteInter;
 
     @Override
     public boolean UserRegister(Users user) {
@@ -266,6 +268,16 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<SignIn> FindSignInTime(String beginTime, String inTime, Integer userId) {
         List<SignIn> reportList=signInInter.SelectSignInInTimeUser(beginTime, inTime,userId);
+
+        if(reportList==null||reportList.isEmpty()){
+            return null;
+        }
+        return reportList;
+    }
+
+    @Override
+    public List<Volunte> FindVolunterOne(Integer userId) {
+        List<Volunte> reportList=volunteInter.SelectVolunteOne(userId);
 
         if(reportList==null||reportList.isEmpty()){
             return null;
