@@ -249,5 +249,17 @@ public interface AdminService {
      */
     Volunte FindVolunteOne(Integer meId);
 
+    /**
+     * 更新志愿申请状态
+     * @param volunte 志愿申请对象
+     * @param stat 状态
+     * @return 更新结果
+     */
     int UpdateVolunteStat(Volunte volunte, String stat);
+
+    /**
+     * 查询已同意的志愿申请
+     * @return 查询到的申请列表
+     */
+    List<Volunte> SelectVolunteAgree();
 }

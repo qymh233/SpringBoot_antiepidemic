@@ -15,10 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/*
-* 101010201
-* 111111
-* */
 @Controller
 @RequestMapping("/user")
 @SessionAttributes(value = {"volunag","OneVolunter","ssign","usigninlist","user","umsglist","usermessage","ureportList","opilist","Oneopinion","myoplist","oppage"})
@@ -36,8 +32,9 @@ public class UserHandler {
 
         Users users = (Users)model.getAttribute("user");
 
-        if(users == null)
+        if(users == null) {
             return "ErrorPage";
+        }
 
         return "views/UserViewPersonalInformationPage";
     }
@@ -54,19 +51,23 @@ public class UserHandler {
     @RequestMapping(path="/changeUser")
     public String ChangeUser(@RequestParam(name = "userName") String userName,@RequestParam(name = "userAge") Integer userAge,@RequestParam(name = "userPhone") Long userPhone,@RequestParam(name = "userSex") String userSex,Model model){
         Users user=(Users) model.getAttribute("user");
-        if(!userName.equals("")&&userName!=null)
+        if(!userName.equals("")&&userName!=null) {
             user.setUserName(userName);
+        }
         if(userAge!=null){
             user.setUserAge(userAge);
         }
-        if(userPhone!=null)
+        if(userPhone!=null) {
             user.setUserPhone(userPhone);
-        if(!userSex.equals(" ")&&userSex!=null)
+        }
+        if(!userSex.equals(" ")&&userSex!=null) {
             user.setUserSex(userSex);
+        }
         int numbers = userService.ChangeUser(user);
 
-        if(numbers == 0)
+        if(numbers == 0) {
             return "views/UserModifyPersonalInformationPage";
+        }
 
         return "views/UserViewPersonalInformationPage";
     }
@@ -104,8 +105,9 @@ public class UserHandler {
         Users user=(Users) model.getAttribute("user");
         boolean isChange = userService.ChangePassword(user.getUserId(), user.getUserPW(), newPW);
 
-        if(!isChange)
+        if(!isChange) {
             return "views/UserChangePasswordPage";
+        }
 
         return "redirect:/UserLoginPage.html";
     }
@@ -149,8 +151,9 @@ public class UserHandler {
 
         List<Report> reportList= userService.FindReportAll(meId);
 
-        if(reportList == null)
+        if(reportList == null) {
             return "views/UserRecordPage-Details";
+        }
 
         model.addAttribute("ureportList", reportList);
 
@@ -184,8 +187,9 @@ public class UserHandler {
         opinion.setUserId(i);
         opinion.setUserName(users.getUserName());
         boolean t=userService.AddOpinion(opinion);
-        if(t==false)
+        if(t==false) {
             return "views/UserFeedbackPage";
+        }
         //重新获取数据
         List<Opinion> opinionList=userService.FindOpinionAll();
         model.addAttribute("opilist",opinionList);
@@ -335,7 +339,12 @@ public class UserHandler {
         model.addAttribute("volunag",volunag);
         return "views/UserApplyForVolunteerPage";
     }
-    //跳转志愿服务安排页面
+
+    /**
+     * 跳转志愿服务安排页面
+     * @param model 模型
+     * @return 志愿服务安排页面
+     */
     @RequestMapping(path="/UserForVolunteerPage")
     public String UserForVolunteerPage(Model model){
         List<Volunte> volunteList=userService.SelectVolunteAgree();
@@ -346,6 +355,7 @@ public class UserHandler {
         model.addAttribute("volunag",volunag);
         return "views/UserForVolunteerPage";
     }
+
     /**
      * 跳转申请志愿页面
      * @param model 模型

@@ -374,4 +374,13 @@ public class AdminServiceImpl implements AdminService{
         int t=volunteInter.UpdateVolunte(volunte);
         return t;
     }
+
+    @Override
+    public List<Volunte> SelectVolunteAgree() {
+        List<Volunte> reportList=volunteInter.SelectVolunteAgree();
+        if(reportList==null||reportList.isEmpty()){
+            return null;
+        }
+        return reportList;
+    }
 }

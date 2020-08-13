@@ -171,8 +171,9 @@ public class AdminHandler {
 
         Users user = adminService.FindUserOne(userId);
 
-        if(user == null)
+        if(user == null) {
             return "ErrorPage";
+        }
 
         model.addAttribute("admuser",user);
 
@@ -453,6 +454,13 @@ public class AdminHandler {
         return "views/ManagerCheckSignInPage";
     }
 
+    /**
+     * 更新志愿申请状态
+     * @param meId 信息ID
+     * @param stat 状态
+     * @param model 模型
+     * @return 处理志愿申请界面
+     */
     @RequestMapping(path = "/updateVolunte")
     public String updateVolunte(@RequestParam(name = "meId")Integer meId, @RequestParam(name = "stat")String stat, Model model){
         Volunte volunte = adminService.FindVolunteOne(meId);;

@@ -251,10 +251,32 @@ public class AdminPageHandler {
         return "views/ManagerCheckSignInPage";
     }
 
+    /**
+     * 跳转处理志愿申请界面
+     * @param model 模型
+     * @return 处理志愿申请界面
+     */
     @RequestMapping("/ManagerCheckForVolunteerPage")
     public String ManagerCheckForVolunteerPage(Model model){
         List<Volunte> voluntersList = adminService.FindIncompleteVolunte();
         model.addAttribute("voluntersList", voluntersList);
         return "views/ManagerCheckForVolunteerPage";
     }
+
+    /**
+     * 跳转查看志愿安排界面
+     * @param model 模型
+     * @return 查看志愿安排界面
+     */
+    @RequestMapping(path="/ManagerForVolunteerPage")
+    public String ManagerForVolunteerPage(Model model){
+        List<Volunte> volunteList=adminService.SelectVolunteAgree();
+        Map<String,Volunte> volunag=new HashMap<>();
+        for(int i=0;i<volunteList.size();i++){
+            volunag.put(volunteList.get(i).getTaskTime(),volunteList.get(i));
+        }
+        model.addAttribute("volunag",volunag);
+        return "views/ManagerForVolunteerPage";
+    }
+
 }
