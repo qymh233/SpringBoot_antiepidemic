@@ -123,4 +123,7 @@ public interface UserService {
      */
     List<SignIn> FindSignInTime(String beginTime, String inTime,Integer userId);
 
+    //获取用户申请结果
+    List<Volunte> FindVolunterOne(Integer userId);
+
 }

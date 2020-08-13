@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="antiesys.antiepidemic.mapper.VolunteInter">
+	<!-- 查询一个信息 -->
+	<select id="SelectOne" parameterType="int" resultType="antiesys.antiepidemic.pojo.Volunte">
+    select * from T_VOLUNTE where meID = #{meID}
+  </select>
+	<!-- 插入信息 -->
+	<insert id="InsertVolunte" parameterType="antiesys.antiepidemic.pojo.Volunte" >
+		insert into T_VOLUNTE(userId,userName,puDate,taskTime,stat) values(#{userId},#{userName},#{puDate,jdbcType=DATE},#{taskTime},#{stat})
+	</insert>
+	<!-- 更新信息 -->
+	<update id="UpdateVolunte">
+	  update T_VOLUNTE set userId = #{volunte.userId} , userName = #{volunte.userName} , puDate = #{volunte.puDate} ,taskTime= #{volunte.taskTime} , stat = #{volunte.stat}  where meID=#{opinion.meID}
+	</update>
+	<!-- 更新信息 -->
+	<update id="UpdateAll">
+	  update T_VOLUNTE set stat = '拒绝'
+	</update>
+	<!-- 查询所有信息 -->
+	<resultMap type="antiesys.antiepidemic.pojo.Volunte" id="SelectAll">
+		<result property="userId" column="userId"/>
+		<result property="userName" column="userName"/>
+		<result property="puDate" column="puDate"/>
+		<result property="taskTime" column="taskTime"/>
+		<result property="stat" column="stat"/>
+		<result property="meID" column="meID"/>
+	</resultMap>
+	<select id="SelectVolunte" resultMap="SelectAll">
+    	select * from T_VOLUNTE order by puDate DESC
+  	</select>
+	<select id="SelectVolunteOne" resultMap="SelectAll">
+    	select * from T_VOLUNTE where userId=#{userId} order by puDate DESC
+  	</select>
+	<select id="SelectVolunteAgree" resultMap="SelectAll">
+    	select * from T_VOLUNTE where stat='同意' order by puDate DESC
+  	</select>
+</mapper>
