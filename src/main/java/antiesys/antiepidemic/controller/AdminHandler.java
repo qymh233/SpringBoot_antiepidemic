@@ -24,6 +24,7 @@ public class AdminHandler {
 
     @Autowired
     AdminService adminService;
+
     /**
      * 管理员签到页面跳转
      * @return 管理员签到页面
@@ -32,6 +33,7 @@ public class AdminHandler {
     public String adminSignInPage(){
         return "views/ManagerSignInPage";
     }
+
     /**
      * 管理员签到
      * @param temperature 体温
@@ -48,6 +50,7 @@ public class AdminHandler {
 
         return "签到成功";
     }
+
     /**
      * 添加物品
      * @param goodsName 物品名称
@@ -83,11 +86,12 @@ public class AdminHandler {
 
         return "views/ManagerMaterialInformationDisplayPage";
     }
+
     /**
      * 删除物品
      * @param goodsId 物品ID
      * @param model 模型
-     * @return
+     * @return 物资信息显示界面
      */
     @RequestMapping(path="/deleteGoods")
     public String DeleteGoods(@RequestParam(name = "goodsId") int goodsId, Model model){
@@ -108,28 +112,33 @@ public class AdminHandler {
 
         return "views/ManagerMaterialInformationDisplayPage";
     }
+
     /**
      * 修改物品
      * @param goodsName 物品名称
      * @param goodsNum 物品数量
      * @param goodsSource 物品来源
-     * @param intime 入库时间
+     * @param inTime 入库时间
      * @param model 模型
      * @return 物品信息显示界面
      */
     @RequestMapping(path="/changeGoods")
     public String ChangeGoods(@RequestParam(name = "goodsName") String goodsName,@RequestParam(name = "goodsNum") Integer goodsNum,@RequestParam(name = "goodsSource") String goodsSource,@RequestParam(name = "intime") String intime, Model model){
         Goods goods=(Goods)model.getAttribute("good");
-        if(!goodsName.equals("")&&goodsName!=null)
+        if(!goodsName.equals("")&&goodsName!=null) {
             goods.setGoodsName(goodsName);
-        if(goodsNum!=null)
+        }
+        if(goodsNum!=null) {
             goods.setGoodsNum(goodsNum);
-        if(!goodsSource.equals("")&&goodsSource!=null)
+        }
+        if(!goodsSource.equals("")&&goodsSource!=null) {
             goods.setGoodsSource(goodsSource);
-        if(intime.equals("入库"))
+        }
+        if(intime.equals("入库")) {
             goods.setGoodsInTime(new Date());
-        else
+        } else {
             goods.setGoodsOutTime(new Date());
+        }
         boolean isChange = adminService.ChangeGoods(goods);
 
         if(!isChange)
@@ -144,61 +153,13 @@ public class AdminHandler {
 
         return "views/ManagerMaterialInformationDisplayPage";
     }
-    /**
-     * 查询一个物品
-     * @param goodsId 物品ID
-     * @param request request
-     * @param model 模型
-     * @return 物品更新页面
-     */
-    @RequestMapping(path="/findGoodsOne")
-    public String FindGoodsOne(@RequestParam(name = "goodsId") int goodsId, HttpServletRequest request, Model model){
 
-        Goods goods = null;
-
-        goods = adminService.FindGoodsOne(goodsId);
-
-        if(goods == null)
-            return "ErrorPage";
-
-        request.setAttribute("good", goods);
-
-        return "ManagerMaterialUpdatePage";
-    }
-    /**
-     * 查询所有物品
-     * @param request request
-     * @param model 模型
-     * @return 物品显示界面
-     */
-    @RequestMapping(path="/findGoodsAll")
-    public String FindGoodsAll(HttpServletRequest request, Model model){
-
-        List<Goods> goods;
-
-        goods = adminService.FindGoodsAll();
-
-        if(goods == null)
-            return "ErrorPage";
-
-        List<Goods> newGoodsList = new ArrayList<>();
-
-
-            for (int i = 0; i < goods.size(); i++) {
-                newGoodsList.add(goods.get(i));
-                System.out.println(newGoodsList.get(i));
-            }
-
-        request.setAttribute("goods", newGoodsList);
-
-        return "ManagerMaterialInformationDisplayPage";
-    }
     /**
      * 查询一个用户
      * @param userId 用户ID
      * @param request request
      * @param model 模型
-     * @return
+     * @return 用户详细信息显示界面
      */
     @RequestMapping(path="/findUseOne")
     public String FindUserOne(@RequestParam(name = "userId") Integer userId, HttpServletRequest request, Model model){
@@ -212,33 +173,7 @@ public class AdminHandler {
 
         return "views/ManagerViewUserInformationPage-Details";
     }
-    /**
-     * 查询所有用户
-     * @param request request
-     * @param model 模型
-     * @return
-     */
-    @RequestMapping(path="/findUserAll")
-    public String FindUserAll(HttpServletRequest request, Model model){
 
-        List<Users> users;
-        users = adminService.FindUserAll();
-
-        if(users == null)
-            return "ErrorPage";
-
-        List<Users> newUsersList = new ArrayList<>();
-
-        if(users.size() > 4){
-            for (int i = 0; i < 4; i++) {
-                newUsersList.add(users.get(i));
-            }
-        }
-
-        request.setAttribute("users", newUsersList);
-
-        return "ManagerShowUserListPage";
-    }
     /**
      * 修改用户信息
      * @param userName 用户名
@@ -273,6 +208,7 @@ public class AdminHandler {
 
         return "views/ManagerViewUserInformationPage";
     }
+
     /**
      * 修改用户密码
      * @param mpassword 管理员密码
@@ -302,6 +238,7 @@ public class AdminHandler {
 
         return "views/ManagerViewUserInformationPage";
     }
+
     /**
      * 添加报表信息
      * @param userId 用户ID
@@ -335,22 +272,16 @@ public class AdminHandler {
 
         return "views/ManagerEnterStatisticsPage";
     }
+
     /**
-     * 删除报表信息
-     * @param reportId 报表ID
+     * 查询统计报表信息
+     * @param indoor 进出选项
+     * @param beginTime 起始时间
+     * @param endTime 结束时间
+     * @param userId 用户ID
      * @param model 模型
-     * @return 删除结果界面
+     * @return 生成统计报表界面
      */
-    @RequestMapping(path="/deleteReport")
-    public String DeleteReport(@RequestParam(name = "reportId") int reportId, Model model){
-
-        int numbers = adminService.DeleteReport(reportId);
-
-        if(numbers == 0)
-            return "deleteReportFail";
-
-        return "deleteReportSuccess";
-    }
     @RequestMapping(path = "/findReport")
     public String FindReport(String indoor, @RequestParam(name = "beginTime")String beginTime,@RequestParam(name = "endTime") String endTime, @RequestParam(name = "userId") Integer userId, Model model){
         List<Report> reportList;
@@ -369,73 +300,6 @@ public class AdminHandler {
         return "views/ManagerGenerateStatisticalReportPage";
     }
 
-    /**
-     * 查询报表信息
-     * @param userId 用户ID
-     * @param model 模型
-     * @return 查询结果界面
-     */
-    @RequestMapping(path="/findReportOne")
-    public String FindReportOne(@RequestParam(name = "userId") int userId, Model model){
-
-        List<Report> reportList;
-
-        reportList = adminService.FindReportOne(userId);
-
-        if(reportList == null)
-            return "findReportOneAdminFail";
-
-        model.addAttribute("reportList", reportList);
-
-        return "views/ManagerFindOneReportPage";
-    }
-
-    /**
-     * 按时间查找出入记录
-     * @param indoor 出入选项
-     * @param beginTime 起始时间
-     * @param endTime 终止时间
-     * @param model 模型
-     * @return 信息显示界面
-     */
-    @RequestMapping(path="/findReportTime")
-    public String FindReportTime(@RequestParam(name = "indoor")String indoor, @RequestParam(name = "beginTime")String beginTime,@RequestParam(name = "endTime") String endTime, Model model) {
-        System.out.println(beginTime);
-        System.out.println(endTime);
-        System.out.println(indoor);
-        List<Report> reportList = adminService.FindReportTime(indoor, beginTime, endTime);
-
-        model.addAttribute("reportList", reportList);
-        return "views/ManagerFindTimeReportPage";
-    }
-    /**
-     * 查询所有报表信息
-     * @param request request
-     * @param model 模型
-     * @return 报表显示界面
-     */
-    @RequestMapping(path="/findReportAll")
-    public String FindReportAll(HttpServletRequest request, Model model){
-
-        List<Report> userList;
-
-        userList = adminService.FindReportAll();
-
-        if(userList == null)
-            return "ErrorPage";
-
-        List<Report> newUserList = new ArrayList<>();
-
-
-            for(int i = 0;i < userList.size();i++){
-                newUserList.add(userList.get(i));
-            }
-
-
-        request.setAttribute("userList", newUserList);
-
-        return "ManagerShowReportPage";
-    }
     /**
      * 发布疫情防控信息
      * @param title 信息标题
@@ -459,6 +323,7 @@ public class AdminHandler {
         model.addAttribute("msglist",messageList);
         return "views/ManagerRecordPage";
     }
+
     /**
      * 查看具体防疫信息
      * @param meId 信息ID
@@ -473,6 +338,7 @@ public class AdminHandler {
 
         return "views/ManagerRecordPage-Details";
     }
+
     /**
      * 修改防控信息状态
      * @param meId 信息ID
