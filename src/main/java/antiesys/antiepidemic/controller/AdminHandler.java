@@ -2,6 +2,7 @@ package antiesys.antiepidemic.controller;
 
 import antiesys.antiepidemic.pojo.*;
 import antiesys.antiepidemic.service.AdminService;
+import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -45,8 +46,9 @@ public class AdminHandler {
     public String AdminSignIn(@RequestParam(name = "temperature") String temperature, Model model){
         boolean isSignIn = adminService.AdminSignIn(temperature);
 
-        if(!isSignIn)
+        if(!isSignIn) {
             return "签到失败";
+        }
 
         return "签到成功";
     }
@@ -64,12 +66,15 @@ public class AdminHandler {
 
 
         Goods goods=new Goods();
-        if(goodsName!=null&&!goodsName.equals(""))
+        if(goodsName!=null&&!goodsName.equals("")) {
             goods.setGoodsName(goodsName);
-        if(goodsNum!=null)
+        }
+        if(goodsNum!=null) {
             goods.setGoodsNum(goodsNum);
-        if(goodsSource!=null&&!goodsSource.equals(""))
+        }
+        if(goodsSource!=null&&!goodsSource.equals("")) {
             goods.setGoodsSource(goodsSource);
+        }
 
         boolean isAdd = adminService.AddGoods(goods);
 
@@ -118,7 +123,7 @@ public class AdminHandler {
      * @param goodsName 物品名称
      * @param goodsNum 物品数量
      * @param goodsSource 物品来源
-     * @param inTime 入库时间
+     * @param intime 入库时间
      * @param model 模型
      * @return 物品信息显示界面
      */
@@ -187,21 +192,25 @@ public class AdminHandler {
     public String ChangeUser(@RequestParam(name = "userName") String userName,@RequestParam(name = "userAge") Integer userAge,@RequestParam(name = "userPhone") Long userPhone,@RequestParam(name = "userSex") String userSex, Model model){
 
         Users user=(Users) model.getAttribute("admuser");
-        if(!userName.equals("")&&userName!=null)
+        if(!userName.equals("")&&userName!=null) {
             user.setUserName(userName);
+        }
         if(userAge!=null){
             user.setUserAge(userAge);
         }
-        if(userPhone!=null)
+        if(userPhone!=null) {
             user.setUserPhone(userPhone);
+        }
 
         //System.out.println(userSex);
-        if(userSex!=null)
+        if(userSex!=null) {
             user.setUserSex(userSex);
+        }
         int numbers = adminService.ChangeUser(user);
 
-        if(numbers == 0)
+        if(numbers == 0) {
             return "views/ManagerModifyUserInformationPage";
+        }
         //重新获取数据
         List<Users> userlist= adminService.FindUserAll();
         model.addAttribute("userlist",userlist);
@@ -226,8 +235,9 @@ public class AdminHandler {
         int userId=users.getUserId();
         boolean isChange = adminService.ChangePassword(manager, userId, newPassword);
 
-        if(!isChange)
+        if(!isChange) {
             return "views/ManagerModifyUserPasswordPage";
+        }
 
         List<Users> userl= adminService.FindUserAll();
         List<Users> newUsersList = new ArrayList<>();
@@ -251,17 +261,21 @@ public class AdminHandler {
     @RequestMapping(path="/addReport", produces="text/html;charset=utf-8")
     public String AddReport(@RequestParam("userId") Integer userId, @RequestParam("temperature") String temperature,@RequestParam("remarks") String remarks,@RequestParam("indoor") String indoor, Model model){
         Report report=new Report();
-        if(userId!=null)
+        if(userId!=null) {
             report.setUserId(userId);
-        if(temperature!=null&&!temperature.equals(""))
+        }
+        if(temperature!=null&&!temperature.equals("")) {
             report.setTemperature(temperature);
-        if(remarks!=null&&!remarks.equals(""))
+        }
+        if(remarks!=null&&!remarks.equals("")) {
             report.setRemarks(remarks);
+        }
         if(indoor.equals("进")){
             report.setInTime(new Date());
         }
-        else
+        else {
             report.setOutTime(new Date());
+        }
 
         System.out.println(report.getInTime());
 
@@ -437,5 +451,15 @@ public class AdminHandler {
         model.addAttribute("signInList", signInList);
 
         return "views/ManagerCheckSignInPage";
+    }
+
+    @RequestMapping(path = "/updateVolunte")
+    public String updateVolunte(@RequestParam(name = "meId")Integer meId, @RequestParam(name = "stat")String stat, Model model){
+        Volunte volunte = adminService.FindVolunteOne(meId);;
+        adminService.UpdateVolunteStat(volunte, stat);
+
+        List<Volunte> voluntersList = adminService.FindIncompleteVolunte();
+        model.addAttribute("voluntersList", voluntersList);
+        return "views/ManagerCheckForVolunteerPage";
     }
 }

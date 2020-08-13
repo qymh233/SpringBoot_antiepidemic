@@ -13,7 +13,7 @@
 	</insert>
 	<!-- 更新信息 -->
 	<update id="UpdateVolunte">
-	  update T_VOLUNTE set userId = #{volunte.userId} , userName = #{volunte.userName} , puDate = #{volunte.puDate} ,taskTime= #{volunte.taskTime} , stat = #{volunte.stat}  where meID=#{opinion.meID}
+	  update T_VOLUNTE set userId = #{volunte.userId} , userName = #{volunte.userName} , puDate = #{volunte.puDate} ,taskTime= #{volunte.taskTime} , stat = #{volunte.stat}  where meID=#{volunte.meID}
 	</update>
 	<!-- 更新信息 -->
 	<update id="UpdateAll">
@@ -37,4 +37,7 @@
 	<select id="SelectVolunteAgree" resultMap="SelectAll">
     	select * from T_VOLUNTE where stat='同意' order by puDate DESC
   	</select>
+    <select id="SelectVolunteIncomplete" resultType="antiesys.antiepidemic.pojo.Volunte">
+		select * from T_VOLUNTE where stat='未处理' order by puDate
+	</select>
 </mapper>
