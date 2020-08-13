@@ -44,8 +44,9 @@ public class AdminPageHandler {
         Map<Integer,Integer> nummap=new HashMap<>();
         model.addAttribute("nummap",nummap);
 
-        if(!isLogin)
+        if(!isLogin) {
             return "ManagerLoginPage";
+        }
 
         return "ManagerMainPage";
     }
@@ -90,8 +91,9 @@ public class AdminPageHandler {
         users.setUserId(userId);
         boolean isRegister = userService.UserRegister(users);
 
-        if(!isRegister)
+        if(!isRegister) {
             return "RegistrationOfOutsidersPage";
+        }
         Users user=userService.FindUserOne(users.getUserId());
         model.addAttribute("user",user);
         return "OutsidersLogin";
@@ -103,7 +105,7 @@ public class AdminPageHandler {
      */
     @RequestMapping("/ManagerReleaseInformationPage_Release")
     public String ManagerReleaseInformationPage_Release(){
-        return "views/ManagerReleaseInformationPage-Release";
+        return "views/Manager/ManagerReleaseInformationPage-Release";
     }
 
     /**
@@ -115,7 +117,7 @@ public class AdminPageHandler {
     public String ManagerRecordPage(Model model){
         List<Message> messageList=adminService.FindMessageAll();
         model.addAttribute("msglist",messageList);
-        return "views/ManagerRecordPage";
+        return "views/Manager/ManagerRecordPage";
     }
 
     /**
@@ -128,7 +130,7 @@ public class AdminPageHandler {
     public String ManagerMaterialInformationDisplayPage_Modifacation(@RequestParam(name = "goodsId") int goodsId,Model model){
         Goods goods=adminService.FindGoodsOne(goodsId);
         model.addAttribute("good",goods);
-        return "views/ManagerMaterialInformationDisplayPage-Modifacation";
+        return "views/Manager/ManagerMaterialInformationDisplayPage-Modifacation";
     }
 
     /**
@@ -137,7 +139,7 @@ public class AdminPageHandler {
      */
     @RequestMapping("/ManagerModifyUserPasswordPage")
     public String ManagerModifyUserPasswordPage(){
-        return "views/ManagerModifyUserPasswordPage";
+        return "views/Manager/ManagerModifyUserPasswordPage";
     }
 
     /**
@@ -152,7 +154,7 @@ public class AdminPageHandler {
         if(users == null)
             return "ErrorPage";
         model.addAttribute("userlist",users);
-        return "views/ManagerViewUserInformationPage";
+        return "views/Manager/ManagerViewUserInformationPage";
     }
 
     /**
@@ -161,7 +163,7 @@ public class AdminPageHandler {
      */
     @RequestMapping("/ManagerEnterStatisticsPage")
     public String ManagerEnterStatisticsPage(){
-        return "views/ManagerEnterStatisticsPage";
+        return "views/Manager/ManagerEnterStatisticsPage";
     }
 
     /**
@@ -170,7 +172,7 @@ public class AdminPageHandler {
      */
     @RequestMapping("/ManagerAddItemPage")
     public String ManagerAddItemPage(){
-        return "views/ManagerAddItemPage";
+        return "views/Manager/ManagerAddItemPage";
     }
 
     /**
@@ -185,7 +187,7 @@ public class AdminPageHandler {
         if(goods == null)
             return "ErrorPage";
         model.addAttribute("goodslist",goods);
-        return "views/ManagerMaterialInformationDisplayPage";
+        return "views/Manager/ManagerMaterialInformationDisplayPage";
     }
 
     /**
@@ -195,7 +197,7 @@ public class AdminPageHandler {
      */
     @RequestMapping("/ManagerModifyUserInformationPage")
     public String ManagerModifyUserInformationPage(Model model){
-        return "views/ManagerModifyUserInformationPage";
+        return "views/Manager/ManagerModifyUserInformationPage";
     }
 
     /**
@@ -212,7 +214,7 @@ public class AdminPageHandler {
             return "ErrorPage";
 
         model.addAttribute("admuser",user);
-        return "views/ManagerModifyUserInformationPage";
+        return "views/Manager/ManagerModifyUserInformationPage";
     }
 
     /**
@@ -224,7 +226,7 @@ public class AdminPageHandler {
     public String ManagerGenerateStatisticalReportPage(Model model){
         List<Report> reportList=adminService.FindReportAll();
         model.addAttribute("reportList",reportList);
-        return "views/ManagerGenerateStatisticalReportPage";
+        return "views/Manager/ManagerGenerateStatisticalReportPage";
     }
 
     /**
@@ -236,7 +238,7 @@ public class AdminPageHandler {
     public String ManagerFeedbackDisplayPage(Model model){
         List<Opinion>  opinionList = adminService.FindOpinionAll();
         model.addAttribute("opinionList", opinionList);
-        return "views/ManagerFeedbackDisplayPage";
+        return "views/Manager/ManagerFeedbackDisplayPage";
     }
 
     /**
@@ -248,7 +250,7 @@ public class AdminPageHandler {
     public String ManagerCheckSignInPage(Model model){
         List<SignIn>  signInList = adminService.FindSignInAll();
         model.addAttribute("signInList", signInList);
-        return "views/ManagerCheckSignInPage";
+        return "views/Manager/ManagerCheckSignInPage";
     }
 
     /**
@@ -260,7 +262,7 @@ public class AdminPageHandler {
     public String ManagerCheckForVolunteerPage(Model model){
         List<Volunte> voluntersList = adminService.FindIncompleteVolunte();
         model.addAttribute("voluntersList", voluntersList);
-        return "views/ManagerCheckForVolunteerPage";
+        return "views/Manager/ManagerCheckForVolunteerPage";
     }
 
     /**
@@ -276,7 +278,7 @@ public class AdminPageHandler {
             volunag.put(volunteList.get(i).getTaskTime(),volunteList.get(i));
         }
         model.addAttribute("volunag",volunag);
-        return "views/ManagerForVolunteerPage";
+        return "views/Manager/ManagerForVolunteerPage";
     }
 
 }

@@ -2,9 +2,7 @@ package antiesys.antiepidemic.controller;
 
 import antiesys.antiepidemic.pojo.*;
 import antiesys.antiepidemic.service.AdminService;
-import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,11 +11,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 
+/**
+ * @author 李伦霆 秦海祺
+ */
 @Controller
 @RequestMapping("/admin")
 @SessionAttributes(value = {"manager","nummap","admuser","goodslist","good","userlist","msglist","adminmessage"})
@@ -32,7 +31,7 @@ public class AdminHandler {
      */
     @RequestMapping("/adminSignInPage")
     public String adminSignInPage(){
-        return "views/ManagerSignInPage";
+        return "views/Manager/ManagerSignInPage";
     }
 
     /**
@@ -43,7 +42,7 @@ public class AdminHandler {
      */
     @RequestMapping(path="/adminSignIn", produces="text/html;charset=utf-8")
     @ResponseBody
-    public String AdminSignIn(@RequestParam(name = "temperature") String temperature, Model model){
+    public String AdminSignIn(@RequestParam(name = "temperature") String temperature){
         boolean isSignIn = adminService.AdminSignIn(temperature);
 
         if(!isSignIn) {
@@ -79,7 +78,7 @@ public class AdminHandler {
         boolean isAdd = adminService.AddGoods(goods);
 
         if(!isAdd) {
-            return "views/ManagerMaterialInformationDisplayPage";
+            return "views/Manager/ManagerMaterialInformationDisplayPage";
         }
 
         List<Goods> mygoods = adminService.FindGoodsAll();
@@ -89,7 +88,7 @@ public class AdminHandler {
         }
         model.addAttribute("goodslist",newGoodsList);
 
-        return "views/ManagerMaterialInformationDisplayPage";
+        return "views/Manager/ManagerMaterialInformationDisplayPage";
     }
 
     /**
@@ -112,10 +111,10 @@ public class AdminHandler {
         model.addAttribute("goodslist",newGoodsList);
 
         if(!isDelete)
-            return "views/ManagerMaterialInformationDisplayPage";
+            return "views/Manager/ManagerMaterialInformationDisplayPage";
 
 
-        return "views/ManagerMaterialInformationDisplayPage";
+        return "views/Manager/ManagerMaterialInformationDisplayPage";
     }
 
     /**
@@ -147,7 +146,7 @@ public class AdminHandler {
         boolean isChange = adminService.ChangeGoods(goods);
 
         if(!isChange)
-            return "views/ManagerMaterialInformationDisplayPage";
+            return "views/Manager/ManagerMaterialInformationDisplayPage";
 
         List<Goods> mygoods = adminService.FindGoodsAll();
         List<Goods> newGoodsList = new ArrayList<>();
@@ -156,7 +155,7 @@ public class AdminHandler {
         }
         model.addAttribute("goodslist",newGoodsList);
 
-        return "views/ManagerMaterialInformationDisplayPage";
+        return "views/Manager/ManagerMaterialInformationDisplayPage";
     }
 
     /**
@@ -177,7 +176,7 @@ public class AdminHandler {
 
         model.addAttribute("admuser",user);
 
-        return "views/ManagerViewUserInformationPage-Details";
+        return "views/Manager/ManagerViewUserInformationPage-Details";
     }
 
     /**
@@ -210,13 +209,13 @@ public class AdminHandler {
         int numbers = adminService.ChangeUser(user);
 
         if(numbers == 0) {
-            return "views/ManagerModifyUserInformationPage";
+            return "views/Manager/ManagerModifyUserInformationPage";
         }
         //重新获取数据
         List<Users> userlist= adminService.FindUserAll();
         model.addAttribute("userlist",userlist);
 
-        return "views/ManagerViewUserInformationPage";
+        return "views/Manager/ManagerViewUserInformationPage";
     }
 
     /**
@@ -230,14 +229,14 @@ public class AdminHandler {
     public String ChangePassword(@RequestParam(name = "mpassword") String mpassword, @RequestParam(name = "newPassword") String newPassword, Model model){
         Manager manager=(Manager)model.getAttribute("manager");
         if(!mpassword.equals(manager.getAdminPW())){
-            return "views/ManagerModifyUserPasswordPage";
+            return "views/Manager/ManagerModifyUserPasswordPage";
         }
         Users users=(Users)model.getAttribute("admuser");
         int userId=users.getUserId();
         boolean isChange = adminService.ChangePassword(manager, userId, newPassword);
 
         if(!isChange) {
-            return "views/ManagerModifyUserPasswordPage";
+            return "views/Manager/ManagerModifyUserPasswordPage";
         }
 
         List<Users> userl= adminService.FindUserAll();
@@ -247,7 +246,7 @@ public class AdminHandler {
         }
         model.addAttribute("userlist",newUsersList);
 
-        return "views/ManagerViewUserInformationPage";
+        return "views/Manager/ManagerViewUserInformationPage";
     }
 
     /**
@@ -265,13 +264,13 @@ public class AdminHandler {
         if(userId!=null) {
             report.setUserId(userId);
         }
-        if(temperature!=null&&!temperature.equals("")) {
+        if(temperature!=null&&!"".equals(temperature)) {
             report.setTemperature(temperature);
         }
-        if(remarks!=null&&!remarks.equals("")) {
+        if(remarks!=null&&!"".equals(remarks)) {
             report.setRemarks(remarks);
         }
-        if(indoor.equals("进")){
+        if("进".equals(indoor)){
             report.setInTime(new Date());
         }
         else {
@@ -283,9 +282,9 @@ public class AdminHandler {
         int numbers = adminService.AddReport(report);
 
         if(numbers == 0)
-            return "views/ManagerEnterStatisticsPage";
+            return "views/Manager/ManagerEnterStatisticsPage";
 
-        return "views/ManagerEnterStatisticsPage";
+        return "views/Manager/ManagerEnterStatisticsPage";
     }
 
     /**
@@ -312,7 +311,7 @@ public class AdminHandler {
         }
 
         model.addAttribute("reportList", reportList);
-        return "views/ManagerGenerateStatisticalReportPage";
+        return "views/Manager/ManagerGenerateStatisticalReportPage";
     }
 
     /**
@@ -331,12 +330,13 @@ public class AdminHandler {
         message.setCont(content);
         message.setPuBer(i);
         boolean t=adminService.AddMessage(message);
-        if(t==false)
-            return "views/ManagerReleaseInformationPage-Release";
+        if(t==false) {
+            return "views/Manager/ManagerReleaseInformationPage-Release";
+        }
         //重新获取数据
         List<Message> messageList=adminService.FindMessageAll();
         model.addAttribute("msglist",messageList);
-        return "views/ManagerRecordPage";
+        return "views/Manager/ManagerRecordPage";
     }
 
     /**
@@ -351,7 +351,7 @@ public class AdminHandler {
         Message message=adminService.FindMessageOne(meId);
         model.addAttribute("adminmessage",message);
 
-        return "views/ManagerRecordPage-Details";
+        return "views/Manager/ManagerRecordPage-Details";
     }
 
     /**
@@ -366,7 +366,7 @@ public class AdminHandler {
 
         List<Message> messageList=adminService.FindMessageAll();
         model.addAttribute("msglist",messageList);
-        return "views/ManagerRecordPage";
+        return "views/Manager/ManagerRecordPage";
     }
 
     /**
@@ -381,7 +381,7 @@ public class AdminHandler {
         Opinion opinion = adminService.FindOpinionOne(meID);
         model.addAttribute("opinion", opinion);
 
-        return "views/ManagerAddReplyPage";
+        return "views/Manager/ManagerAddReplyPage";
     }
 
     /**
@@ -402,7 +402,7 @@ public class AdminHandler {
 
         List<Opinion>  opinionList = adminService.FindOpinionAll();
         model.addAttribute("opinionList", opinionList);
-        return "views/ManagerFeedbackDisplayPage";
+        return "views/Manager/ManagerFeedbackDisplayPage";
     }
 
     /**
@@ -422,7 +422,7 @@ public class AdminHandler {
 
         model.addAttribute("opinionList", opinionList);
 
-        return "views/ManagerFeedbackDisplayPage";
+        return "views/Manager/ManagerFeedbackDisplayPage";
     }
 
     /**
@@ -451,7 +451,7 @@ public class AdminHandler {
 
         model.addAttribute("signInList", signInList);
 
-        return "views/ManagerCheckSignInPage";
+        return "views/Manager/ManagerCheckSignInPage";
     }
 
     /**
@@ -468,6 +468,6 @@ public class AdminHandler {
 
         List<Volunte> voluntersList = adminService.FindIncompleteVolunte();
         model.addAttribute("voluntersList", voluntersList);
-        return "views/ManagerCheckForVolunteerPage";
+        return "views/Manager/ManagerCheckForVolunteerPage";
     }
 }

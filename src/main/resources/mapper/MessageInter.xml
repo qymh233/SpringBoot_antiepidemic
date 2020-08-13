@@ -33,6 +33,6 @@
 
 	</resultMap>
 	<select id="SelectMessage" resultMap="SelectAll">
-    	select * from T_MESSAGE
+    	select * from T_MESSAGE ORDER BY puDate DESC
   	</select>
 </mapper>

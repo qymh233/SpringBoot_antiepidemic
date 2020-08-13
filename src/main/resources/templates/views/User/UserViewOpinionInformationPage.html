@@ -15,10 +15,11 @@
     	<div class="mianb">
     		<div class="mblf layui-col-xs6 layui-col-md6">
     			 <i class="layui-icon">&#xe656;</i>
-    			 <p>首页管理 > <span>查看防疫信息</span></p>
+    			 <p>首页管理 > <span>查看反馈信息</span></p>
     		</div>
     		<div class="mbrt layui-col-xs6 layui-col-md6">
-    			<a href="javascript:;" class="layui-btn layui-btn-normal" id="fabu">查看防疫信息</a>    			     			 
+    			<a th:if="${oppage} eq 'UserViewOpinionInformationPage'" href="/user/selfOpinion" class="layui-btn layui-btn-normal">查看个人反馈记录</a>
+				<a th:if="${oppage} eq 'selfOpinion'" href="/user/UserViewOpinionInformationPage" class="layui-btn layui-btn-normal">查看全部反馈记录</a>
     		</div>
     	</div>
     	<!--面包屑导航-->
@@ -28,23 +29,23 @@
 			 		  <table class="layui-table" lay-skin="line" lay-size="lg" id="table">						  
 						  <thead>
 						    <tr>
-						      <th>消息标题</th>
-						      <th>发布者</th>	
-						      <th>发布时间</th>
+						      <th>反馈标题</th>
+						      <th>反馈者</th>
+						      <th>反馈时间</th>
 							  <th>&nbsp&nbsp&nbsp&nbsp操作</th>
 							  <th>&nbsp&nbsp&nbsp&nbsp状态</th>
 						    </tr> 
 						  </thead>
 						  <tbody>
 						  <!--#循环打印<tr>标签 修改删除向后端传递数据 id值#-->
-						  <tr th:each="message:${umsglist}">
+						  <tr th:each="message:${opilist}">
 							  <td th:text="${message.getTitle()}"></td>
-							  <td th:text="${message.getPuBer()}"></td>
+							  <td th:text="${message.getUserName()}"></td>
 							  <td th:text="${#dates.format(message.getPuDate(),'yyyy-MM-dd')}"></td>
 							  <td>
 								  <div class="layui-table-cell laytable-cell-1-0-10">
 									  <!--#添加脚本#-->
-									  <a th:href="@{/user/taskCompletion(meId=${message.getMeID()})}" class="layui-btn layui-btn-normal layui-btn-xs update">查看</a>
+									  <a th:href="@{/user/taskOpinion(meId=${message.getMeID()})}" class="layui-btn layui-btn-normal layui-btn-xs update">查看</a>
 								  </div>
 							  </td>
 							  <td th:text="${message.getStat()}"></td>
@@ -77,25 +78,6 @@
 		    }
 		  });	 
 		});
-		
-		//弹框		
-		$('#fabu').on('click', function(){			
-		  layui.use('layer', function(){
-          var layer = layui.layer;
-          layer.open({
-                type: 2,
-                title: '发布任务',
-                fix: false,
-                shadeClose: true,
-                shade: 0.8,
-                area: ['660px', '420px'],
-                content: '02任务发布-发布任务.html',
-                end: function () {
-                   location.reload();
-                }
-            });
-        });
-      })
 		
 		//判断弹框
 		$(".delete").click(function(){
