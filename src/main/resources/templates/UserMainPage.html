@@ -37,17 +37,23 @@
                 </div>
                 <ul id="Nav" class="layui-nav layui-nav-tree">
                     <li class="layui-nav-item" >
-                        <a href="/user/findUsesOne">
+                        <a href="javascript:;">
                             <i class="layui-icon">&#xe857;</i>
-							<em>查看个人信息</em>
+                            <em>个人信息</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/user/findUsesOne">查看个人信息</a></dd>
+                        </dl>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/user/changeUserPage">修改信息</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item" >
+                        <a href="">
+                            <i class="layui-icon">&#xe663;</i>
+                            <em>签到</em>
                         </a>
                     </li>
-                    <li class="layui-nav-item">
-                        <a href="/user/changeUserPage">
-                            <i class="layui-icon">&#xe653;</i>
-                            <em>修改信息</em>
-                        </a>
-					</li>
 					<li class="layui-nav-item" >
                         <a href="/user/releaseInformation">
                             <i class="layui-icon">&#xe663;</i>
@@ -55,10 +61,13 @@
                         </a>
                     </li>
                     <li class="layui-nav-item" >
-                        <a th:href="@{/user/UserFindOneReportPage(meId=${user.getUserId()})}">
-                            <i class="layui-icon">&#xe663;</i>
+                        <a href="javascript:;">
+                            <i class="layui-icon">&#xe857;</i>
                             <em>个人出入记录</em>
                         </a>
+                        <dl class="layui-nav-child">
+                            <dd><a th:href="@{/user/UserFindOneReportPage(meId=${user.getUserId()})}">个人出入记录</a></dd>
+                        </dl>
                     </li>
                     <li class="layui-nav-item" >
                         <a href="javascript:;">
@@ -70,6 +79,21 @@
                         </dl>
                         <dl class="layui-nav-child">
                             <dd><a href="/user/UserViewOpinionInformationPage">全部反馈记录</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item" >
+                        <a href="javascript:;">
+                            <i class="layui-icon">&#xe857;</i>
+                            <em>志愿申请</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="">志愿申请</a></dd>
+                        </dl>
+                        <dl class="layui-nav-child">
+                            <dd><a href="">申请结果</a></dd>
+                        </dl>
+                        <dl class="layui-nav-child">
+                            <dd><a href="">志愿服务安排</a></dd>
                         </dl>
                     </li>
                 </ul>
