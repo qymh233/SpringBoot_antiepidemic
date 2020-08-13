@@ -24,6 +24,8 @@ public class AdminServiceImpl implements AdminService{
     OpinionInter opinionInter;
     @Autowired
     SignInInter signInInter;
+    @Autowired
+    VolunteInter volunteInter;
 
 
     @Override
@@ -347,5 +349,29 @@ public class AdminServiceImpl implements AdminService{
             return  null;
         }
         return signInList;
+    }
+
+    @Override
+    public List<Volunte> FindIncompleteVolunte(){
+        List<Volunte> volunteList = volunteInter.SelectVolunteIncomplete();
+        if(volunteList == null || volunteList.isEmpty()){
+            return null;
+        }
+        return volunteList;
+    }
+
+    @Override
+    public Volunte FindVolunteOne(Integer meId){
+
+        return volunteInter.SelectOne(meId);
+    }
+
+    @Override
+    public int UpdateVolunteStat(Volunte volunte, String stat){
+        //判断信息是否存在
+        volunte.setStat(stat);
+        //修改信息
+        int t=volunteInter.UpdateVolunte(volunte);
+        return t;
     }
 }

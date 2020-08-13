@@ -250,4 +250,11 @@ public class AdminPageHandler {
         model.addAttribute("signInList", signInList);
         return "views/ManagerCheckSignInPage";
     }
+
+    @RequestMapping("/ManagerCheckForVolunteerPage")
+    public String ManagerCheckForVolunteerPage(Model model){
+        List<Volunte> voluntersList = adminService.FindIncompleteVolunte();
+        model.addAttribute("voluntersList", voluntersList);
+        return "views/ManagerCheckForVolunteerPage";
+    }
 }
