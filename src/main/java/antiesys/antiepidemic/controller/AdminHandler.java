@@ -505,4 +505,24 @@ public class AdminHandler {
         model.addAttribute("opinionList", opinionList);
         return "views/ManagerFeedbackDisplayPage";
     }
+
+    /**
+     * 查找指定用户的反馈
+     * @param userId 用户ID
+     * @param model 模型
+     * @return 反馈显示界面
+     */
+    @RequestMapping(path = "/findOpinion")
+    public String findOpinion(@RequestParam(name = "userId")Integer userId, Model model){
+        List<Opinion> opinionList;
+        if(userId == null){
+            opinionList = adminService.FindOpinionAll();
+        }else{
+            opinionList = adminService.SelectOpinionOne(userId);
+        }
+
+        model.addAttribute("opinionList", opinionList);
+
+        return "views/ManagerFeedbackDisplayPage";
+    }
 }
