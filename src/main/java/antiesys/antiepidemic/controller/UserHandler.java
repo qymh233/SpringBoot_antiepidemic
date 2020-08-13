@@ -18,7 +18,7 @@ import java.util.List;
 * */
 @Controller
 @RequestMapping("/user")
-@SessionAttributes(value = {"user","umsglist","usermessage","ureportList","opilist","Oneopinion","myoplist","oppage"})
+@SessionAttributes(value = {"ssign","usigninlist","user","umsglist","usermessage","ureportList","opilist","Oneopinion","myoplist","oppage"})
 public class UserHandler {
     @Autowired
     UserService userService;
@@ -87,8 +87,6 @@ public class UserHandler {
 
         return "views/UserViewPersonalInformationPage";
     }
-    //修改用户信息页面
-
     /**
      * 修改用户页面
      * @param model 模型
@@ -217,9 +215,46 @@ public class UserHandler {
     //跳转上一次反馈页面
     @RequestMapping(path="/ReturnPage")
     public String ReturnPage(Model model){
-//        List<Opinion> opinionList=userService.FindOpinionAll();
-//        model.addAttribute("opilist",opinionList);
         return "views/UserViewOpinionInformationPage";
+    }
+
+    //跳转签到
+    @RequestMapping(path="/GotoSignIn")
+    public String GotoSignIn(Model model){
+        return "views/UserSignInPage";
+    }
+    //跳转签到
+    @RequestMapping(path="/UserSignIn")
+    public String UserSignIn(@RequestParam(name = "temperature") String temperature,@RequestParam(name = "remake") String remake,Model model){
+        SignIn signIn=new SignIn();
+        signIn.setTemperature(temperature);
+        signIn.setRemarks(remake);
+        Users users=(Users)model.getAttribute("user");
+        signIn.setUserId(users.getUserId());
+        signIn.setUserName(users.getUserName());
+        boolean i=userService.AddSignIn(signIn);
+        if(i==false)
+            return "ErrorPage";
+        List<SignIn> signInList=userService.SelectSignInOne(users.getUserId());
+        model.addAttribute("usigninlist",signInList);
+        return "views/UserViewSignInPage";
+    }
+
+    @RequestMapping(path="/findSignInAll")
+    public String findSignInAll(Model model) {
+        Users users=(Users)model.getAttribute("user");
+        List<SignIn> signInList=userService.SelectSignInOne(users.getUserId());
+        model.addAttribute("usigninlist",signInList);
+        model.addAttribute("ssign","all");
+        return "views/UserViewSignInPage";
+    }
+    @RequestMapping(path="/findSignInTime")
+    public String findSignInTime(String beginTime, String endTime, Model model) {
+        Users users=(Users)model.getAttribute("user");
+        List<SignIn> reportList = userService.FindSignInTime(beginTime, endTime,users.getUserId());
+        model.addAttribute("usigninlist", reportList);
+        model.addAttribute("ssign","time");
+        return "views/UserViewSignInPage";
     }
 
 }

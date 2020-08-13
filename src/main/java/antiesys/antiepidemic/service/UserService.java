@@ -116,6 +116,6 @@ public interface UserService {
      * @param beginTime 起始时间
      * @param inTime 终止时间
      */
-    List<Report> FindReportTime(String beginTime, String inTime,Integer userId);
+    List<SignIn> FindSignInTime(String beginTime, String inTime,Integer userId);
 
 }

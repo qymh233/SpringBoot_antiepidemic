@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>指定时间段出入记录</title>
+    <link rel="stylesheet" href="../assets/css/layui.css">
+    <link rel="stylesheet" href="../assets/css/view.css"/>
+    <link rel="stylesheet" href="../assets/css/admin.css"/>
+</head>
+<body class="layui-view-body">
+<div class="layui-content">
+    <!--面包屑导航-->
+    <div class="mianb">
+        <div class="mblf layui-col-xs6 layui-col-md6">
+            <i class="layui-icon">&#xe656;</i>
+            <p>用户首页 > 签到管理 > <span th:if="${ssign} eq 'time'">指定时间段签到记录</span><span th:if="${ssign} eq 'all'">个人签到记录</span></p>
+        </div>
+        <div class="mbrt layui-col-xs6 layui-col-md6">
+            <form method="post">
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input type="text" id="beginTime" name="beginTime" placeholder="起始时间" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input type="text" id="endTime" name="endTime" placeholder="结束时间" autocomplete="off" class="layui-input">
+                </div>
+                <button type="submit" formaction="/user/findSignInTime" class="layui-btn layui-btn-normal">搜索</button>
+            </form>
+        </div>
+    </div>
+    <!--面包屑导航-->
+    <div class="layui-row">
+        <div class="layui-card">
+            <div class="table-responsive">
+                <table class="layui-table" lay-skin="line" lay-size="lg" id="table">
+                    <thead>
+                    <tr>
+                        <th>姓名</th>
+                        <th>体温</th>
+                        <th>签到时间</th>
+                        <th>备注</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="report:${usigninlist}">
+                        <td th:text="${report.getUserName()}"></td>
+                        <td th:text="${report.getTemperature()}"></td>
+                        <td th:text="${#dates.format(report.getInTime(),'yyyy-MM-dd HH:mm:ss')}"></td>
+                        <td th:text="${report.getRemarks()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--分页-->
+            <div id="page"></div>
+            <!--分页-->
+        </div>
+    </div>
+</div>
+<script src="../assets/jquery.min.js"></script>
+<script src="../assets/layui.all.js"></script>
+<script>
+    var element = layui.element;
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#beginTime', //指定元素
+            type: 'datetime'
+        });
+
+        laydate.render({
+            elem: '#endTime', //指定元素
+            type: 'datetime'
+        });
+    });
+    layui.use(['laypage', 'layer'], function(){
+        var laypage = layui.laypage
+            ,layer = layui.layer;
+
+        //页码完整功能
+        laypage.render({
+            elem: 'page'
+            ,count: 100
+            ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+            ,jump: function(obj){
+                console.log(obj)
+            }
+        });
+    });
+
+    layui.use('form', function(){
+        var form = layui.form;
+        form.render();
+    });
+</script>
+
+</body>
+</html>

@@ -264,7 +264,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<Report> FindReportTime(String beginTime, String inTime, Integer userId) {
-        return null;
+    public List<SignIn> FindSignInTime(String beginTime, String inTime, Integer userId) {
+        List<SignIn> reportList=signInInter.SelectSignInInTimeUser(beginTime, inTime,userId);
+
+        if(reportList==null||reportList.isEmpty()){
+            return null;
+        }
+        return reportList;
     }
 }
