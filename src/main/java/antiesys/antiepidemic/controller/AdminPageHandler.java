@@ -22,6 +22,7 @@ public class AdminPageHandler {
     AdminService adminService;
     @Autowired
     UserService userService;
+
     /**
      * 管理员登录
      * @param adminId 管理员ID
@@ -48,6 +49,7 @@ public class AdminPageHandler {
 
         return "ManagerMainPage";
     }
+
     /**
      * 用户登录
      * @param userId 用户ID
@@ -65,6 +67,7 @@ public class AdminPageHandler {
         model.addAttribute("user",user);
         return "UserMainPage";
     }
+
     /**
      * 用户注册
      * @param userName 用户名
@@ -93,6 +96,7 @@ public class AdminPageHandler {
         model.addAttribute("user",user);
         return "OutsidersLogin";
     }
+
     /**
      * 跳转发布防控信息
      * @return 发布防控信息界面
@@ -101,6 +105,7 @@ public class AdminPageHandler {
     public String ManagerReleaseInformationPage_Release(){
         return "views/ManagerReleaseInformationPage-Release";
     }
+
     /**
      * 跳转防控任务完成情况
      * @param model 模型
@@ -112,6 +117,7 @@ public class AdminPageHandler {
         model.addAttribute("msglist",messageList);
         return "views/ManagerRecordPage";
     }
+
     /**
      * 跳转物品修改
      * @param goodsId 物品ID
@@ -124,6 +130,7 @@ public class AdminPageHandler {
         model.addAttribute("good",goods);
         return "views/ManagerMaterialInformationDisplayPage-Modifacation";
     }
+
     /**
      * 跳转修改用户密码
      * @return 修改用户密码界面
@@ -132,6 +139,7 @@ public class AdminPageHandler {
     public String ManagerModifyUserPasswordPage(){
         return "views/ManagerModifyUserPasswordPage";
     }
+
     /**
      * 查看用户信息
      * @param model 模型
@@ -146,6 +154,7 @@ public class AdminPageHandler {
         model.addAttribute("userlist",users);
         return "views/ManagerViewUserInformationPage";
     }
+
     /**
      * 跳转录入统计信息
      * @return 录入统计信息界面
@@ -154,6 +163,7 @@ public class AdminPageHandler {
     public String ManagerEnterStatisticsPage(){
         return "views/ManagerEnterStatisticsPage";
     }
+
     /**
      * 跳转添加物资信息
      * @return 添加物资信息界面
@@ -162,6 +172,7 @@ public class AdminPageHandler {
     public String ManagerAddItemPage(){
         return "views/ManagerAddItemPage";
     }
+
     /**
      * 跳转查看所有物资信息
      * @param model 模型
@@ -176,6 +187,7 @@ public class AdminPageHandler {
         model.addAttribute("goodslist",goods);
         return "views/ManagerMaterialInformationDisplayPage";
     }
+
     /**
      * 跳转查看单个用户信息
      * @param model 模型
@@ -185,6 +197,7 @@ public class AdminPageHandler {
     public String ManagerModifyUserInformationPage(Model model){
         return "views/ManagerModifyUserInformationPage";
     }
+
     /**
      * 跳转修改用户界面
      * @param userId 用户ID
@@ -201,6 +214,7 @@ public class AdminPageHandler {
         model.addAttribute("admuser",user);
         return "views/ManagerModifyUserInformationPage";
     }
+
     /**
      * 跳转报表页面
      * @param model 模型
@@ -214,30 +228,6 @@ public class AdminPageHandler {
     }
 
     /**
-     * 跳转单人出入记录界面
-     * @param model 模型
-     * @return 担任出入记录界面
-     */
-    @RequestMapping("/ManagerFindOneReportPage")
-    public String ManagerFineOneReportPage(Model model){
-        List<Report> reportList=null;
-        model.addAttribute("reportList", reportList);
-        return "views/ManagerFindOneReportPage";
-    }
-
-    /**
-     * 跳转查找某一时间段内出入记录的页面
-     * @param model 模型
-     * @return 查找某一时间段内出入记录的页面
-     */
-    @RequestMapping("/ManagerFindTimeReportPage")
-    public String ManagerFinfTimeReportPage(Model model){
-        List<Report> reportList=null;
-        model.addAttribute("reportList", reportList);
-        return "views/ManagerFindTimeReportPage";
-    }
-
-    /**
      * 跳转显示用户反馈界面
      * @param model 模型
      * @return 显示用户反馈界面
@@ -247,5 +237,17 @@ public class AdminPageHandler {
         List<Opinion>  opinionList = adminService.FindOpinionAll();
         model.addAttribute("opinionList", opinionList);
         return "views/ManagerFeedbackDisplayPage";
+    }
+
+    /**
+     * 跳转显示用户签到信息界面
+     * @param model 模型
+     * @return 显示用户签到信息界面
+     */
+    @RequestMapping("/ManagerCheckSignInPage")
+    public String ManagerCheckSignInPage(Model model){
+        List<SignIn>  signInList = adminService.FindSignInAll();
+        model.addAttribute("signInList", signInList);
+        return "views/ManagerCheckSignInPage";
     }
 }

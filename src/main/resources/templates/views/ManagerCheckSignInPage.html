@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>生成统计报表页面</title>
+    <title>查看物资信息</title>
     <link rel="stylesheet" href="../assets/css/layui.css">    
     <link rel="stylesheet" href="../assets/css/view.css"/>
-    <link rel="stylesheet" href="../assets/css/admin.css"/>    
+    <link rel="stylesheet" href="../assets/css/admin.css"/> 
+    <link rel="stylesheet" href="../assets/css/style.css"/>
+    <style type="text/css">
+    	.layui-form-item{ margin-bottom: 0;}
+    </style>
 </head>
 <body class="layui-view-body">
     <div class="layui-content">
@@ -15,15 +18,10 @@
     	<div class="mianb">
     		<div class="mblf layui-col-xs6 layui-col-md6">
     			 <i class="layui-icon">&#xe656;</i>
-    			 <p>管理员首页 > 统计信息管理 > <span>生成统计报表</span></p>
+    			 <p>管理员首页 > 用户信息管理 ><span>查看用户签到情况</span></p>
     		</div>
-    		<div class="mbrt layui-col-xs6 layui-col-md6">
+			<div class="mbrt layui-col-xs6 layui-col-md6">
 				<form method="post">
-					<div class="layui-input-inline" style="...">
-						<!--#修改name值 替换为变量名#-->
-						<input type="radio" name="indoor" value="进">进
-						<input type="radio" name="indoor" value="出">出
-					</div>
 					<div class="layui-input-inline" style="width: 200px;">
 						<input type="text" id="beginTime" name="beginTime" placeholder="起始时间" autocomplete="off" class="layui-input">
 					</div>
@@ -34,9 +32,9 @@
 					<div class="layui-input-inline" style="width: 200px;">
 						<input type="text" name="userId" placeholder="用户ID" autocomplete="off" class="layui-input">
 					</div>
-					<button type="submit" formaction="/admin/findReport" class="layui-btn layui-btn-normal">搜索</button>
+					<button type="submit" formaction="/admin/findSignIn" class="layui-btn layui-btn-normal">搜索</button>
 				</form>
-    		</div>
+			</div>
     	</div>
     	<!--面包屑导航-->
         <div class="layui-row">
@@ -45,25 +43,24 @@
 			 		  <table class="layui-table" lay-skin="line" lay-size="lg" id="table">						  
 						  <thead>
 						    <tr>
-							 <th>用户ID</th>
-							 <th>姓名</th>
-							 <th>电话号码</th>
-							 <th>体温</th>
-						     <th>进入小区时间</th>
-							 <th>出小区时间</th>
-						     <th>备注</th>
+								<th>签到者Id</th>
+								<th>签到者姓名</th>
+								<th>温度</th>
+								<th>签到时间</th>
+								<th>备注</th>
 						    </tr> 
 						  </thead>
 						  <tbody>
-							<tr th:each="report:${reportList}">
-								<td th:text="${report.getUserId()}"></td>
-								<td th:text="${report.getUserName()}"></td>
-								<td th:text="${report.getUserPhone()}"></td>
-								<td th:text="${report.getTemperature()}"></td>
-								<td th:text="${#dates.format(report.getInTime(),'yyyy-MM-dd HH:mm:ss')}"></td>
-								<td th:text="${#dates.format(report.getOutTime(),'yyyy-MM-dd HH:mm:ss')}"></td>
-								<td th:text="${report.getRemarks()}"></td>
-							</tr>
+							<!-- #使用循环进行表格打印# -->
+						    <tr th:each="signIn:${signInList}">
+								<!-- #每一个td内用后端数据进行填充# -->
+								<td th:text="${signIn.getUserId()}"></td>
+								<td th:text="${signIn.getUserName()}"></td>
+								<td th:text="${signIn.getTemperature()}"></td>
+								<td th:text="${#dates.format(signIn.getInTime(),'yyyy-MM-dd HH:mm:ss')}"></td>
+								<td th:text="${signIn.getRemarks()}"></td>
+						    </tr>
+						    
 						  </tbody>
 					</table>
 			 	</div>
@@ -106,7 +103,37 @@
 		    }
 		  });	 
 		});
-
+		
+		//弹框		
+		$('#fabu').on('click', function(){			
+		  layui.use('layer', function(){
+          var layer = layui.layer;
+          layer.open({
+                type: 2,
+                title: '发布任务',
+                fix: false,
+                shadeClose: true,
+                shade: 0.8,
+                area: ['660px', '420px'],
+                content: '02任务发布-发布任务.html',
+                end: function () {
+                   location.reload();
+                }
+            });
+        });
+      })
+		
+		//判断弹框
+		$(".delete").click(function(){
+			layer.confirm('确定要删除该职位信息？', {
+			  btn: ['是','否'] //按钮
+			}, function(){
+			  layer.msg('已删除', {icon: 1});
+			}, function(){
+			  layer.msg('已取消',  {icon: 2});
+			});
+		})			
+		
 		 layui.use('form', function(){
 		  var form = layui.form; 
 		  form.render();

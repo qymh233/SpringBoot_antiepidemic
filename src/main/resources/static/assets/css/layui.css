@@ -1956,6 +1956,10 @@ a cite {
 	border-radius: 2px
 }
 
+.layui-input{
+	margin: 3px;
+}
+
 .layui-input::-webkit-input-placeholder,.layui-select::-webkit-input-placeholder,.layui-textarea::-webkit-input-placeholder {
 	line-height: 1.3
 }

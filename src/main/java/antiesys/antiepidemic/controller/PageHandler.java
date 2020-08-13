@@ -26,6 +26,7 @@ public class PageHandler {
     public String mypage(){
         return "SystemMainPage";
     }
+
     @RequestMapping("/he")
     public String mypag(){
         return "hello";

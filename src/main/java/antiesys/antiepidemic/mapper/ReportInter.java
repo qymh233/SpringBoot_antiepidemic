@@ -38,6 +38,8 @@ public interface ReportInter {
 
     List<Report> SelectReportInTime(String beginTime, String endTime);
     List<Report> SelectReportOutTime(String beginTime, String endTime);
+    List<Report> SelectReportInTimeOne(Integer userId, String beginTime, String endTime);
+    List<Report> SelectReportOutTimeOne(Integer userId, String beginTime, String endTime);
     /**
      * 查询记录条数，便于添加记录，自动增加orderNum
      * @return 查询到的记录条数

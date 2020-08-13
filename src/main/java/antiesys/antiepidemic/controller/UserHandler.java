@@ -23,8 +23,6 @@ public class UserHandler {
     @Autowired
     UserService userService;
 
-    //查询用户信息
-
     /**
      * 查询用户信息
      * @param model 模型
@@ -40,25 +38,7 @@ public class UserHandler {
 
         return "views/UserViewPersonalInformationPage";
     }
-    /**
-     * 获取用户信息
-     * @param userId 用户ID
-     * @param request request
-     * @param model 模型
-     * @return 个人信息界面
-     */
-    @RequestMapping(path="/findUsesOneUpdate")
-    public String findUsesOneUpdate(@RequestParam(name = "userId") int userId, HttpServletRequest request, Model model){
 
-        Users users = userService.FindUserOne(userId);
-
-        if(users == null)
-            return "ErrorPage";
-
-        request.setAttribute("user", users);
-
-        return "UserModifyPersonalInformationPage";
-    }
     /**
      * 修改用户信息
      * @param userName 用户名
@@ -87,6 +67,7 @@ public class UserHandler {
 
         return "views/UserViewPersonalInformationPage";
     }
+
     /**
      * 修改用户页面
      * @param model 模型
@@ -97,6 +78,7 @@ public class UserHandler {
 
         return "views/UserModifyPersonalInformationPage";
     }
+
     /**
      * 修改用户密码界面
      * @param model 模型
@@ -107,6 +89,7 @@ public class UserHandler {
 
         return "views/UserChangePasswordPage";
     }
+
     /**
      * 修改用户密码
      * @param newPW 新密码
@@ -123,7 +106,7 @@ public class UserHandler {
 
         return "redirect:/UserLoginPage.html";
     }
-    //查询疫情防控信息
+
     /**
      * 查询疫情防控信息
      * @param model 模型
@@ -136,6 +119,7 @@ public class UserHandler {
         model.addAttribute("umsglist",messageList);
         return "views/UserViewEpidemicPreventionInformationPage";
     }
+
     /**
      * 查看具体防控信息
      * @param meId 信息ID
@@ -151,6 +135,12 @@ public class UserHandler {
         return "views/UserRecordPage-Details";
     }
 
+    /**
+     * 用户查看自己的统计报表信息
+     * @param meId 信息ID
+     * @param model 模型
+     * @return 统计报表显示界面
+     */
     @RequestMapping(path = "/UserFindOneReportPage")
     public String UserFindOneReportPage(@RequestParam(name = "meId") Integer meId, Model model){
 
@@ -163,12 +153,24 @@ public class UserHandler {
 
         return "views/UserFindOneReportPage";
     }
-    //跳转意见反馈页面
+
+    /**
+     * 跳转意见反馈界面
+     * @param model 模型
+     * @return 意见反馈界面
+     */
     @RequestMapping(path="/feedback")
     public String feedback(Model model){
         return "views/UserFeedbackPage";
     }
-    //意见反馈页面
+
+    /**
+     * 意见反馈界面
+     * @param title 反馈标题
+     * @param content 反馈内容
+     * @param model 模型
+     * @return 用户查看反馈界面
+     */
     @RequestMapping(path = "/releaseOpinion")
     public String ReleaseOpinion(@RequestParam(name = "title") String title, @RequestParam(name = "content") String content,Model model){
         Users users=(Users)model.getAttribute("user");
@@ -186,7 +188,12 @@ public class UserHandler {
         model.addAttribute("opilist",opinionList);
         return "views/UserViewOpinionInformationPage";
     }
-    //跳转全部意见反馈页面
+
+    /**
+     * 跳转全部意见反馈界面
+     * @param model 模型
+     * @return 全部意见反馈界面
+     */
     @RequestMapping(path="/UserViewOpinionInformationPage")
     public String UserViewOpinionInformationPage(Model model){
         List<Opinion> opinionList=userService.FindOpinionAll();
@@ -194,7 +201,13 @@ public class UserHandler {
         model.addAttribute("oppage","UserViewOpinionInformationPage");
         return "views/UserViewOpinionInformationPage";
     }
-    //查看具体反馈
+
+    /**
+     * 查看具体反馈
+     * @param meId 信息ID
+     * @param model 模型
+     * @return 具体信息显示界面
+     */
     @RequestMapping(path = "/taskOpinion")
     public String taskOpinion(@RequestParam(name = "meId") Integer meId, Model model){
 
@@ -203,7 +216,12 @@ public class UserHandler {
 
         return "views/UserViewOneOpinionInformationPage";
     }
-    //查看个人反馈页面
+
+    /**
+     * 查看个人反馈
+     * @param model 模型
+     * @return 个人反馈信息界面
+     */
     @RequestMapping(path = "/selfOpinion")
     public String selfOpinion(Model model){
         Users users=(Users)model.getAttribute("user");
@@ -212,18 +230,34 @@ public class UserHandler {
         model.addAttribute("oppage","selfOpinion");
         return "views/UserViewOpinionInformationPage";
     }
-    //跳转上一次反馈页面
+
+    /**
+     * 跳转上一次反馈页面
+     * @param model 模型
+     * @return 上一次反馈页面
+     */
     @RequestMapping(path="/ReturnPage")
     public String ReturnPage(Model model){
         return "views/UserViewOpinionInformationPage";
     }
 
-    //跳转签到
+    /**
+     * 跳转签到页面
+     * @param model 模型
+     * @return 签到页面
+     */
     @RequestMapping(path="/GotoSignIn")
     public String GotoSignIn(Model model){
         return "views/UserSignInPage";
     }
-    //跳转签到
+
+    /**
+     * 签到结果界面
+     * @param temperature 温度
+     * @param remake 备注
+     * @param model 模型
+     * @return 签到结果界面
+     */
     @RequestMapping(path="/UserSignIn")
     public String UserSignIn(@RequestParam(name = "temperature") String temperature,@RequestParam(name = "remake") String remake,Model model){
         SignIn signIn=new SignIn();
@@ -240,6 +274,11 @@ public class UserHandler {
         return "views/UserViewSignInPage";
     }
 
+    /**
+     * 查看个人所有签到记录
+     * @param model 模型
+     * @return 个人签到记录显示界面
+     */
     @RequestMapping(path="/findSignInAll")
     public String findSignInAll(Model model) {
         Users users=(Users)model.getAttribute("user");
@@ -248,6 +287,14 @@ public class UserHandler {
         model.addAttribute("ssign","all");
         return "views/UserViewSignInPage";
     }
+
+    /**
+     * 查询指定时间的签到记录
+     * @param beginTime 起始时间
+     * @param endTime 结束时间
+     * @param model 模型
+     * @return 签到记录显示界面
+     */
     @RequestMapping(path="/findSignInTime")
     public String findSignInTime(String beginTime, String endTime, Model model) {
         Users users=(Users)model.getAttribute("user");
