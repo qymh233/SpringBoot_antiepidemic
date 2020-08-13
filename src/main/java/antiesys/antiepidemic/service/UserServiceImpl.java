@@ -284,4 +284,28 @@ public class UserServiceImpl implements UserService{
         }
         return reportList;
     }
+
+    @Override
+    public List<Volunte> SelectVolunteAgree() {
+        List<Volunte> reportList=volunteInter.SelectVolunteAgree();
+        if(reportList==null||reportList.isEmpty()){
+            return null;
+        }
+        return reportList;
+    }
+
+    @Override
+    public int InsertVolunte(Volunte volunte) {
+        if(volunte==null){
+            return  0;
+        }
+        volunte.setPuDate(new Date());
+        volunte.setStat("未处理");
+        //添加信息
+        int t=volunteInter.InsertVolunte(volunte);
+        if(t==0){
+            return 0;
+        }
+        return 1;
+    }
 }

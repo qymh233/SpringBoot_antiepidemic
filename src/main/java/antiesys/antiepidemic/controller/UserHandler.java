@@ -11,14 +11,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 /*
 * 101010201
 * 111111
 * */
 @Controller
 @RequestMapping("/user")
-@SessionAttributes(value = {"OneVolunter","ssign","usigninlist","user","umsglist","usermessage","ureportList","opilist","Oneopinion","myoplist","oppage"})
+@SessionAttributes(value = {"volunag","OneVolunter","ssign","usigninlist","user","umsglist","usermessage","ureportList","opilist","Oneopinion","myoplist","oppage"})
 public class UserHandler {
     @Autowired
     UserService userService;
@@ -324,7 +327,41 @@ public class UserHandler {
      */
     @RequestMapping(path="/UserApplyForVolunteerPage")
     public String UserApplyForVolunteerPage(Model model){
+        List<Volunte> volunteList=userService.SelectVolunteAgree();
+        Map<String,Volunte> volunag=new HashMap<>();
+        for(int i=0;i<volunteList.size();i++){
+            volunag.put(volunteList.get(i).getTaskTime(),volunteList.get(i));
+        }
+        model.addAttribute("volunag",volunag);
         return "views/UserApplyForVolunteerPage";
+    }
+    //跳转志愿服务安排页面
+    @RequestMapping(path="/UserForVolunteerPage")
+    public String UserForVolunteerPage(Model model){
+        List<Volunte> volunteList=userService.SelectVolunteAgree();
+        Map<String,Volunte> volunag=new HashMap<>();
+        for(int i=0;i<volunteList.size();i++){
+            volunag.put(volunteList.get(i).getTaskTime(),volunteList.get(i));
+        }
+        model.addAttribute("volunag",volunag);
+        return "views/UserForVolunteerPage";
+    }
+    /**
+     * 跳转申请志愿页面
+     * @param model 模型
+     * @return 申请结果页面
+     */
+    @RequestMapping(path="/UserApplyForVolunteer")
+    public String UserApplyForVolunteer(@RequestParam(name = "taskTime") String taskTime,Model model){
+        Users users=(Users)model.getAttribute("user");
+        Volunte volunte=new Volunte();
+        volunte.setTaskTime(taskTime);
+        volunte.setUserId(users.getUserId());
+        volunte.setUserName(users.getUserName());
+        userService.InsertVolunte(volunte);
+        List<Volunte> volunteList=userService.FindVolunterOne(users.getUserId());
+        model.addAttribute("OneVolunter",volunteList);
+        return "views/GotoVolunterEnd";
     }
 
 }

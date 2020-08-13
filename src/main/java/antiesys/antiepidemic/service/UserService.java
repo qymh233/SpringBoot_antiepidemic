@@ -125,5 +125,12 @@ public interface UserService {
 
     //获取用户申请结果
     List<Volunte> FindVolunterOne(Integer userId);
+    /**
+     * 查询同意信息
+     * @return 查询到的信息对象
+     */
+    List<Volunte> SelectVolunteAgree();
+    //提交申请
+    int InsertVolunte(Volunte volunte);
 
 }
