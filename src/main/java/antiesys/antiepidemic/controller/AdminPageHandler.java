@@ -248,4 +248,15 @@ public class AdminPageHandler {
         model.addAttribute("opinionList", opinionList);
         return "views/ManagerFeedbackDisplayPage";
     }
+    /**
+     * 跳转显示用户签到信息界面
+     * @param model 模型
+     * @return 显示用户签到信息界面
+     */
+    @RequestMapping("/ManagerCheckSignInPage")
+    public String ManagerCheckSignInPage(Model model){
+        List<SignIn>  signInList = adminService.FindSignInAll();
+        model.addAttribute("signInList", signInList);
+        return "views/ManagerCheckSignInPage";
+    }
 }

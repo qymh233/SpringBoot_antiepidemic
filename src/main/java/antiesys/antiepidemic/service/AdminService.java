@@ -147,9 +147,12 @@ public interface AdminService {
      * @param indoor 进出选项
      * @param beginTime 起始时间
      * @param inTime 终止时间
-     * @return
+     * @return 查询到的信息列表
      */
     List<Report> FindReportTime(String indoor, String beginTime, String inTime);
+
+    List<Report> FindReportTimeOne(Integer userId, String indoor, String beginTime, String inTime);
+
     /**
      * 查询所有反馈信息
      * @return 查询到的报表信息列表
@@ -172,5 +175,35 @@ public interface AdminService {
      * @param UserId 用户ID
      * @return 查找到的反馈列表
      */
-    List<Opinion> SelectOpinionOne(Integer UserId);
+    List<Opinion> SelectOpinionOne(Integer userId);
+
+    /**
+     * 查询所有的用户签到记录
+     * @return 查询到的记录列表
+     */
+    List<SignIn> FindSignInAll();
+
+    /**
+     * 查询单个用户的签到记录
+     * @param userId 用户ID
+     * @return 查询到的记录列表
+     */
+    List<SignIn> FindSignInOne(Integer userId);
+
+    /**
+     * 查询某段时间的签到记录
+     * @param beginTime 起始时间
+     * @param endTime 结束时间
+     * @return 查询到的记录列表
+     */
+    List<SignIn> FindSignInTime(String beginTime, String endTime);
+
+    /**
+     * 查询某段时间的单用户的签到记录
+     * @param userId 用户ID
+     * @param beginTime 起始时间
+     * @param endTime 结束时间
+     * @return 查询到的记录列表
+     */
+    List<SignIn> FindSignInTimeOne(Integer userId, String beginTime, String endTime);
 }

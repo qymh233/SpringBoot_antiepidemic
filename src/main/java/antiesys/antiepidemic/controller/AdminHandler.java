@@ -351,6 +351,24 @@ public class AdminHandler {
 
         return "deleteReportSuccess";
     }
+    @RequestMapping(path = "/findReport")
+    public String FindReport(String indoor, @RequestParam(name = "beginTime")String beginTime,@RequestParam(name = "endTime") String endTime, @RequestParam(name = "userId") Integer userId, Model model){
+        List<Report> reportList;
+
+        if(indoor == null && userId == null){
+            reportList = adminService.FindReportAll();
+        }else if(userId != null && indoor == null){
+            reportList = adminService.FindReportOne(userId);
+        }else if(userId == null){
+            reportList = adminService.FindReportTime(indoor, beginTime, endTime);
+        }else{
+            reportList = adminService.FindReportTimeOne(userId, indoor, beginTime, endTime);
+        }
+
+        model.addAttribute("reportList", reportList);
+        return "views/ManagerGenerateStatisticalReportPage";
+    }
+
     /**
      * 查询报表信息
      * @param userId 用户ID
@@ -381,7 +399,7 @@ public class AdminHandler {
      * @return 信息显示界面
      */
     @RequestMapping(path="/findReportTime")
-    public String FindReportTime(String indoor, String beginTime, String endTime, Model model) {
+    public String FindReportTime(@RequestParam(name = "indoor")String indoor, @RequestParam(name = "beginTime")String beginTime,@RequestParam(name = "endTime") String endTime, Model model) {
         System.out.println(beginTime);
         System.out.println(endTime);
         System.out.println(indoor);
@@ -524,5 +542,34 @@ public class AdminHandler {
         model.addAttribute("opinionList", opinionList);
 
         return "views/ManagerFeedbackDisplayPage";
+    }
+
+    /**
+     * 根据条件查询用户的签到记录
+     * @param beginTime 起始时间
+     * @param endTime 结束时间
+     * @param userId 用户ID
+     * @param model 模型
+     * @return 记录显示页面
+     */
+    @RequestMapping(path = "/findSignIn")
+    public String findSignIn(@RequestParam(name = "beginTime")String beginTime,@RequestParam(name = "endTime") String endTime, @RequestParam(name = "userId")Integer userId, Model model){
+        List<SignIn> signInList;
+
+        System.out.println(beginTime);
+
+        if(userId == null && "".equals(beginTime)){
+            signInList = adminService.FindSignInAll();
+        }else if(userId != null && "".equals(beginTime)){
+            signInList = adminService.FindSignInOne(userId);
+        }else if(userId == null){
+            signInList = adminService.FindSignInTime(beginTime, endTime);
+        }else{
+            signInList = adminService.FindSignInTimeOne(userId, beginTime, endTime);
+        }
+
+        model.addAttribute("signInList", signInList);
+
+        return "views/ManagerCheckSignInPage";
     }
 }

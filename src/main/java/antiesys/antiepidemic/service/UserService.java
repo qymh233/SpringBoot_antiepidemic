@@ -104,7 +104,12 @@ public interface UserService {
      * @return 修改结果
      */
     int ChangeOpinion(Integer MeID);
-    //查询个人反馈信息
+
+    /**
+     * 查询个人反馈信息
+     * @param UserId 用户ID
+     * @return 查询到的信息列表
+     */
     List<Opinion> SelectOpinionOne(Integer UserId);
 
 }

@@ -14,6 +14,10 @@ public class SignIn {
         this.userId = userId;
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
     public Integer getMeId() {
         return meId;
     }

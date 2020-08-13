@@ -43,4 +43,10 @@
     <select id="SelectReportOutTime" resultType="antiesys.antiepidemic.pojo.Report">
         select * from V_Report where outTime between #{beginTime} and #{endTime}
     </select>
+    <select id="SelectReportInTimeOne" resultType="antiesys.antiepidemic.pojo.Report">
+        select * from V_Report where inTime between #{beginTime} and #{endTime} and userId=#{userId}
+    </select>
+    <select id="SelectReportOutTimeOne" resultType="antiesys.antiepidemic.pojo.Report">
+        select * from V_Report where outTime between #{beginTime} and #{endTime} and userId=#{userId}
+    </select>
 </mapper>

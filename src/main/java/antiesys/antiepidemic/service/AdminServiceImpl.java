@@ -22,6 +22,8 @@ public class AdminServiceImpl implements AdminService{
     MessageInter messageInter;
     @Autowired
     OpinionInter opinionInter;
+    @Autowired
+    SignInInter signInInter;
 
 
     @Override
@@ -37,19 +39,13 @@ public class AdminServiceImpl implements AdminService{
             return false;
         }
         //判断密码
-        if(!admin.getAdminPW().equals(m.getAdminPW())){
-            return false;
-        }
-        return true;
+        return admin.getAdminPW().equals(m.getAdminPW());
     }
 
     @Override
     public boolean AdminSignIn(String emperature) {
     	Double emp= Double.valueOf(emperature.toString());
-    	if(emp<=35.2||emp>=37.4) {
-    		return false;
-    	}
-    	return true;
+        return !(emp <= 35.2) && !(emp >= 37.4);
     }
 
     @Override
@@ -60,10 +56,7 @@ public class AdminServiceImpl implements AdminService{
         goods.setGoodsInTime(new Date());
         //添加物品
         int t=goodsInter.InsertGoods(goods);
-        if(t==0){
-            return false;
-        }
-        return true;
+        return t != 0;
     }
 
     @Override
@@ -74,10 +67,7 @@ public class AdminServiceImpl implements AdminService{
             return false;
         }
         int t=goodsInter.DeleteGoods(goodsId);
-        if(t==0){
-            return false;
-        }
-        return true;
+        return t != 0;
     }
 
     @Override
@@ -89,19 +79,13 @@ public class AdminServiceImpl implements AdminService{
         }
         //更新物品
         int t=goodsInter.UpdateGoods(goods);
-        if(t==0){
-            return false;
-        }
-        return true;
+        return t != 0;
     }
 
     @Override
     public Goods FindGoodsOne(int goodsId) {
         //直接查询
         Goods goods=goodsInter.SelectOne(goodsId);
-        if(goods==null){
-            return  null;
-        }
         return goods;
     }
 
@@ -117,9 +101,6 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public Users FindUserOne(int userId) {
         Users user=userInter.SelectOne(userId);
-        if(user==null){
-            return null;
-        }
         return user;
     }
 
@@ -144,9 +125,6 @@ public class AdminServiceImpl implements AdminService{
         user.setTemperature(u.getTemperature());
         //修改信息
         int t=userInter.UpdateUser(user);
-        if(t==0){
-            return 0;
-        }
         return t;
     }
 
@@ -155,10 +133,7 @@ public class AdminServiceImpl implements AdminService{
     	Users u=userInter.SelectOne(userId);
     	u.setUserPW(newPW);
     	int t=userInter.UpdateUser(u);
-    	if(t==0){
-            return false;
-        }
-        return true;
+        return t != 0;
     }
 
     @Override
@@ -168,9 +143,6 @@ public class AdminServiceImpl implements AdminService{
         num=num+1;
         report.setOrderNum(num);
         int t=reportInter.InsertReport(report);
-        if(t==0){
-            return  0;
-        }
         return t;
     }
 
@@ -178,9 +150,6 @@ public class AdminServiceImpl implements AdminService{
     public int DeleteReport(int reportId) {
         //直接进行删除
         int t=reportInter.DeleteReport(reportId);
-        if(t==0){
-            return 0;
-        }
         return t;
     }
 
@@ -216,6 +185,22 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
+    public List<Report> FindReportTimeOne(Integer userId, String indoor, String beginTime, String endTime){
+
+        List<Report> reportList;
+        if("进".equals(indoor)) {
+            reportList=reportInter.SelectReportInTimeOne(userId, beginTime, endTime);
+        }else{
+            reportList=reportInter.SelectReportOutTimeOne(userId, beginTime, endTime);
+        }
+
+        if(reportList==null||reportList.isEmpty()){
+            return null;
+        }
+        return reportList;
+    }
+
+    @Override
     public List<Report> FindReportAll() {
         List<Report> reports=reportInter.SelectReport();
         if(reports==null||reports.isEmpty()){
@@ -228,17 +213,14 @@ public class AdminServiceImpl implements AdminService{
     public boolean FindNumber(Map<Integer, Integer> map, int serialNum) {
     	Set set=map.keySet();
     	int sig=0;
-    	for(Iterator iter=set.iterator();iter.hasNext();) {
-    		int key=(int)iter.next();
-    		if((Integer)map.get(key)==serialNum) {
-    			sig=1;
-    			break;
-    		}
-    	}
-    	if(sig==0) {
-    		return false;
-    	}
-    	return true;
+        for (Object o : set) {
+            int key = (int) o;
+            if ((Integer) map.get(key) == serialNum) {
+                sig = 1;
+                break;
+            }
+        }
+        return sig != 0;
     }
 
     @Override
@@ -250,10 +232,7 @@ public class AdminServiceImpl implements AdminService{
         message.setStat("未完成");
         //添加信息
         int t=messageInter.InsertMessage(message);
-        if(t==0){
-            return false;
-        }
-        return true;
+        return t != 0;
     }
 
     @Override
@@ -264,19 +243,13 @@ public class AdminServiceImpl implements AdminService{
             return false;
         }
         int t=messageInter.DeleteMessage(meID);
-        if(t==0){
-            return false;
-        }
-        return true;
+        return t != 0;
     }
 
     @Override
     public Message FindMessageOne(Integer meID) {
         //直接查询
         Message message=messageInter.SelectOne(meID);
-        if(message==null){
-            return  null;
-        }
         return message;
     }
 
@@ -299,9 +272,6 @@ public class AdminServiceImpl implements AdminService{
         u.setStat("已完成");
         //修改信息
         int t=messageInter.UpdateMessage(u);
-        if(t==0){
-            return 0;
-        }
         return t;
     }
 
@@ -318,9 +288,6 @@ public class AdminServiceImpl implements AdminService{
     public Opinion FindOpinionOne(Integer meID) {
         //直接查询
         Opinion opinion=opinionInter.SelectOne(meID);
-        if(opinion==null){
-            return  null;
-        }
         return opinion;
     }
 
@@ -334,18 +301,51 @@ public class AdminServiceImpl implements AdminService{
         opinion.setStat("已处理");
         //修改信息
         int t=opinionInter.UpdateOpinion(opinion);
-        if(t==0){
-            return 0;
-        }
         return t;
     }
 
     @Override
-    public List<Opinion> SelectOpinionOne(Integer UserId) {
-        List<Opinion> opinionList=opinionInter.SelectOpinionOne(UserId);
+    public List<Opinion> SelectOpinionOne(Integer userId) {
+        List<Opinion> opinionList=opinionInter.SelectOpinionOne(userId);
         if(opinionList==null||opinionList.isEmpty()){
             return  null;
         }
         return opinionList;
+    }
+
+    @Override
+    public List<SignIn> FindSignInAll(){
+        List<SignIn> signInList = signInInter.SelectSignIn();
+        if(signInList==null||signInList.isEmpty()){
+            return  null;
+        }
+        return signInList;
+    }
+
+    @Override
+    public List<SignIn> FindSignInOne(Integer userId){
+        List<SignIn> signInList = signInInter.SelectOne(userId);
+        if(signInList==null||signInList.isEmpty()){
+            return  null;
+        }
+        return signInList;
+    }
+
+    @Override
+    public List<SignIn> FindSignInTime(String beginTime, String endTime){
+        List<SignIn> signInList = signInInter.SelectSignInInTime(beginTime, endTime);
+        if(signInList==null||signInList.isEmpty()){
+            return  null;
+        }
+        return signInList;
+    }
+
+    @Override
+    public List<SignIn> FindSignInTimeOne(Integer userId, String beginTime, String endTime){
+        List<SignIn> signInList = signInInter.SelectSignInInTimeUser(beginTime, endTime, userId);
+        if(signInList==null||signInList.isEmpty()){
+            return  null;
+        }
+        return signInList;
     }
 }
