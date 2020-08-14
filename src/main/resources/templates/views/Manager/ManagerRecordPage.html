@@ -22,78 +22,78 @@
         <div class="layui-row">
             <div class="layui-card">
             	<div class="table-responsive">
-			 		  <table class="layui-table" lay-skin="line" lay-size="lg" id="table">						  
-						  <thead>
-						    <tr>
-						      <th>消息标题</th>
-							  <th>发布者</th>
-							  <th>发布时间</th>	
-						      <th>&nbsp&nbsp&nbsp&nbsp查看</th>
-							  <th>&nbsp&nbsp&nbsp状态</th>
-							  <th>&nbsp&nbsp&nbsp&nbsp操作</th>
-						    </tr>
-						  </thead>
-						  <tbody>
-							<!--#循环打印<tr>标签 修改删除向后端传递数据 id值#-->	
-							<tr th:each="message:${msglist}">
-								<td th:text="${message.getTitle()}"></td>
-								<td th:text="${message.getPuBer()}"></td>
-								<td th:text="${#dates.format(message.getPuDate(),'yyyy-MM-dd')}"></td>
-								<td>
-						      	  <div class="layui-table-cell laytable-cell-1-0-10"> 
-										<!--#添加脚本#-->	
-							      	  	<a th:href="@{/admin/taskCompletion(meId=${message.getMeID()})}" class="layui-btn layui-btn-normal layui-btn-xs">查看</a>
-						      	  </div>
-						      	</td>
-								<td th:text="${message.getStat()}"></td>
-								<td>
-									<div class="layui-table-cell laytable-cell-1-0-10"> 
-										<!--#添加脚本#-->	
-							      	  	<a th:if="${message.getStat() == '未完成'}" value="完成" th:href="@{/admin/updateCompletion(meId=${message.getMeID()})}" class="layui-btn layui-btn-normal layui-btn-xs">完成</a>
-									</div>
-								</td>
-							</tr>
-						  </tbody>
-					</table>
+					<table id="recordList" lay-filter="test"></table>
 			 	</div>
-                   
-           		<!--分页-->
-           		<div id="page"></div>
-           		<!--分页-->
             </div>           
         </div>
     </div>
     <script src="../assets/jquery.min.js"></script>
-    <script src="../assets/layui.all.js"></script>    
+    <script src="../assets/layui.all.js"></script>
+	<script type="text/html" id="checkBar">
+		<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="check">查看</a>
+	</script>
+	<script type="text/html" id="doBar">
+		{{#  if(d.stat == "未完成"){ }}
+		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="complete">完成</a>
+		{{#  } }}
+	</script>
+
     <script>
     	var element = layui.element;
-    	layui.use(['laypage', 'layer'], function(){
-		  var laypage = layui.laypage
-		  ,layer = layui.layer;		  
-		  
-		  //页码完整功能
-		  laypage.render({
-		    elem: 'page'
-		    ,count: 100
-		    ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
-		    ,jump: function(obj){
-		      console.log(obj)
-		    }
-		  });	 
-		});
-		
-		//判断弹框
-		$(".delete").click(function(){
-			var obj = document.elementFromPoint(event.clientX,event.clientY).parentNode.parentNode.parentNode;
-			layer.confirm('确定要删除此任务？', {
-			  btn: ['是','否'] //按钮
-			}, function(){
-			  obj.parentNode.removeChild(obj);
-			  layer.msg('已删除', {icon: 1});
-			}, function(){
-			  layer.msg('已取消',  {icon: 2});
+
+		function dateToStr(date) {
+			if(date==="") return "";
+			var time = new Date(date.time);
+			var y = time.getFullYear();
+			var M = time.getMonth() + 1;
+			M = M < 10 ? ("0" + M) : M;
+			var d = time.getDate();
+			d = d < 10 ? ("0" + d) : d;
+			var h = time.getHours();
+			var str = y + "-" + M + "-" + d;
+			return str;
+		}
+
+		layui.use('table', function(){
+			var table = layui.table;
+
+			//第一个实例
+			table.render({
+				elem: '#recordList'
+				,height: 466
+				,url: '/admin/recordList' //数据接口
+				,page: true //开启分页
+				,method: 'post'
+				,cols: [
+					[ //表头
+						{field: 'title', title: '消息标题', sort: true, fixed: 'left'}
+						,{field: 'puBer', title: '发布者', sort: true}
+						,{field: 'puDate', title: '发布时间', sort: true,
+							templet: function (d){
+								return dateToStr(d.puDate);
+							}
+						}
+						,{title: '查看', toolbar:"#checkBar", width:65}
+						,{field: 'stat', title: '状态', sort: true}
+						,{title: '操作', toolbar:"#doBar", width:65}
+					]
+				]
 			});
-		})			
+
+			table.on('tool(test)', function(obj){
+				var data = obj.data;
+				var layEvent = obj.event;
+
+				if(layEvent === 'check'){ //查看
+					location.href="/admin/taskCompletion?meId="+data.meID;
+				} else if(layEvent === 'complete'){ //完成
+					layer.confirm('真的要完成么', function(){
+						location.href="/admin/updateCompletion?meId="+data.meID;
+					});
+				}
+			});
+
+		});
 		
 		 layui.use('form', function(){
 		  var form = layui.form; 

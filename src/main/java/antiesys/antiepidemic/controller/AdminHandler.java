@@ -2,8 +2,8 @@ package antiesys.antiepidemic.controller;
 
 import antiesys.antiepidemic.pojo.*;
 import antiesys.antiepidemic.service.AdminService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import antiesys.antiepidemic.util.NullToEmpty;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 
@@ -27,8 +26,14 @@ public class AdminHandler {
 
     @Autowired
     AdminService adminService;
+
     List<SignIn> signInList;
     List<Report> reportList;
+    List<Goods> goodsList;
+    List<Message> messageList;
+    List<Users> userList;
+    List<Opinion> opinionList;
+    List<Volunte> volunteList;
 
     /**
      * 管理员签到页面跳转
@@ -54,6 +59,16 @@ public class AdminHandler {
         }
 
         return "签到成功";
+    }
+
+    /**
+     * 跳转查看所有物资信息
+     * @return 查看物资信息界面
+     */
+    @RequestMapping("/ManagerMaterialInformationDisplayPage")
+    public String ManagerMaterialInformationDisplayPage(){
+        goodsList = adminService.FindGoodsAll();
+        return "views/Manager/ManagerMaterialInformationDisplayPage";
     }
 
     /**
@@ -85,12 +100,7 @@ public class AdminHandler {
             return "views/Manager/ManagerMaterialInformationDisplayPage";
         }
 
-        List<Goods> mygoods = adminService.FindGoodsAll();
-        List<Goods> newGoodsList = new ArrayList<>();
-        for (int i = 0; i < mygoods.size(); i++) {
-            newGoodsList.add(mygoods.get(i));
-        }
-        model.addAttribute("goodslist",newGoodsList);
+        goodsList = adminService.FindGoodsAll();
 
         return "views/Manager/ManagerMaterialInformationDisplayPage";
     }
@@ -105,18 +115,10 @@ public class AdminHandler {
     public String DeleteGoods(@RequestParam(name = "goodsId") int goodsId, Model model){
 
         boolean isDelete = adminService.DeleteGoods(goodsId);
-        List<Goods> goods = adminService.FindGoodsAll();
-
-        List<Goods> newGoodsList = new ArrayList<>();
-
-        for (int i = 0; i < goods.size(); i++) {
-            newGoodsList.add(goods.get(i));
-        }
-        model.addAttribute("goodslist",newGoodsList);
+        goodsList = adminService.FindGoodsAll();
 
         if(!isDelete)
             return "views/Manager/ManagerMaterialInformationDisplayPage";
-
 
         return "views/Manager/ManagerMaterialInformationDisplayPage";
     }
@@ -150,28 +152,54 @@ public class AdminHandler {
         }
         boolean isChange = adminService.ChangeGoods(goods);
 
-        if(!isChange)
+        if(!isChange) {
             return "views/Manager/ManagerMaterialInformationDisplayPage";
-
-        List<Goods> mygoods = adminService.FindGoodsAll();
-        List<Goods> newGoodsList = new ArrayList<>();
-        for (int i = 0; i < mygoods.size(); i++) {
-            newGoodsList.add(mygoods.get(i));
         }
-        model.addAttribute("goodslist",newGoodsList);
+
+        goodsList = adminService.FindGoodsAll();
 
         return "views/Manager/ManagerMaterialInformationDisplayPage";
+    }
+
+    @RequestMapping(path = "/goodsList")
+    @ResponseBody
+    public JSONObject goodsList(Integer page, Integer limit){
+
+        List<Goods> goodsListSub;
+        if(((page - 1) * limit + limit) <= goodsList.size()) {
+            goodsListSub = goodsList.subList((page - 1) * limit, (page - 1) * limit + limit);
+        }else{
+            goodsListSub = goodsList.subList((page - 1) * limit, goodsList.size());
+        }
+
+        JSONObject result = new JSONObject();
+        JSONArray jsonArray = JSONArray.fromObject(goodsListSub);
+        NullToEmpty.filterNull(jsonArray);
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", goodsList.size());
+        result.put("data", jsonArray);
+        return result;
+    }
+
+    /**
+     * 查看用户信息
+     * @return 查看用户信息界面
+     */
+    @RequestMapping("/ManagerViewUserInformationPage")
+    public String ManagerViewUserInformationPage(){
+        userList = adminService.FindUserAll();
+        return "views/Manager/ManagerViewUserInformationPage";
     }
 
     /**
      * 查询一个用户
      * @param userId 用户ID
-     * @param request request
      * @param model 模型
      * @return 用户详细信息显示界面
      */
     @RequestMapping(path="/findUseOne")
-    public String FindUserOne(@RequestParam(name = "userId") Integer userId, HttpServletRequest request, Model model){
+    public String FindUserOne(@RequestParam(name = "userId") Integer userId, Model model){
 
         Users user = adminService.FindUserOne(userId);
 
@@ -207,7 +235,6 @@ public class AdminHandler {
             user.setUserPhone(userPhone);
         }
 
-        //System.out.println(userSex);
         if(userSex!=null) {
             user.setUserSex(userSex);
         }
@@ -216,9 +243,7 @@ public class AdminHandler {
         if(numbers == 0) {
             return "views/Manager/ManagerModifyUserInformationPage";
         }
-        //重新获取数据
-        List<Users> userlist= adminService.FindUserAll();
-        model.addAttribute("userlist",userlist);
+        userList = adminService.FindUserAll();
 
         return "views/Manager/ManagerViewUserInformationPage";
     }
@@ -244,14 +269,30 @@ public class AdminHandler {
             return "views/Manager/ManagerModifyUserPasswordPage";
         }
 
-        List<Users> userl= adminService.FindUserAll();
-        List<Users> newUsersList = new ArrayList<>();
-        for (int i = 0; i < userl.size(); i++) {
-            newUsersList.add(userl.get(i));
-        }
-        model.addAttribute("userlist",newUsersList);
+        userList = adminService.FindUserAll();
 
         return "views/Manager/ManagerViewUserInformationPage";
+    }
+
+    @RequestMapping(path = "/userList")
+    @ResponseBody
+    public JSONObject userList(Integer page, Integer limit){
+
+        List<Users> userListSub;
+        if(((page - 1) * limit + limit) <= userList.size()) {
+            userListSub = userList.subList((page - 1) * limit, (page - 1) * limit + limit);
+        }else{
+            userListSub = userList.subList((page - 1) * limit, userList.size());
+        }
+
+        JSONObject result = new JSONObject();
+        JSONArray jsonArray = JSONArray.fromObject(userListSub);
+        NullToEmpty.filterNull(jsonArray);
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", userList.size());
+        result.put("data", jsonArray);
+        return result;
     }
 
     /**
@@ -282,7 +323,7 @@ public class AdminHandler {
             report.setOutTime(new Date());
         }
 
-        System.out.println(report.getInTime());
+        //System.out.println(report.getInTime());
 
         int numbers = adminService.AddReport(report);
 
@@ -329,10 +370,12 @@ public class AdminHandler {
         }
 
         JSONObject result = new JSONObject();
+        JSONArray jsonArray = JSONArray.fromObject(reportListSub);
+        NullToEmpty.filterNull(jsonArray);
         result.put("code", 0);
         result.put("msg", "");
         result.put("count", reportList.size());
-        result.put("data", reportListSub);
+        result.put("data", jsonArray);
         return result;
     }
 
@@ -344,6 +387,16 @@ public class AdminHandler {
     public String ManagerGenerateStatisticalReportPage(){
         reportList=adminService.FindReportAll();
         return "views/Manager/ManagerGenerateStatisticalReportPage";
+    }
+
+    /**
+     * 跳转防控任务完成情况
+     * @return 防控任务完成情况界面
+     */
+    @RequestMapping("/ManagerRecordPage")
+    public String ManagerRecordPage(){
+        messageList=adminService.FindMessageAll();
+        return "views/Manager/ManagerRecordPage";
     }
 
     /**
@@ -362,12 +415,11 @@ public class AdminHandler {
         message.setCont(content);
         message.setPuBer(i);
         boolean t=adminService.AddMessage(message);
-        if(t==false) {
+        if(!t) {
             return "views/Manager/ManagerReleaseInformationPage-Release";
         }
         //重新获取数据
-        List<Message> messageList=adminService.FindMessageAll();
-        model.addAttribute("msglist",messageList);
+        messageList=adminService.FindMessageAll();
         return "views/Manager/ManagerRecordPage";
     }
 
@@ -396,9 +448,39 @@ public class AdminHandler {
     public String updateCompletion(@RequestParam(name = "meId") Integer meId, Model model){
         adminService.ChangeMessage(meId);
 
-        List<Message> messageList=adminService.FindMessageAll();
-        model.addAttribute("msglist",messageList);
+        messageList=adminService.FindMessageAll();
         return "views/Manager/ManagerRecordPage";
+    }
+
+    @RequestMapping(path = "/recordList")
+    @ResponseBody
+    public JSONObject recordList(Integer page, Integer limit){
+
+        List<Message> messageListSub;
+        if(((page - 1) * limit + limit) <= messageList.size()) {
+            messageListSub = messageList.subList((page - 1) * limit, (page - 1) * limit + limit);
+        }else{
+            messageListSub = messageList.subList((page - 1) * limit, messageList.size());
+        }
+
+        JSONObject result = new JSONObject();
+        JSONArray jsonArray = JSONArray.fromObject(messageListSub);
+        NullToEmpty.filterNull(jsonArray);
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", messageList.size());
+        result.put("data", jsonArray);
+        return result;
+    }
+
+    /**
+     * 跳转显示用户反馈界面
+     * @return 显示用户反馈界面
+     */
+    @RequestMapping("/ManagerFeedbackDisplayPage")
+    public String ManagerFeedbackDisplayPage(){
+        opinionList = adminService.FindOpinionAll();
+        return "views/Manager/ManagerFeedbackDisplayPage";
     }
 
     /**
@@ -432,8 +514,7 @@ public class AdminHandler {
         opinion.setAdminId(adminId);
         adminService.UpdateOpinion(opinion);
 
-        List<Opinion>  opinionList = adminService.FindOpinionAll();
-        model.addAttribute("opinionList", opinionList);
+        opinionList = adminService.FindOpinionAll();
         return "views/Manager/ManagerFeedbackDisplayPage";
     }
 
@@ -445,16 +526,33 @@ public class AdminHandler {
      */
     @RequestMapping(path = "/findOpinion")
     public String findOpinion(@RequestParam(name = "userId")Integer userId, Model model){
-        List<Opinion> opinionList;
         if(userId == null){
             opinionList = adminService.FindOpinionAll();
         }else{
             opinionList = adminService.SelectOpinionOne(userId);
         }
-
-        model.addAttribute("opinionList", opinionList);
-
         return "views/Manager/ManagerFeedbackDisplayPage";
+    }
+
+    @RequestMapping(path = "/opinionList")
+    @ResponseBody
+    public JSONObject opinionList(Integer page, Integer limit){
+
+        List<Opinion> opinionListSub;
+        if(((page - 1) * limit + limit) <= opinionList.size()) {
+            opinionListSub = opinionList.subList((page - 1) * limit, (page - 1) * limit + limit);
+        }else{
+            opinionListSub = opinionList.subList((page - 1) * limit, opinionList.size());
+        }
+
+        JSONObject result = new JSONObject();
+        JSONArray jsonArray = JSONArray.fromObject(opinionListSub);
+        NullToEmpty.filterNull(jsonArray);
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", opinionList.size());
+        result.put("data", jsonArray);
+        return result;
     }
 
     /**
@@ -502,11 +600,23 @@ public class AdminHandler {
         }
 
         JSONObject result = new JSONObject();
+        JSONArray jsonArray = JSONArray.fromObject(signInListSub);
+        NullToEmpty.filterNull(jsonArray);
         result.put("code", 0);
         result.put("msg", "");
         result.put("count", signInList.size());
-        result.put("data", signInListSub);
+        result.put("data", jsonArray);
         return result;
+    }
+
+    /**
+     * 跳转处理志愿申请界面
+     * @return 处理志愿申请界面
+     */
+    @RequestMapping("/ManagerCheckForVolunteerPage")
+    public String ManagerCheckForVolunteerPage(){
+        volunteList = adminService.FindIncompleteVolunte();
+        return "views/Manager/ManagerCheckForVolunteerPage";
     }
 
     /**
@@ -521,8 +631,28 @@ public class AdminHandler {
         Volunte volunte = adminService.FindVolunteOne(meId);;
         adminService.UpdateVolunteStat(volunte, stat);
 
-        List<Volunte> voluntersList = adminService.FindIncompleteVolunte();
-        model.addAttribute("voluntersList", voluntersList);
+        volunteList = adminService.FindIncompleteVolunte();
         return "views/Manager/ManagerCheckForVolunteerPage";
+    }
+
+    @RequestMapping(path = "/volunteList")
+    @ResponseBody
+    public JSONObject volunteList(Integer page, Integer limit){
+
+        List<Volunte> volunteListSub;
+        if(((page - 1) * limit + limit) <= volunteList.size()) {
+            volunteListSub = volunteList.subList((page - 1) * limit, (page - 1) * limit + limit);
+        }else{
+            volunteListSub = volunteList.subList((page - 1) * limit, volunteList.size());
+        }
+
+        JSONObject result = new JSONObject();
+        JSONArray jsonArray = JSONArray.fromObject(volunteListSub);
+        NullToEmpty.filterNull(jsonArray);
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", volunteList.size());
+        result.put("data", jsonArray);
+        return result;
     }
 }

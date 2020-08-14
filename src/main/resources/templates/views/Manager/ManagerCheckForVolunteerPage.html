@@ -22,103 +22,98 @@
 	<div class="layui-row">
 		<div class="layui-card">
 			<div class="table-responsive">
-				<table class="layui-table" lay-skin="line" lay-size="lg" id="table">
-					<thead>
-					<tr>
-						<th>申请人</th>
-						<th>申请服务时间</th>
-						<th>申请时间</th>
-						<th>状态</th>
-						<th>操作</th>
-					</tr>
-					</thead>
-					<tbody>
-					<!--#循环打印<tr>标签 修改删除向后端传递数据 id值#-->
-					<tr th:each="message:${voluntersList}">
-						<td th:text="${message.getUserName()}"></td>
-						<td th:if="${message.getTaskTime()} eq '1'" th:text="周一上午"></td>
-						<td th:if="${message.getTaskTime()} eq '2'" th:text="周二上午"></td>
-						<td th:if="${message.getTaskTime()} eq '3'" th:text="周三上午"></td>
-						<td th:if="${message.getTaskTime()} eq '4'" th:text="周四上午"></td>
-						<td th:if="${message.getTaskTime()} eq '5'" th:text="周五上午"></td>
-						<td th:if="${message.getTaskTime()} eq '6'" th:text="周六上午"></td>
-						<td th:if="${message.getTaskTime()} eq '7'" th:text="周日上午"></td>
-						<td th:if="${message.getTaskTime()} eq '8'" th:text="周一下午"></td>
-						<td th:if="${message.getTaskTime()} eq '9'" th:text="周二下午"></td>
-						<td th:if="${message.getTaskTime()} eq '10'" th:text="周三下午"></td>
-						<td th:if="${message.getTaskTime()} eq '11'" th:text="周四下午"></td>
-						<td th:if="${message.getTaskTime()} eq '12'" th:text="周五下午"></td>
-						<td th:if="${message.getTaskTime()} eq '13'" th:text="周六下午"></td>
-						<td th:if="${message.getTaskTime()} eq '14'" th:text="周日下午"></td>
-						<td th:text="${#dates.format(message.getPuDate(),'yyyy-MM-dd')}"></td>
-						<td th:text="${message.getStat()}"></td>
-						<td>
-							<div class="layui-table-cell laytable-cell-1-0-10">
-								<!-- #需要填充数据# -->
-								<a th:href="@{/admin/updateVolunte(meId=${message.getMeID()}, stat=${'同意'})}" class="layui-btn layui-btn-xs">同意</a>
-								<!-- #需要添加脚本进行修改# -->
-								<a th:href="@{/admin/updateVolunte(meId=${message.getMeID()}, stat=${'拒绝'})}" class="layui-btn layui-btn-normal layui-btn-xs">拒绝</a>
-							</div>
-						</td>
-					</tr>
-					</tbody>
-				</table>
+				<table id="volunteList" lay-filter="test"></table>
 			</div>
-
-			<!--分页-->
-			<div id="page"></div>
-			<!--分页-->
 		</div>
 	</div>
 </div>
 <script src="../assets/jquery.min.js"></script>
 <script src="../assets/layui.all.js"></script>
+
+<script type="text/html" id="doBar">
+	<a class="layui-btn layui-btn-xs" lay-event="agree">同意</a>
+	<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="refuse">拒绝</a>
+</script>
+
 <script>
 	var element = layui.element;
-	layui.use(['laypage', 'layer'], function(){
-		var laypage = layui.laypage
-				,layer = layui.layer;
 
-		//页码完整功能
-		laypage.render({
-			elem: 'page'
-			,count: 100
-			,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
-			,jump: function(obj){
-				console.log(obj)
+	function dateToStr(date) {
+		if(date==="") return "";
+		var time = new Date(date.time);
+		var y = time.getFullYear();
+		var M = time.getMonth() + 1;
+		M = M < 10 ? ("0" + M) : M;
+		var d = time.getDate();
+		d = d < 10 ? ("0" + d) : d;
+		var h = time.getHours();
+		var str = y + "-" + M + "-" + d;
+		return str;
+	}
+
+	function intToDay(num){
+		var str;
+		switch (num){
+			case '1': str="周一上午";break;
+			case '2': str="周二上午";break;
+			case '3': str="周三上午";break;
+			case '4': str="周四上午";break;
+			case '5': str="周五上午";break;
+			case '6': str="周六上午";break;
+			case '7': str="周日上午";break;
+			case '8': str="周一下午";break;
+			case '9': str="周二下午";break;
+			case '10': str="周三下午";break;
+			case '11': str="周四下午";break;
+			case '12': str="周五下午";break;
+			case '13': str="周六下午";break;
+			case '14': str="周日下午";break;
+		}
+		return str;
+	}
+
+	layui.use('table', function(){
+		var table = layui.table;
+
+		//第一个实例
+		table.render({
+			elem: '#volunteList'
+			,height: 466
+			,url: '/admin/volunteList' //数据接口
+			,page: true //开启分页
+			,method: 'post'
+			,cols: [
+				[ //表头
+					{field: 'userName', title: '申请人', sort: true, fixed: 'left'}
+					,{field: 'taskTime', title: '申请服务时间', sort: true,
+						templet: function (d) {
+							return intToDay(d.taskTime);
+						}
+					}
+					,{field: 'puDate', title: '申请服务时间', sort: true,
+						templet: function (d) {
+							return dateToStr(d.puDate);
+						}
+					}
+					,{field: 'stat', title: '状态', sort: true}
+					,{title: '操作', toolbar:"#doBar", width:120}
+				]
+			]
+		});
+
+		table.on('tool(test)', function(obj){
+			var data = obj.data;
+			var layEvent = obj.event;
+
+			if(layEvent === 'agree'){ //同意
+				location.href="/admin/updateVolunte?meId="+data.meID+"&stat=同意";
+			}
+			if(layEvent === 'refuse'){ //拒绝
+				location.href="/admin/updateVolunte?meId="+data.meID+"&stat=拒绝";
 			}
 		});
+
 	});
-
-	//弹框
-	$('#fabu').on('click', function(){
-		layui.use('layer', function(){
-			var layer = layui.layer;
-			layer.open({
-				type: 2,
-				title: '发布任务',
-				fix: false,
-				shadeClose: true,
-				shade: 0.8,
-				area: ['660px', '420px'],
-				content: '02任务发布-发布任务.html',
-				end: function () {
-					location.reload();
-				}
-			});
-		});
-	})
-
-	//判断弹框
-	$(".delete").click(function(){
-		layer.confirm('确定要删除此任务？', {
-			btn: ['是','否'] //按钮
-		}, function(){
-			layer.msg('已删除', {icon: 1});
-		}, function(){
-			layer.msg('已取消',  {icon: 2});
-		});
-	})
 
 	layui.use('form', function(){
 		var form = layui.form;

@@ -48,8 +48,8 @@
         </div>
     </div>
     <script src="../assets/jquery.min.js"></script>
-    <script src="../assets/layui.all.js"></script>    
-    <script th:inline="none">
+    <script src="../assets/layui.all.js"></script>
+    <script>
     	var element = layui.element;
 		layui.use('laydate', function(){
 			var laydate = layui.laydate;
@@ -67,6 +67,7 @@
 		});
 
 		function dateToStr(date) {
+			if(date==="") return "";
 			var time = new Date(date.time);
 			var y = time.getFullYear();
 			var M = time.getMonth() + 1;
@@ -93,7 +94,8 @@
 				,url: '/admin/reportList' //数据接口
 				,page: true //开启分页
 				,method: 'post'
-				,cols: [[ //表头
+				,cols: [
+					[ //表头
 					{field: 'userId', title: '用户ID', sort: true, fixed: 'left'}
 					,{field: 'userName', title: '姓名', sort: true}
 					,{field: 'userPhone', title: '电话号码', sort: true}
@@ -110,7 +112,8 @@
 					}
 					,{field: 'remarks', title: '备注', sort: true}
 
-				]]
+					]
+				]
 			});
 
 		});

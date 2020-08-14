@@ -10,9 +10,9 @@ public class Opinion {
     /**
      * 发布者
      */
-    private Integer UserId;
+    private Integer userId;
 
-    private String UserName;
+    private String userName;
     /**
      * 具体内容
      */
@@ -52,19 +52,19 @@ public class Opinion {
     }
 
     public Integer getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(Integer userId) {
-        UserId = userId;
+        this.userId = userId;
     }
 
     public String getUserName() {
-        return UserName;
+        return userName;
     }
 
     public void setUserName(String userName) {
-        UserName = userName;
+        this.userName = userName;
     }
 
     public String getCont() {
@@ -112,16 +112,12 @@ public class Opinion {
         return adDate;
     }
 
-    public void setAdDate(Date adDate) {
-        this.adDate = adDate;
-    }
-
     @Override
     public String toString() {
         return "Opinion{" +
                 "title='" + title + '\'' +
-                ", UserId=" + UserId +
-                ", UserName='" + UserName + '\'' +
+                ", userId=" + userId +
+                ", userName='" + userName + '\'' +
                 ", cont='" + cont + '\'' +
                 ", puDate=" + puDate +
                 ", meID=" + meID +
@@ -131,4 +127,9 @@ public class Opinion {
                 ", adDate=" + adDate +
                 '}';
     }
+
+    public void setAdDate(Date adDate) {
+        this.adDate = adDate;
+    }
+
 }

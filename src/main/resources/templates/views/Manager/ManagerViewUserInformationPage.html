@@ -26,102 +26,54 @@
             <div class="layui-card">
  
             	<div class="table-responsive">
-			 		  <table class="layui-table" lay-skin="line" lay-size="lg" id="table">						  
-						  <thead>
-						    <tr>
-								<th class="layui-form">
-								</th>
-								<th class="layui-form">
-								</th>
-								<th>姓名</th>
-								<th>年龄</th>	
-								<th>电话号码</th>
-								<th>性别</th>
-								<th></th>
-								<th>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp操作</th>
-						    </tr> 
-						  </thead>
-						  <tbody>
-							<!-- #使用循环进行表格打印# -->
-						    <tr th:each="user:${userlist}">
-								<!-- #每一个td内用后端数据进行填充# -->
-								<td class="layui-form">
-								</td>
-								<td class="layui-form">
-								</td>
-								<td th:text="${user.userName}"></td>
-								<td th:text="${user.userAge}"></td>
-								<td th:text="${user.userPhone}"></td>
-								<td th:text="${user.userSex}"></td>
-								<td></td>	
-								<td>
-									<div class="layui-table-cell laytable-cell-1-0-10"> 
-										<!-- #需要填充数据# -->
-										<a th:href="@{/admin/findUseOne(userId=${user.getUserId()})}" class="layui-btn layui-btn-xs">查看</a>
-							      	  	<!-- #需要添加脚本进行修改# -->
-										<a th:href="@{/ManagerModifyUserInformationPage1(userId=${user.getUserId()})}" class="layui-btn layui-btn-normal layui-btn-xs">修改</a>
-									</div>
-								</td>
-						    </tr>
-						    
-						  </tbody>
-					</table>
+					<table id="userList" lay-filter="test"></table>
 			 	</div>
-                   
-           		<!--分页-->
-           		<div id="page"></div>
-           		<!--分页-->
             </div>           
         </div>
     </div>
     <script src="../assets/jquery.min.js"></script>
-    <script src="../assets/layui.all.js"></script>    
+    <script src="../assets/layui.all.js"></script>
+
+	<script type="text/html" id="doBar">
+		<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="check">查看</a>
+		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit">修改</a>
+	</script>
+
     <script>
     	var element = layui.element;
-    	layui.use(['laypage', 'layer'], function(){
-		  var laypage = layui.laypage
-		  ,layer = layui.layer;		  
-		  
-		  //页码完整功能
-		  laypage.render({
-		    elem: 'page'
-		    ,count: 100
-		    ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
-		    ,jump: function(obj){
-		      console.log(obj)
-		    }
-		  });	 
-		});
-		
-		//弹框		
-		$('#fabu').on('click', function(){			
-		  layui.use('layer', function(){
-          var layer = layui.layer;
-          layer.open({
-                type: 2,
-                title: '发布任务',
-                fix: false,
-                shadeClose: true,
-                shade: 0.8,
-                area: ['660px', '420px'],
-                content: '02任务发布-发布任务.html',
-                end: function () {
-                   location.reload();
-                }
-            });
-        });
-      })
-		
-		//判断弹框
-		$(".delete").click(function(){
-			layer.confirm('确定要删除该职位信息？', {
-			  btn: ['是','否'] //按钮
-			}, function(){
-			  layer.msg('已删除', {icon: 1});
-			}, function(){
-			  layer.msg('已取消',  {icon: 2});
+
+		layui.use('table', function(){
+			var table = layui.table;
+
+			table.render({
+				elem: '#userList'
+				,height: 466
+				,url: '/admin/userList' //数据接口
+				,page: true //开启分页
+				,method: 'post'
+				,cols: [
+					[ //表头
+						{field: 'userName', title: '姓名', sort: true, fixed: 'left'}
+						,{field: 'userAge', title: '年龄', sort: true}
+						,{field: 'userPhone', title: '电话号码', sort: true}
+						,{field: 'userSex', title: '性别', sort: true}
+						,{title: '操作', toolbar:"#doBar", width:200}
+					]
+				]
 			});
-		})			
+
+			table.on('tool(test)', function(obj){
+				var data = obj.data;
+				var layEvent = obj.event;
+
+				if(layEvent === 'edit'){ //修改
+					location.href="/ManagerModifyUserInformationPage?userId="+data.userId;
+				} else if(layEvent === 'check'){ //查看
+					location.href="/admin/findUseOne?userId="+data.userId;
+				}
+			});
+
+		});
 		
 		 layui.use('form', function(){
 		  var form = layui.form; 

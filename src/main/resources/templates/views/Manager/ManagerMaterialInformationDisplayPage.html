@@ -28,103 +28,59 @@
         <div class="layui-row">
             <div class="layui-card">
             	<div class="table-responsive">
-			 		  <table class="layui-table" lay-skin="line" lay-size="lg" id="table">						  
-						  <thead>
-						    <tr>
-								<th class="layui-form">
-								</th>
-								<th class="layui-form">
-								</th>
-								<th>物资名称</th>
-								<th>物资数量</th>	
-								<th>物资来源</th>
-								<th>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp操作</th>
-						    </tr> 
-						  </thead>
-						  <tbody>
-							<!-- #使用循环进行表格打印# -->
-						    <tr th:each="goods:${goodslist}">
-								<!-- #每一个td内用后端数据进行填充# -->
-								<td class="layui-form">
-								</td>
-								<td class="layui-form">
-								</td>
-								<td th:text="${goods.goodsName}"></td>
-								<td th:text="${goods.goodsNum}"></td>
-								<td th:text="${goods.goodsSource}"></td>	
-								<td>
-									<div class="layui-table-cell laytable-cell-1-0-10"> 
-							      	  	<!-- #需要添加脚本进行修改# -->
-										<a th:href="@{/ManagerMaterialInformationDisplayPage_Modifacation(goodsId=${goods.getGoodsId()})}" class="layui-btn layui-btn-normal layui-btn-xs">修改</a>
-							      	  	<!-- #需要添加脚本进行删除功能完善# -->
-										<a th:href="@{/admin/deleteGoods(goodsId=${goods.getGoodsId()})}" class="layui-btn layui-btn-danger layui-btn-xs">删除</a>
-									</div>
-								</td>
-						    </tr>
-						    
-						  </tbody>
-					</table>
+					<table id="goodsList" lay-filter="test"></table>
 			 	</div>
-                   
-           		<!--分页-->
-           		<div id="page"></div>
-           		<!--分页-->
             </div>           
         </div>
     </div>
     <script src="../assets/jquery.min.js"></script>
-    <script src="../assets/layui.all.js"></script>    
+    <script src="../assets/layui.all.js"></script>
+
+    <script type="text/html" id="doBar">
+        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">修改</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+    </script>
+
     <script>
-    	var element = layui.element;
-    	layui.use(['laypage', 'layer'], function(){
-		  var laypage = layui.laypage
-		  ,layer = layui.layer;		  
-		  
-		  //页码完整功能
-		  laypage.render({
-		    elem: 'page'
-		    ,count: 100
-		    ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
-		    ,jump: function(obj){
-		      console.log(obj)
-		    }
-		  });	 
-		});
-		
-		//弹框		
-		$('#fabu').on('click', function(){			
-		  layui.use('layer', function(){
-          var layer = layui.layer;
-          layer.open({
-                type: 2,
-                title: '发布任务',
-                fix: false,
-                shadeClose: true,
-                shade: 0.8,
-                area: ['660px', '420px'],
-                content: '02任务发布-发布任务.html',
-                end: function () {
-                   location.reload();
+		layui.use('table', function(){
+			var table = layui.table;
+
+			//第一个实例
+			table.render({
+				elem: '#goodsList'
+				,height: 466
+				,url: '/admin/goodsList' //数据接口
+				,page: true //开启分页
+				,method: 'post'
+				,cols: [
+					[ //表头
+						{field: 'goodsName', title: '物资名称', sort: true, fixed: 'left'}
+						,{field: 'goodsNum', title: '物资数量', sort: true}
+						,{field: 'goodsSource', title: '物资来源', sort: true}
+						,{title: '操作', toolbar:"#doBar", width:200}
+					]
+				]
+			});
+
+            table.on('tool(test)', function(obj){
+                var data = obj.data;
+                var layEvent = obj.event;
+
+                if(layEvent === 'edit'){ //修改
+                    location.href="/ManagerMaterialInformationDisplayPage_Modifacation?goodsId="+data.goodsId;
+                } else if(layEvent === 'delete'){ //删除
+                    layer.confirm('真的要删除物资么', function(index){
+                        location.href="/admin/deleteGoods?goodsId="+data.goodsId;
+                    });
                 }
             });
-        });
-      })
-		
-		//判断弹框
-		$(".delete").click(function(){
-			layer.confirm('确定要删除该职位信息？', {
-			  btn: ['是','否'] //按钮
-			}, function(){
-			  layer.msg('已删除', {icon: 1});
-			}, function(){
-			  layer.msg('已取消',  {icon: 2});
-			});
-		})			
+
+		});
 		
 		 layui.use('form', function(){
 		  var form = layui.form; 
 		  form.render();
-		}); 
+		})
 	</script>
 	
 </body>

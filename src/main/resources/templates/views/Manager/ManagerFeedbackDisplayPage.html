@@ -33,93 +33,74 @@
         <div class="layui-row">
             <div class="layui-card">
             	<div class="table-responsive">
-			 		  <table class="layui-table" lay-skin="line" lay-size="lg" id="table">						  
-						  <thead>
-						    <tr>
-								<th>标题</th>
-								<th>反馈者Id</th>
-								<th>反馈者姓名</th>
-								<th>反馈时间</th>
-								<th>状态</th>
-								<th>操作</th>
-						    </tr> 
-						  </thead>
-						  <tbody>
-							<!-- #使用循环进行表格打印# -->
-						    <tr th:each="opinion:${opinionList}">
-								<!-- #每一个td内用后端数据进行填充# -->
-								<td th:text="${opinion.getTitle()}"></td>
-								<td th:text="${opinion.getUserId()}"></td>
-								<td th:text="${opinion.getUserName()}"></td>
-								<td th:text="${#dates.format(opinion.getPuDate(),'yyyy-MM-dd HH:mm:ss')}"></td>
-								<td th:text="${opinion.getStat()}"></td>
-								<td>
-									<div class="layui-table-cell laytable-cell-1-0-10">
-										<!--#添加脚本#-->
-										<a th:if="${opinion.getStat() == '未处理'}" value="回复" th:href="@{/admin/findOpinionOne(meID=${opinion.getMeID()})}" class="layui-btn layui-btn-normal layui-btn-xs">回复</a>
-									</div>
-								</td>
-						    </tr>
-						    
-						  </tbody>
-					</table>
+					<table id="opinionList" lay-filter="test"></table>
 			 	</div>
-                   
-           		<!--分页-->
-           		<div id="page"></div>
-           		<!--分页-->
             </div>           
         </div>
     </div>
     <script src="../assets/jquery.min.js"></script>
-    <script src="../assets/layui.all.js"></script>    
+    <script src="../assets/layui.all.js"></script>
+
+	<script type="text/html" id="doBar">
+		{{#  if(d.stat == "未处理"){ }}
+		<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="reply">回复</a>
+		{{#  } }}
+	</script>
+
     <script>
     	var element = layui.element;
-    	layui.use(['laypage', 'layer'], function(){
-		  var laypage = layui.laypage
-		  ,layer = layui.layer;		  
-		  
-		  //页码完整功能
-		  laypage.render({
-		    elem: 'page'
-		    ,count: 100
-		    ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
-		    ,jump: function(obj){
-		      console.log(obj)
-		    }
-		  });	 
-		});
-		
-		//弹框		
-		$('#fabu').on('click', function(){			
-		  layui.use('layer', function(){
-          var layer = layui.layer;
-          layer.open({
-                type: 2,
-                title: '发布任务',
-                fix: false,
-                shadeClose: true,
-                shade: 0.8,
-                area: ['660px', '420px'],
-                content: '02任务发布-发布任务.html',
-                end: function () {
-                   location.reload();
-                }
-            });
-        });
-      })
-		
-		//判断弹框
-		$(".delete").click(function(){
-			layer.confirm('确定要删除该职位信息？', {
-			  btn: ['是','否'] //按钮
-			}, function(){
-			  layer.msg('已删除', {icon: 1});
-			}, function(){
-			  layer.msg('已取消',  {icon: 2});
+
+		function dateToStr(date) {
+			if(date==="") return "";
+			var time = new Date(date.time);
+			var y = time.getFullYear();
+			var M = time.getMonth() + 1;
+			M = M < 10 ? ("0" + M) : M;
+			var d = time.getDate();
+			d = d < 10 ? ("0" + d) : d;
+			var h = time.getHours();
+			var str = y + "-" + M + "-" + d;
+			return str;
+		}
+
+		layui.use('table', function(){
+			var table = layui.table;
+
+			//第一个实例
+			table.render({
+				elem: '#opinionList'
+				,height: 466
+				,url: '/admin/opinionList' //数据接口
+				,page: true //开启分页
+				,method: 'post'
+				,cols: [
+					[ //表头
+						{field: 'title', title: '标题', sort: true, fixed: 'left'}
+						,{field: 'userId', title: '反馈者Id', sort: true}
+						,{field: 'userName', title: '反馈者姓名', sort: true}
+						, {
+						field: 'puDate', title: '反馈时间', sort: true,
+							templet: function (d) {
+								return dateToStr(d.puDate);
+							}
+						}
+						,{field: 'stat', title: '状态', sort: true}
+						,{title: '操作', toolbar:"#doBar", width:65}
+					]
+				]
 			});
-		})			
-		
+
+			table.on('tool(test)', function(obj){
+				var data = obj.data;
+				var layEvent = obj.event;
+
+				if(layEvent === 'reply'){ //查看
+					location.href="/admin/findOpinionOne?meID="+data.meID;
+				}
+			});
+
+		});
+
 		 layui.use('form', function(){
 		  var form = layui.form; 
 		  form.render();

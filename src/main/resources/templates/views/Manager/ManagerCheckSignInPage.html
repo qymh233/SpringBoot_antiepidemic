@@ -47,7 +47,7 @@
     </div>
     <script src="../assets/jquery.min.js"></script>
     <script src="../assets/layui.all.js"></script>    
-    <script th:inline="none">
+    <script>
     	var element = layui.element;
     	//生成日期选择框
 		layui.use('laydate', function(){
@@ -66,6 +66,7 @@
 		});
 
 		function dateToStr(date) {
+			if(date==="") return "";
 			var time = new Date(date.time);
 			var y = time.getFullYear();
 			var M = time.getMonth() + 1;
@@ -92,7 +93,8 @@
 				,url: '/admin/signInList' //数据接口
 				,page: true //开启分页
 				,method: 'post'
-				,cols: [[ //表头
+				,cols: [
+					[ //表头
 					{field: 'userId', title: '签到人ID', sort: true, fixed: 'left'}
 					,{field: 'userName', title: '签到人姓名', sort: true}
 					,{field: 'temperature', title: '体温', sort: true}
@@ -103,22 +105,11 @@
 					}
 					,{field: 'remarks', title: '备注', sort: true}
 
-				]]
+					]
+				]
 			});
 
 		});
-
-		
-		//判断弹框
-		$(".delete").click(function(){
-			layer.confirm('确定要删除该职位信息？', {
-			  btn: ['是','否'] //按钮
-			}, function(){
-			  layer.msg('已删除', {icon: 1});
-			}, function(){
-			  layer.msg('已取消',  {icon: 2});
-			});
-		})			
 		
 		 layui.use('form', function(){
 		  var form = layui.form; 

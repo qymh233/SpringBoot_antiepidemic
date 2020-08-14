@@ -110,18 +110,6 @@ public class AdminPageHandler {
     }
 
     /**
-     * 跳转防控任务完成情况
-     * @param model 模型
-     * @return 防控任务完成情况界面
-     */
-    @RequestMapping("/ManagerRecordPage")
-    public String ManagerRecordPage(Model model){
-        List<Message> messageList=adminService.FindMessageAll();
-        model.addAttribute("msglist",messageList);
-        return "views/Manager/ManagerRecordPage";
-    }
-
-    /**
      * 跳转物品修改
      * @param goodsId 物品ID
      * @param model 模型
@@ -144,21 +132,6 @@ public class AdminPageHandler {
     }
 
     /**
-     * 查看用户信息
-     * @param model 模型
-     * @return 查看用户信息界面
-     */
-    @RequestMapping("/ManagerViewUserInformationPage")
-    public String ManagerViewUserInformationPage(Model model){
-        List<Users> users= adminService.FindUserAll();
-
-        if(users == null)
-            return "ErrorPage";
-        model.addAttribute("userlist",users);
-        return "views/Manager/ManagerViewUserInformationPage";
-    }
-
-    /**
      * 跳转录入统计信息
      * @return 录入统计信息界面
      */
@@ -177,69 +150,21 @@ public class AdminPageHandler {
     }
 
     /**
-     * 跳转查看所有物资信息
-     * @param model 模型
-     * @return 查看物资信息界面
-     */
-    @RequestMapping("/ManagerMaterialInformationDisplayPage")
-    public String ManagerMaterialInformationDisplayPage(Model model){
-        List<Goods> goods= adminService.FindGoodsAll();
-
-        if(goods == null)
-            return "ErrorPage";
-        model.addAttribute("goodslist",goods);
-        return "views/Manager/ManagerMaterialInformationDisplayPage";
-    }
-
-    /**
-     * 跳转查看单个用户信息
-     * @param model 模型
-     * @return 用户信息界面
-     */
-    @RequestMapping("/ManagerModifyUserInformationPage")
-    public String ManagerModifyUserInformationPage(Model model){
-        return "views/Manager/ManagerModifyUserInformationPage";
-    }
-
-    /**
      * 跳转修改用户界面
      * @param userId 用户ID
      * @param model 模型
      * @return 修改用户界面
      */
-    @RequestMapping("/ManagerModifyUserInformationPage1")
+    @RequestMapping("/ManagerModifyUserInformationPage")
     public String ManagerModifyUserInformationPage1(@RequestParam(name = "userId") int userId,Model model){
         Users user = adminService.FindUserOne(userId);
 
-        if(user == null)
+        if(user == null) {
             return "ErrorPage";
+        }
 
         model.addAttribute("admuser",user);
         return "views/Manager/ManagerModifyUserInformationPage";
-    }
-
-    /**
-     * 跳转显示用户反馈界面
-     * @param model 模型
-     * @return 显示用户反馈界面
-     */
-    @RequestMapping("/ManagerFeedbackDisplayPage")
-    public String ManagerFeedbackDisplayPage(Model model){
-        List<Opinion>  opinionList = adminService.FindOpinionAll();
-        model.addAttribute("opinionList", opinionList);
-        return "views/Manager/ManagerFeedbackDisplayPage";
-    }
-
-    /**
-     * 跳转处理志愿申请界面
-     * @param model 模型
-     * @return 处理志愿申请界面
-     */
-    @RequestMapping("/ManagerCheckForVolunteerPage")
-    public String ManagerCheckForVolunteerPage(Model model){
-        List<Volunte> voluntersList = adminService.FindIncompleteVolunte();
-        model.addAttribute("voluntersList", voluntersList);
-        return "views/Manager/ManagerCheckForVolunteerPage";
     }
 
     /**
