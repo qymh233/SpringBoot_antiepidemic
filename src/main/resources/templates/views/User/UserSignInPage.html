@@ -75,11 +75,14 @@
 							</div>
 						</div>
 					</div>
-					<div class="layui-form-item layui-form-text">
-						<label class="layui-form-label">备注</label>
-						<div class="layui-input-block">
-							<textarea name="remake" placeholder="请输入" class="layui-textarea"></textarea>
-							<!--<button type="button" class="layui-btn layui-btn-danger" id="test7">上传信息</button>-->
+					<div class="layui-form-item">
+						<label class="layui-form-label">体温备注</label>
+						<div class="layui-input-inline">
+							<select name="remake" lay-filter="aihao">
+								<option value="发烧">发烧</option>
+								<option value="高温">高温</option>
+								<option value="正常">正常</option>
+							</select>
 						</div>
 					</div>
 					<div class="layui-form-item">

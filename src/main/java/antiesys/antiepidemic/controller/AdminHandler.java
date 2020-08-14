@@ -2,6 +2,9 @@ package antiesys.antiepidemic.controller;
 
 import antiesys.antiepidemic.pojo.*;
 import antiesys.antiepidemic.service.AdminService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +27,8 @@ public class AdminHandler {
 
     @Autowired
     AdminService adminService;
+    List<SignIn> signInList;
+    List<Report> reportList;
 
     /**
      * 管理员签到页面跳转
@@ -298,7 +303,6 @@ public class AdminHandler {
      */
     @RequestMapping(path = "/findReport")
     public String FindReport(String indoor, @RequestParam(name = "beginTime")String beginTime,@RequestParam(name = "endTime") String endTime, @RequestParam(name = "userId") Integer userId, Model model){
-        List<Report> reportList;
 
         if(indoor == null && userId == null){
             reportList = adminService.FindReportAll();
@@ -310,7 +314,35 @@ public class AdminHandler {
             reportList = adminService.FindReportTimeOne(userId, indoor, beginTime, endTime);
         }
 
-        model.addAttribute("reportList", reportList);
+        return "views/Manager/ManagerGenerateStatisticalReportPage";
+    }
+
+    @RequestMapping(path = "/reportList")
+    @ResponseBody
+    public JSONObject reportList(Integer page, Integer limit){
+
+        List<Report> reportListSub;
+        if(((page - 1) * limit + limit) <= reportList.size()) {
+            reportListSub = reportList.subList((page - 1) * limit, (page - 1) * limit + limit);
+        }else{
+            reportListSub = reportList.subList((page - 1) * limit, reportList.size());
+        }
+
+        JSONObject result = new JSONObject();
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", reportList.size());
+        result.put("data", reportListSub);
+        return result;
+    }
+
+    /**
+     * 跳转报表页面
+     * @return 报表页面
+     */
+    @RequestMapping("/ManagerGenerateStatisticalReportPage")
+    public String ManagerGenerateStatisticalReportPage(){
+        reportList=adminService.FindReportAll();
         return "views/Manager/ManagerGenerateStatisticalReportPage";
     }
 
@@ -426,18 +458,24 @@ public class AdminHandler {
     }
 
     /**
+     * 跳转显示用户签到信息界面
+     * @return 显示用户签到信息界面
+     */
+    @RequestMapping("/ManagerCheckSignInPage")
+    public String ManagerCheckSignInPage(){
+        signInList = adminService.FindSignInAll();
+        return "views/Manager/ManagerCheckSignInPage";
+    }
+
+    /**
      * 根据条件查询用户的签到记录
      * @param beginTime 起始时间
      * @param endTime 结束时间
      * @param userId 用户ID
-     * @param model 模型
      * @return 记录显示页面
      */
     @RequestMapping(path = "/findSignIn")
-    public String findSignIn(@RequestParam(name = "beginTime")String beginTime,@RequestParam(name = "endTime") String endTime, @RequestParam(name = "userId")Integer userId, Model model){
-        List<SignIn> signInList;
-
-        System.out.println(beginTime);
+    public String findSignIn(@RequestParam(name = "beginTime")String beginTime,@RequestParam(name = "endTime") String endTime, @RequestParam(name = "userId")Integer userId){
 
         if(userId == null && "".equals(beginTime)){
             signInList = adminService.FindSignInAll();
@@ -449,9 +487,26 @@ public class AdminHandler {
             signInList = adminService.FindSignInTimeOne(userId, beginTime, endTime);
         }
 
-        model.addAttribute("signInList", signInList);
-
         return "views/Manager/ManagerCheckSignInPage";
+    }
+
+    @RequestMapping(path = "/signInList")
+    @ResponseBody
+    public JSONObject signInList(Integer page, Integer limit){
+
+        List<SignIn> signInListSub;
+        if(((page - 1) * limit + limit) <= signInList.size()) {
+            signInListSub = signInList.subList((page - 1) * limit, (page - 1) * limit + limit);
+        }else{
+            signInListSub = signInList.subList((page - 1) * limit, signInList.size());
+        }
+
+        JSONObject result = new JSONObject();
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", signInList.size());
+        result.put("data", signInListSub);
+        return result;
     }
 
     /**

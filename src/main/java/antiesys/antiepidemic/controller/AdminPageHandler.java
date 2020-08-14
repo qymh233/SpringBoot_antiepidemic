@@ -219,18 +219,6 @@ public class AdminPageHandler {
     }
 
     /**
-     * 跳转报表页面
-     * @param model 模型
-     * @return 报表页面
-     */
-    @RequestMapping("/ManagerGenerateStatisticalReportPage")
-    public String ManagerGenerateStatisticalReportPage(Model model){
-        List<Report> reportList=adminService.FindReportAll();
-        model.addAttribute("reportList",reportList);
-        return "views/Manager/ManagerGenerateStatisticalReportPage";
-    }
-
-    /**
      * 跳转显示用户反馈界面
      * @param model 模型
      * @return 显示用户反馈界面
@@ -240,18 +228,6 @@ public class AdminPageHandler {
         List<Opinion>  opinionList = adminService.FindOpinionAll();
         model.addAttribute("opinionList", opinionList);
         return "views/Manager/ManagerFeedbackDisplayPage";
-    }
-
-    /**
-     * 跳转显示用户签到信息界面
-     * @param model 模型
-     * @return 显示用户签到信息界面
-     */
-    @RequestMapping("/ManagerCheckSignInPage")
-    public String ManagerCheckSignInPage(Model model){
-        List<SignIn>  signInList = adminService.FindSignInAll();
-        model.addAttribute("signInList", signInList);
-        return "views/Manager/ManagerCheckSignInPage";
     }
 
     /**

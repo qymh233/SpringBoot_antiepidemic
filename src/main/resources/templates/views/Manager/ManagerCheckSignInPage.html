@@ -40,41 +40,16 @@
         <div class="layui-row">
             <div class="layui-card">
             	<div class="table-responsive">
-			 		  <table class="layui-table" lay-skin="line" lay-size="lg" id="table">						  
-						  <thead>
-						    <tr>
-								<th>签到者Id</th>
-								<th>签到者姓名</th>
-								<th>温度</th>
-								<th>签到时间</th>
-								<th>备注</th>
-						    </tr> 
-						  </thead>
-						  <tbody>
-							<!-- #使用循环进行表格打印# -->
-						    <tr th:each="signIn:${signInList}">
-								<!-- #每一个td内用后端数据进行填充# -->
-								<td th:text="${signIn.getUserId()}"></td>
-								<td th:text="${signIn.getUserName()}"></td>
-								<td th:text="${signIn.getTemperature()}"></td>
-								<td th:text="${#dates.format(signIn.getInTime(),'yyyy-MM-dd HH:mm:ss')}"></td>
-								<td th:text="${signIn.getRemarks()}"></td>
-						    </tr>
-						    
-						  </tbody>
-					</table>
+					<table id="signInList" lay-filter="test"></table>
 			 	</div>
-                   
-           		<!--分页-->
-           		<div id="page"></div>
-           		<!--分页-->
             </div>           
         </div>
     </div>
     <script src="../assets/jquery.min.js"></script>
     <script src="../assets/layui.all.js"></script>    
-    <script>
+    <script th:inline="none">
     	var element = layui.element;
+    	//生成日期选择框
 		layui.use('laydate', function(){
 			var laydate = layui.laydate;
 
@@ -89,39 +64,50 @@
 				type: 'datetime'
 			});
 		});
-    	layui.use(['laypage', 'layer'], function(){
-		  var laypage = layui.laypage
-		  ,layer = layui.layer;		  
-		  
-		  //页码完整功能
-		  laypage.render({
-		    elem: 'page'
-		    ,count: 100
-		    ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
-		    ,jump: function(obj){
-		      console.log(obj)
-		    }
-		  });	 
+
+		function dateToStr(date) {
+			var time = new Date(date.time);
+			var y = time.getFullYear();
+			var M = time.getMonth() + 1;
+			M = M < 10 ? ("0" + M) : M;
+			var d = time.getDate();
+			d = d < 10 ? ("0" + d) : d;
+			var h = time.getHours();
+			h = h < 10 ? ("0" + h) : h;
+			var m = time.getMinutes();
+			m = m < 10 ? ("0" + m) : m;
+			var s = time.getSeconds();
+			s = s < 10 ? ("0" + s) : s;
+			var str = y + "-" + M + "-" + d + " " + h + ":" + m + ":" + s;
+			return str;
+		}
+
+			layui.use('table', function(){
+			var table = layui.table;
+
+			//第一个实例
+			table.render({
+				elem: '#signInList'
+				,height: 466
+				,url: '/admin/signInList' //数据接口
+				,page: true //开启分页
+				,method: 'post'
+				,cols: [[ //表头
+					{field: 'userId', title: '签到人ID', sort: true, fixed: 'left'}
+					,{field: 'userName', title: '签到人姓名', sort: true}
+					,{field: 'temperature', title: '体温', sort: true}
+					,{field: 'inTime', title: '签到时间', sort: true,
+						templet: function (d){
+							return dateToStr(d.inTime);
+						}
+					}
+					,{field: 'remarks', title: '备注', sort: true}
+
+				]]
+			});
+
 		});
-		
-		//弹框		
-		$('#fabu').on('click', function(){			
-		  layui.use('layer', function(){
-          var layer = layui.layer;
-          layer.open({
-                type: 2,
-                title: '发布任务',
-                fix: false,
-                shadeClose: true,
-                shade: 0.8,
-                area: ['660px', '420px'],
-                content: '02任务发布-发布任务.html',
-                end: function () {
-                   location.reload();
-                }
-            });
-        });
-      })
+
 		
 		//判断弹框
 		$(".delete").click(function(){
