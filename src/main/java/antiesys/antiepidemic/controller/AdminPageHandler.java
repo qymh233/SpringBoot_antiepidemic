@@ -6,6 +6,7 @@ import antiesys.antiepidemic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -59,7 +60,7 @@ public class AdminPageHandler {
      * @return 用户主界面
      */
     @RequestMapping(path="/userLogin")
-    public String UserLogin(@RequestParam(name = "userId") int userId, @RequestParam(name = "userPW") String userPW, Model model){
+    public String UserLogin(@Validated @RequestParam(name = "userId") int userId, @Validated @RequestParam(name = "userPW") String userPW, Model model){
         boolean isLogin = userService.UserLogin(userId, userPW);
         if(!isLogin){
             return "redirect:/UserLoginPage.html";

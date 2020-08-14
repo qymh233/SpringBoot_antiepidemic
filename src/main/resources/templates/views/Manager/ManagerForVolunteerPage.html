@@ -35,60 +35,60 @@
 		<!--指示条-->
         <div class="layui-row">   
             <div id="imgDiv" class="layui-card positionbox">     		
-				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 5px;">
-					<legend>任务申请</legend>
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 5px; color: #00008B">
+					<legend>志愿服务安排</legend>
 				</fieldset>
 				<table class="layui-table">
 					<thead>
 						<tr>
-							<td title="任务表" class="topth" bgcolor="#55aaff">任务表</th>
-							<td bgcolor="#55aaff">周一</th>
-							<td bgcolor="#55aaff">周二</th>
-							<td bgcolor="#55aaff">周三</th>
-							<td bgcolor="#55aaff">周四</th>
-							<td bgcolor="#55aaff">周五</th>
-							<td bgcolor="#55aaff">周六</th>
-							<td bgcolor="#55aaff">周日</th>
+							<td title="任务表" class="topth" bgcolor="#55aaff"style="color: #FF8C00;font-size: 20px">任务表</th>
+							<td bgcolor="#55aaff"style="color: #FD482C;font-size: 20px">周一</th>
+							<td bgcolor="#55aaff"style="color: #FD482C;font-size: 20px">周二</th>
+							<td bgcolor="#55aaff"style="color: #FD482C;font-size: 20px">周三</th>
+							<td bgcolor="#55aaff"style="color: #FD482C;font-size: 20px">周四</th>
+							<td bgcolor="#55aaff"style="color: #FD482C;font-size: 20px">周五</th>
+							<td bgcolor="#55aaff"style="color: #FD482C;font-size: 20px">周六</th>
+							<td bgcolor="#55aaff"style="color: #FD482C;font-size: 20px">周日</th>
 						</tr> 
 					</thead>
 				  
 				    <tbody>
 						<tr>
-							<td class="toptd" bgcolor="#55aaff">上午</td>
-						    <td th:if="${volunag.containsKey('1')}" bgcolor="#ffaa00">
+							<td class="toptd" bgcolor="#55aaff" style="color: #FA8072;font-size: 20px">上午</td>
+						    <td th:if="${volunag.containsKey('1')}" bgcolor="#ffaa00"style="color: 	#20B2AA;font-size: 15px">
 								<span th:text="${volunag.get('1').getUserName()}"></span>
 							</td>
 							<td th:if="${not volunag.containsKey('1')}" bgcolor="#00ff00">
 							</td>
-							<td th:if="${volunag.containsKey('2')}" bgcolor="#ffaa00">
+							<td th:if="${volunag.containsKey('2')}" bgcolor="#ffaa00"style="color: 	#20B2AA;font-size: 15px">
 								<span th:text="${volunag.get('2').getUserName()}"></span>
 							</td>
 							<td th:if="${not volunag.containsKey('2')}" bgcolor="#00ff00">
 							</td>
-							<td th:if="${volunag.containsKey('3')}" bgcolor="#ffaa00">
+							<td th:if="${volunag.containsKey('3')}" bgcolor="#ffaa00"style="color: 	#20B2AA;font-size: 15px">
 								<span th:text="${volunag.get('3').getUserName()}"></span>
 							</td>
 							<td th:if="${not volunag.containsKey('3')}" bgcolor="#00ff00">
 							</td>
-							<td th:if="${volunag.containsKey('4')}" bgcolor="#ffaa00">
+							<td th:if="${volunag.containsKey('4')}" bgcolor="#ffaa00"style="color: 	#20B2AA;font-size: 15px">
 								<span th:text="${volunag.get('4').getUserName()}"></span>
 							</td>
 							<td th:if="${not volunag.containsKey('4')}" bgcolor="#00ff00">
 
 							</td>
-							<td th:if="${volunag.containsKey('5')}" bgcolor="#ffaa00">
+							<td th:if="${volunag.containsKey('5')}" bgcolor="#ffaa00"style="color: 	#20B2AA;font-size: 15px">
 								<span th:text="${volunag.get('5').getUserName()}"></span>
 							</td>
 							<td th:if="${not volunag.containsKey('5')}" bgcolor="#00ff00">
 
 							</td>
-							<td th:if="${volunag.containsKey('6')}" bgcolor="#ffaa00">
+							<td th:if="${volunag.containsKey('6')}" bgcolor="#ffaa00"style="color: 	#20B2AA;font-size: 15px">
 								<span th:text="${volunag.get('6').getUserName()}"></span>
 							</td>
 							<td th:if="${not volunag.containsKey('6')}" bgcolor="#00ff00">
 
 							</td>
-							<td th:if="${volunag.containsKey('7')}" bgcolor="#ffaa00">
+							<td th:if="${volunag.containsKey('7')}" bgcolor="#ffaa00"style="color: 	#20B2AA;font-size: 15px">
 								<span th:text="${volunag.get('7').getUserName()}"></span>
 							</td>
 							<td th:if="${not volunag.containsKey('7')}" bgcolor="#00ff00">
@@ -96,44 +96,44 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="toptd" bgcolor="#55aaff">下午</td>
-							<td th:if="${volunag.containsKey('8')}" bgcolor="#ffaa00">
+							<td class="toptd" bgcolor="#55aaff" style="color: #FA8072;font-size: 20px">下午</td>
+							<td th:if="${volunag.containsKey('8')}" bgcolor="#ffaa00"style="color: 	#20B2AA;font-size: 15px">
 								<span th:text="${volunag.get('8').getUserName()}"></span>
 							</td>
 							<td th:if="${not volunag.containsKey('8')}" bgcolor="#00ff00">
 
 							</td>
-							<td th:if="${volunag.containsKey('9')}" bgcolor="#ffaa00">
+							<td th:if="${volunag.containsKey('9')}" bgcolor="#ffaa00"style="color: 	#20B2AA;font-size: 15px">
 								<span th:text="${volunag.get('9').getUserName()}"></span>
 							</td>
 							<td th:if="${not volunag.containsKey('9')}" bgcolor="#00ff00">
 
 							</td>
-							<td th:if="${volunag.containsKey('10')}" bgcolor="#ffaa00">
+							<td th:if="${volunag.containsKey('10')}" bgcolor="#ffaa00"style="color: #20B2AA;font-size: 15px">
 								<span th:text="${volunag.get('10').getUserName()}"></span>
 							</td>
 							<td th:if="${not volunag.containsKey('10')}" bgcolor="#00ff00">
 
 							</td>
-							<td th:if="${volunag.containsKey('11')}" bgcolor="#ffaa00">
+							<td th:if="${volunag.containsKey('11')}" bgcolor="#ffaa00"style="color: #20B2AA;font-size: 15px">
 								<span th:text="${volunag.get('11').getUserName()}"></span>
 							</td>
 							<td th:if="${not volunag.containsKey('11')}" bgcolor="#00ff00">
 
 							</td>
-							<td th:if="${volunag.containsKey('12')}" bgcolor="#ffaa00">
+							<td th:if="${volunag.containsKey('12')}" bgcolor="#ffaa00"style="color: 	#20B2AA;font-size: 15px">
 								<span th:text="${volunag.get('12').getUserName()}"></span>
 							</td>
 							<td th:if="${not volunag.containsKey('12')}" bgcolor="#00ff00">
 
 							</td>
-							<td th:if="${volunag.containsKey('13')}" bgcolor="#ffaa00">
+							<td th:if="${volunag.containsKey('13')}" bgcolor="#ffaa00"style="color: 	#20B2AA;font-size: 15px">
 								<span th:text="${volunag.get('13').getUserName()}"></span>
 							</td>
 							<td th:if="${not volunag.containsKey('13')}" bgcolor="#00ff00">
 
 							</td>
-							<td th:if="${volunag.containsKey('14')}" bgcolor="#ffaa00">
+							<td th:if="${volunag.containsKey('14')}" bgcolor="#ffaa00"style="color: 	#20B2AA;font-size: 15px">
 								<span th:text="${volunag.get('14').getUserName()}"></span>
 							</td>
 							<td th:if="${not volunag.containsKey('14')}" bgcolor="#00ff00">
