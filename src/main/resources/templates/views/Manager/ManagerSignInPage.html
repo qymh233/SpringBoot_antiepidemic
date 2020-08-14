@@ -9,28 +9,39 @@
     <link rel="stylesheet" href="../assets/css/admin.css"/>  
     <link rel="stylesheet" href="../assets/css/style.css"/>
 	<style type="text/css">
-		#imgDiv{
-			background-image: url("../img/signin.jpg");
-			background-size:cover;
-		}
 		#test_n1{
-			float: right;
+			float: left;
 			opacity:0.6;
+			position:relative;
+			left:51%;
+			top:calc(15vh);
 		}
 		.lform{
-			float: left;
-			background-color: #00FFFF;
+			width: 400px;
+			height: 324px;
+			float: right;
+			background-color: #21B4E2;
 			opacity:0.6;
+			position:relative;
+			right:51.5%;
+			top:calc(15vh);
 		}
 		#lbox{
-			background-image: url("../img/signin.jpg");
-			background-size:cover;
-			margin-bottom: 0px;
+			height: 800px;
+			background-image: url("../img/signin2.png");
+			background-repeat: no-repeat;
+			background-size: 100%,100%;
+			background-origin:content-box;
+		}
+		#bbox{
+			min-height: 400px;
+			height: calc(90vh);
+			overflow:hidden;
 		}
 	</style>
 </head>
 <body  class="layui-view-body">
-    <div class="layui-content">
+    <div id="bbox" class="layui-content">
     	<!--面包屑导航-->
     	<div class="mianb">
     		<div class="mblf layui-col-xs6 layui-col-md6">
@@ -72,7 +83,7 @@
 			<div class="layui-inline" id="test_n1"></div>
 		</div>
 		</div>
-    </div>
+	</div>
     <script src="../assets/jquery.min.js"></script>
     <script src="../assets/layui.all.js"></script>   
     <script>

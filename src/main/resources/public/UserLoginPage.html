@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,6 +8,44 @@
     <link rel="icon" href="/favicon.ico">
     <title>管理后台</title>
     <script>
+        //初始化加载函数
+        window.onload = function(){
+
+            var userIdInputElt = document.getElementById("userIdInput");
+            var userPwInputElt = document.getElementById("userPwInput");
+            var submitBtn = document.getElementById("submitBtn");
+            var loginFormElt = document.getElementById("loginForm");
+
+            var userIdTag = false;
+            var userPwTag = false;
+
+            userIdInputElt.onblur = function(){
+                if(userIdInputElt.value == ""){
+                    userIdTag = false;
+                }else{
+                    userIdTag = true;
+                }
+            }
+            userPwInputElt.onblur = function(){
+                if(userPwInputElt.value == ""){
+                    userPwTag = false;
+                }else{
+                    userPwTag = true;
+                }
+            }
+            submitBtn.onclick = function(){
+                alert("test");
+                if(userIdTag == true && userPwTag == true){
+                    alert(userIdTag);
+                    alert(loginFormElt.method);
+                    alert(loginFormElt.method);
+                    loginFormElt.action = "/userLogin";
+                    loginFormElt.submit();
+                }else{
+                    alert("请检查用户名和密码");
+                }
+            }
+        }
         if(window != top){
             top.location.href=location.href;
         }
@@ -16,22 +53,23 @@
 </head>
 <body class="login-wrap">
     <div class="login-container">
-        <form class="login-form" method="post">
-            <div class="input-group">
-                <input type="text" name="userId" id="userId" class="input-field">
-                <label for="userId" class="input-label">
-                    <span class="label-title">用户账号</span>
-                </label>
-            </div>
-            <div class="input-group">
-                <input type="password" name="userPW" id="userPW" class="input-field">
-                <label for="userPW" class="input-label">
-                    <span class="label-title">密码</span>
-                </label>
-            </div>
-            <button type="submit" formaction="/userLogin" class="login-button">登录<i class="ai ai-enter"></i></button>
-        </form>
-
+        <div class="login-form">
+            <form id="loginForm" class="layui-form layui-form-item" method="post">
+                <div class="input-group">
+                    <input id="userIdInput" type="text" name="userId" class="input-field" value="">
+                    <label for="userIdInput" class="input-label">
+                        <span class="label-title">用户账号</span>
+                    </label>
+                </div>
+                <div class="input-group">
+                    <input id="userPwInput" type="password" name="userPW" class="input-field" value="">
+                    <label for="userPwInput" class="input-label">
+                        <span class="label-title">密码</span>
+                    </label>
+                </div>
+                <button id="submitBtn" class="layui-btn layui-btn-fluid">登录</button>
+            </form>
+        </div>
     </div>
 </body>
 <script src="../assets/layui.js"></script>

@@ -40,6 +40,7 @@
     background-color: #fff;
 }
 
+
 .layui-layout-admin .layui-side,
 .layui-nav,
 .custom-admin .layui-nav-tree .layui-nav-item.layui-nav-itemed > a,
@@ -67,15 +68,32 @@
 .custom-header .layui-nav .layui-nav-item a{
     color: rgba(0,0,0,.8);
 }
+
+/*左侧导航栏字体颜色 zzs*/
 .custom-admin .layui-nav-tree .layui-nav-item a{
-    color: #222;
+    color: rgba(0,0,0,.8);
     transition: all .3s;
 }
 
+/*左侧导航栏字体变色 zzbs*/
 .custom-admin .layui-nav-tree .layui-nav-item a:hover,
 .custom-admin .layui-nav-tree .layui-nav-item a:hover .layui-nav-more:before,
 .custom-admin .layui-nav-tree .layui-nav-itemed  > a .layui-nav-more:before{
-    color: #111;
+    color: rgb(0, 162, 255);
+    /*background-color: #71d0ff;*/
+}
+
+.custom-admin .layui-nav-tree .layui-nav-item .layui-nav-item-a:hover{
+    background: url(../images/ppkq.png);
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    background-origin:content-box;
+}
+.custom-admin .layui-nav-tree .layui-nav-item .layui-nav-item-a:focus{
+    background: url(../images/lppkq.png);
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    background-origin:content-box;
 }
 
 .custom-admin .layui-nav-tree .layui-nav-item a > i{
@@ -159,7 +177,7 @@
 }
 .layui-table thead tr{
 	background-color: #f2f2f2;   
-	color: #222;
+	color: rgb(131, 0, 0);
 }
 .col-red{ color: #ef5350!important; }
 .col-blue{ color: #0094d1!important;}
@@ -365,9 +383,10 @@ html, body , .app-container{
     right: -10px;
 }
 
+/*欢迎使用左侧压缩按钮颜色*/
 .custom-header .layui-nav .slide-sidebar a.icon-font{
     padding: 0;
-    color: #2c2e2f;
+    color: #525252;
 }
 
 .custom-header .layui-nav .slide-sidebar a.icon-font > i{
@@ -390,20 +409,26 @@ html, body , .app-container{
     top: 0;
 }
 
-.custom-header .layui-nav .layui-nav-more:before,
+/*下拉箭头*/
+/*.custom-header .layui-nav .layui-nav-more:before,
 .custom-admin .layui-nav .layui-nav-more:before{
     content: '\e61a';
 }
 
 .custom-admin .layui-nav-itemed > a .layui-nav-more:before{
     content: '\e619';
-}
+}*/
 
+/*左上leftlogo*/
 .custom-logo{
     height: 50px;
     line-height: 50px;
-    color: #fff;
-    background-color: #fff;
+    /*color: #fff;*/
+    /*background-color: #fff;*/
+    background: url(../images/leftlogo.png);
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    background-origin:content-box;
     vertical-align: middle;
     text-align: center;
     border-bottom: 1px #eee solid;
