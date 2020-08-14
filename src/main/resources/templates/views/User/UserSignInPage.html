@@ -9,8 +9,39 @@
     <link rel="stylesheet" href="../assets/css/admin.css"/>  
     <link rel="stylesheet" href="../assets/css/style.css"/> 
 </head>
+<style type="text/css">
+	#test_n1{
+		float: left;
+		opacity:0.6;
+		position:relative;
+		left:51%;
+		top:calc(15vh);
+	}
+	.lform{
+		width: 400px;
+		height: 324px;
+		float: right;
+		background-color: #21B4E2;
+		opacity:0.6;
+		position:relative;
+		right:51.5%;
+		top:calc(15vh);
+	}
+	#lbox{
+		height: 800px;
+		background-image: url("../img/signin2.png");
+		background-repeat: no-repeat;
+		background-size: 100%,100%;
+		background-origin:content-box;
+	}
+	#bbox{
+		min-height: 400px;
+		height: calc(90vh);
+		overflow:hidden;
+	}
+</style>
 <body class="layui-view-body">
-    <div class="layui-content">
+    <div id="bbox" class="layui-content">
     	<!--面包屑导航-->
     	<div class="mianb">
     		<div class="mblf layui-col-xs6 layui-col-md6">
@@ -25,9 +56,10 @@
 		    </div>
 		</div>
 		<!--指示条-->
-        <div class="layui-row">        	
-            <div class="layui-card positionbox">            	  
-				    
+		<div id="lbox">
+        <div class="layui-row">
+            <div class="layui-card positionbox">
+				<div class="lform">
 				<!--#填写action的值确定提交的url#-->
 				<form  class="layui-form">
 
@@ -56,7 +88,10 @@
 						</div>
 					</div>
 				</form>
+				</div>
+				<div class="layui-inline" id="test_n1"></div>
             </div>   
+		</div>
 		</div>
     </div>
     <script src="../assets/jquery.min.js"></script>
