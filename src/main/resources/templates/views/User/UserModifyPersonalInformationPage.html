@@ -61,10 +61,10 @@
 						  </div>
 						  <div class="layui-form-item">
 						    <label class="layui-form-label">用户性别</label>
-						    <div class="layui-input-block">
-						      <input type="radio" name="userSex" value="男" title="男" >
-						      <input type="radio" name="userSex" value="女" title="女">
-						    </div>
+							  <div class="layui-input-block">
+								  <input type="radio" name="userSex" value="男" title="男" th:checked="${user.getUserSex()=='男'}">
+								  <input type="radio" name="userSex" value="女" title="女" th:checked="${user.getUserSex()=='女'}">
+							  </div>
 						  </div>
 						<button type="submit" formaction="/user/changeUser" class="layui-btn layui-btn-normal">确认修改</button>
 					</form>
@@ -82,6 +82,6 @@
 	  var layedit = layui.layedit;
 	  layedit.build('demo2'); //建立编辑器
 	});	
-	</script>>
+	</script>
 </body>
 </html>
