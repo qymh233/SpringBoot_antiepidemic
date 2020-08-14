@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -57,7 +58,7 @@ public class AdminPageHandler {
      * @param model 模型
      * @return 用户主界面
      */
-    @RequestMapping(path="/userLogin")
+    @RequestMapping(path="/userLogin", method = RequestMethod.POST)
     public String UserLogin(@RequestParam(name = "userId") int userId, @RequestParam(name = "userPW") String userPW, Model model){
         boolean isLogin = userService.UserLogin(userId, userPW);
         if(!isLogin){
@@ -81,6 +82,7 @@ public class AdminPageHandler {
      */
     @RequestMapping(path="/userRegister")
     public String UserRegister(@RequestParam(name = "userName") String userName, @RequestParam(name = "userSex") String userSex, @RequestParam(name = "userAge") int userAge, @RequestParam(name = "userPhone") Long userPhone, @RequestParam(name = "userIdCard") String userIdCard, @RequestParam(name = "userId") int userId, Model model){
+
         Users users=new Users();
         users.setUserName(userName);
         users.setUserSex(userSex);
@@ -92,6 +94,7 @@ public class AdminPageHandler {
 
         if(!isRegister)
             return "RegistrationOfOutsidersPage";
+        System.out.println("test2");
         Users user=userService.FindUserOne(users.getUserId());
         model.addAttribute("user",user);
         return "OutsidersLogin";
