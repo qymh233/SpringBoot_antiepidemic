@@ -27,7 +27,6 @@ public class AdminServiceImpl implements AdminService{
     @Autowired
     VolunteInter volunteInter;
 
-
     @Override
     public Manager selectManagerById(int adminId){
         return adminInter.SelectOne(adminId);
