@@ -166,16 +166,18 @@ public class AdminHandler {
     public JSONObject goodsList(Integer page, Integer limit){
 
         List<Goods> goodsListSub;
+        JSONObject result = new JSONObject();
+        result.put("code", 0);
+        if(goodsList == null) return result;
+
         if(((page - 1) * limit + limit) <= goodsList.size()) {
             goodsListSub = goodsList.subList((page - 1) * limit, (page - 1) * limit + limit);
         }else{
             goodsListSub = goodsList.subList((page - 1) * limit, goodsList.size());
         }
 
-        JSONObject result = new JSONObject();
         JSONArray jsonArray = JSONArray.fromObject(goodsListSub);
         NullToEmpty.filterNull(jsonArray);
-        result.put("code", 0);
         result.put("msg", "");
         result.put("count", goodsList.size());
         result.put("data", jsonArray);
@@ -279,16 +281,17 @@ public class AdminHandler {
     public JSONObject userList(Integer page, Integer limit){
 
         List<Users> userListSub;
+        JSONObject result = new JSONObject();
+        result.put("code", 0);
+        if(userList == null) return result;
         if(((page - 1) * limit + limit) <= userList.size()) {
             userListSub = userList.subList((page - 1) * limit, (page - 1) * limit + limit);
         }else{
             userListSub = userList.subList((page - 1) * limit, userList.size());
         }
 
-        JSONObject result = new JSONObject();
         JSONArray jsonArray = JSONArray.fromObject(userListSub);
         NullToEmpty.filterNull(jsonArray);
-        result.put("code", 0);
         result.put("msg", "");
         result.put("count", userList.size());
         result.put("data", jsonArray);
@@ -363,16 +366,17 @@ public class AdminHandler {
     public JSONObject reportList(Integer page, Integer limit){
 
         List<Report> reportListSub;
+        JSONObject result = new JSONObject();
+        result.put("code", 0);
+        if(reportList == null) return result;
         if(((page - 1) * limit + limit) <= reportList.size()) {
             reportListSub = reportList.subList((page - 1) * limit, (page - 1) * limit + limit);
         }else{
             reportListSub = reportList.subList((page - 1) * limit, reportList.size());
         }
 
-        JSONObject result = new JSONObject();
         JSONArray jsonArray = JSONArray.fromObject(reportListSub);
         NullToEmpty.filterNull(jsonArray);
-        result.put("code", 0);
         result.put("msg", "");
         result.put("count", reportList.size());
         result.put("data", jsonArray);
@@ -457,16 +461,17 @@ public class AdminHandler {
     public JSONObject recordList(Integer page, Integer limit){
 
         List<Message> messageListSub;
+        JSONObject result = new JSONObject();
+        result.put("code", 0);
+        if(messageList == null) return result;
         if(((page - 1) * limit + limit) <= messageList.size()) {
             messageListSub = messageList.subList((page - 1) * limit, (page - 1) * limit + limit);
         }else{
             messageListSub = messageList.subList((page - 1) * limit, messageList.size());
         }
 
-        JSONObject result = new JSONObject();
         JSONArray jsonArray = JSONArray.fromObject(messageListSub);
         NullToEmpty.filterNull(jsonArray);
-        result.put("code", 0);
         result.put("msg", "");
         result.put("count", messageList.size());
         result.put("data", jsonArray);
@@ -539,16 +544,17 @@ public class AdminHandler {
     public JSONObject opinionList(Integer page, Integer limit){
 
         List<Opinion> opinionListSub;
+        JSONObject result = new JSONObject();
+        result.put("code", 0);
+        if(opinionList == null) return result;
         if(((page - 1) * limit + limit) <= opinionList.size()) {
             opinionListSub = opinionList.subList((page - 1) * limit, (page - 1) * limit + limit);
         }else{
             opinionListSub = opinionList.subList((page - 1) * limit, opinionList.size());
         }
 
-        JSONObject result = new JSONObject();
         JSONArray jsonArray = JSONArray.fromObject(opinionListSub);
         NullToEmpty.filterNull(jsonArray);
-        result.put("code", 0);
         result.put("msg", "");
         result.put("count", opinionList.size());
         result.put("data", jsonArray);
@@ -593,16 +599,17 @@ public class AdminHandler {
     public JSONObject signInList(Integer page, Integer limit){
 
         List<SignIn> signInListSub;
+        JSONObject result = new JSONObject();
+        result.put("code", 0);
+        if(signInList == null) return result;
         if(((page - 1) * limit + limit) <= signInList.size()) {
             signInListSub = signInList.subList((page - 1) * limit, (page - 1) * limit + limit);
         }else{
             signInListSub = signInList.subList((page - 1) * limit, signInList.size());
         }
 
-        JSONObject result = new JSONObject();
         JSONArray jsonArray = JSONArray.fromObject(signInListSub);
         NullToEmpty.filterNull(jsonArray);
-        result.put("code", 0);
         result.put("msg", "");
         result.put("count", signInList.size());
         result.put("data", jsonArray);
@@ -640,16 +647,18 @@ public class AdminHandler {
     public JSONObject volunteList(Integer page, Integer limit){
 
         List<Volunte> volunteListSub;
+        JSONObject result = new JSONObject();
+        result.put("code", 0);
+        if(volunteList == null) return result;
         if(((page - 1) * limit + limit) <= volunteList.size()) {
             volunteListSub = volunteList.subList((page - 1) * limit, (page - 1) * limit + limit);
         }else{
             volunteListSub = volunteList.subList((page - 1) * limit, volunteList.size());
         }
 
-        JSONObject result = new JSONObject();
+
         JSONArray jsonArray = JSONArray.fromObject(volunteListSub);
         NullToEmpty.filterNull(jsonArray);
-        result.put("code", 0);
         result.put("msg", "");
         result.put("count", volunteList.size());
         result.put("data", jsonArray);
