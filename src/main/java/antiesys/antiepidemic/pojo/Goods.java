@@ -7,7 +7,7 @@ import java.util.Date;
 public class Goods {
     private int goodsId;
     private String goodsName;
-    @NotNull(message = "用户ID不能为空")
+    @NotNull(message = "物品数量不能为空")
     private int goodsNum;
     private String goodsSource;
     private Date goodsInTime;

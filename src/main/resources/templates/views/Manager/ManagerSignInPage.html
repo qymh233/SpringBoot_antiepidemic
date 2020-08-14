@@ -7,15 +7,36 @@
     <link rel="stylesheet" href="../assets/css/layui.css">    
     <link rel="stylesheet" href="../assets/css/view.css"/>
     <link rel="stylesheet" href="../assets/css/admin.css"/>  
-    <link rel="stylesheet" href="../assets/css/style.css"/> 
+    <link rel="stylesheet" href="../assets/css/style.css"/>
+	<style type="text/css">
+		#imgDiv{
+			background-image: url("../img/signin.jpg");
+			background-size:cover;
+		}
+		#test_n1{
+			float: right;
+			opacity:0.6;
+		}
+		.lform{
+			float: left;
+			background-color: #00FFFF;
+			opacity:0.6;
+		}
+		#lbox{
+			background-image: url("../img/signin.jpg");
+			background-size:cover;
+			margin-bottom: 0px;
+			m
+		}
+	</style>
 </head>
-<body class="layui-view-body">
+<body  class="layui-view-body">
     <div class="layui-content">
     	<!--面包屑导航-->
     	<div class="mianb">
     		<div class="mblf layui-col-xs6 layui-col-md6">
     			 <i class="layui-icon">&#xe656;</i>
-    			 <p>管理员首页 > <span>签到</span></p>
+    			 <p >管理员首页 > <span >签到</span></p>
     		</div>    		
     	</div>
     	<!--面包屑导航-->
@@ -25,31 +46,32 @@
 		    </div>
 		</div>
 		<!--指示条-->
-        <div class="layui-row">        	
-            <div class="layui-card positionbox">            	  
-				    
+		<div id="lbox">
+        <div  class="layui-row">
 				<!--#填写action的值确定提交的url#-->
-				<form  class="layui-form">
-
-					<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-					    <legend>请填写体温</legend>
-					</fieldset>
-					<!--#修改name值 替换为变量名#-->
-					<div class="layui-form-item">							    
-						<div class="layui-inline">
-							<label class="layui-form-label">体温</label>
-							<div class="layui-input-inline" style="width: 200px;">
-								<input type="text" name="temperature" placeholder="体温" autocomplete="off" class="layui-input">
+				<div class="lform">
+					<form  class="layui-form">
+						<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+							<legend>请填写体温</legend>
+						</fieldset>
+						<!--#修改name值 替换为变量名#-->
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label">体温</label>
+								<div class="layui-input-inline" style="width: 200px;">
+									<input type="text" name="temperature" placeholder="体温" autocomplete="off" class="layui-input">
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="layui-form-item">
-						<div class="layui-input-block">
-							<button type="submit" formaction="/admin/adminSignIn" class="layui-btn layui-btn-primary">签到</button>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button type="submit" formaction="/admin/adminSignIn" class="layui-btn layui-btn-primary">签到</button>
+							</div>
 						</div>
-					</div>
-				</form>
-            </div>   
+					</form>
+				</div>
+			<div class="layui-inline" id="test_n1"></div>
+		</div>
 		</div>
     </div>
     <script src="../assets/jquery.min.js"></script>
@@ -62,7 +84,17 @@
 	layui.use('layedit', function(){
 	  var layedit = layui.layedit;
 	  layedit.build('demo2'); //建立编辑器
-	});	
+	});
+	layui.use('laydate', function(){
+		var laydate = layui.laydate;
+
+		//执行一个laydate实例
+		laydate.render({
+			elem: '#test_n1'
+			,position: 'static'
+		});
+	});
+
 	</script>
 </body>
 </html>
