@@ -15,8 +15,11 @@
     	<div class="mianb">
     		<div class="mblf layui-col-xs6 layui-col-md6">
     			 <i class="layui-icon">&#xe656;</i>
-    			 <p>首页管理 > <span>查看申请结果</span></p>
+    			 <p>首页管理 > <span>查看防疫信息</span></p>
     		</div>
+    		<!--<div class="mbrt layui-col-xs6 layui-col-md6">
+    			<a href="javascript:;" class="layui-btn layui-btn-normal">查看防疫信息</a>
+    		</div>-->
     	</div>
     	<!--面包屑导航-->
         <div class="layui-row">
@@ -25,31 +28,25 @@
 			 		  <table class="layui-table" lay-skin="line" lay-size="lg" id="table">						  
 						  <thead>
 						    <tr>
-						      <th>申请人</th>
-						      <th>申请服务时间</th>
-						      <th>申请时间</th>
-							  <th>状态</th>
+						      <th>消息标题</th>
+						      <th>发布者</th>	
+						      <th>发布时间</th>
+							  <th>&nbsp&nbsp&nbsp&nbsp操作</th>
+							  <th>&nbsp&nbsp&nbsp&nbsp状态</th>
 						    </tr> 
 						  </thead>
 						  <tbody>
 						  <!--#循环打印<tr>标签 修改删除向后端传递数据 id值#-->
-						  <tr th:each="message:${OneVolunter}">
-							  <td th:text="${message.getUserName()}"></td>
-							  <td th:if="${message.getTaskTime()} eq '1'" th:text="周一上午"></td>
-							  <td th:if="${message.getTaskTime()} eq '2'" th:text="周二上午"></td>
-							  <td th:if="${message.getTaskTime()} eq '3'" th:text="周三上午"></td>
-							  <td th:if="${message.getTaskTime()} eq '4'" th:text="周四上午"></td>
-							  <td th:if="${message.getTaskTime()} eq '5'" th:text="周五上午"></td>
-							  <td th:if="${message.getTaskTime()} eq '6'" th:text="周六上午"></td>
-							  <td th:if="${message.getTaskTime()} eq '7'" th:text="周日上午"></td>
-							  <td th:if="${message.getTaskTime()} eq '8'" th:text="周一下午"></td>
-							  <td th:if="${message.getTaskTime()} eq '9'" th:text="周二下午"></td>
-							  <td th:if="${message.getTaskTime()} eq '10'" th:text="周三下午"></td>
-							  <td th:if="${message.getTaskTime()} eq '11'" th:text="周四下午"></td>
-							  <td th:if="${message.getTaskTime()} eq '12'" th:text="周五下午"></td>
-							  <td th:if="${message.getTaskTime()} eq '13'" th:text="周六下午"></td>
-							  <td th:if="${message.getTaskTime()} eq '14'" th:text="周日下午"></td>
+						  <tr th:each="message:${umsglist}">
+							  <td th:text="${message.getTitle()}"></td>
+							  <td th:text="${message.getPuBer()}"></td>
 							  <td th:text="${#dates.format(message.getPuDate(),'yyyy-MM-dd')}"></td>
+							  <td>
+								  <div class="layui-table-cell laytable-cell-1-0-10">
+									  <!--#添加脚本#-->
+									  <a th:href="@{/user/taskCompletion(meId=${message.getMeID()})}" class="layui-btn layui-btn-normal layui-btn-xs update">查看</a>
+								  </div>
+							  </td>
 							  <td th:text="${message.getStat()}"></td>
 						  </tr>
 						  </tbody>

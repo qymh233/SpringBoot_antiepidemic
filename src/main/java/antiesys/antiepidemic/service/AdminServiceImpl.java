@@ -27,7 +27,6 @@ public class AdminServiceImpl implements AdminService{
     @Autowired
     VolunteInter volunteInter;
 
-
     @Override
     public Manager selectManagerById(int adminId){
         return adminInter.SelectOne(adminId);
@@ -373,5 +372,14 @@ public class AdminServiceImpl implements AdminService{
         //修改信息
         int t=volunteInter.UpdateVolunte(volunte);
         return t;
+    }
+
+    @Override
+    public List<Volunte> SelectVolunteAgree() {
+        List<Volunte> reportList=volunteInter.SelectVolunteAgree();
+        if(reportList==null||reportList.isEmpty()){
+            return null;
+        }
+        return reportList;
     }
 }

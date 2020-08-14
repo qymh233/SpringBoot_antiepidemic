@@ -35,18 +35,18 @@
   	</select>
     <!-- 查询一个信息 -->
     <select id="SelectOne" resultMap="SelectAll">
-    	select * from V_Report where userId=#{userId} order by ORDERNUM DESC
+    	select * from V_Report where userId=#{userId} order by orderNum DESC
   	</select>
     <select id="SelectReportInTime" resultType="antiesys.antiepidemic.pojo.Report">
-        select * from V_Report where inTime between #{beginTime} and #{endTime}
+        select * from V_Report where inTime between #{beginTime} and #{endTime} order by orderNum DESC
     </select>
     <select id="SelectReportOutTime" resultType="antiesys.antiepidemic.pojo.Report">
-        select * from V_Report where outTime between #{beginTime} and #{endTime}
+        select * from V_Report where outTime between #{beginTime} and #{endTime} order by orderNum DESC
     </select>
     <select id="SelectReportInTimeOne" resultType="antiesys.antiepidemic.pojo.Report">
-        select * from V_Report where inTime between #{beginTime} and #{endTime} and userId=#{userId}
+        select * from V_Report where inTime between #{beginTime} and #{endTime} and userId=#{userId} order by orderNum DESC
     </select>
     <select id="SelectReportOutTimeOne" resultType="antiesys.antiepidemic.pojo.Report">
-        select * from V_Report where outTime between #{beginTime} and #{endTime} and userId=#{userId}
+        select * from V_Report where outTime between #{beginTime} and #{endTime} and userId=#{userId} order by orderNum DESC
     </select>
 </mapper>

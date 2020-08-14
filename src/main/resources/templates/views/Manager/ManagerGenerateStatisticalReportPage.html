@@ -42,41 +42,14 @@
         <div class="layui-row">
             <div class="layui-card">
             	<div class="table-responsive">
-			 		  <table class="layui-table" lay-skin="line" lay-size="lg" id="table">						  
-						  <thead>
-						    <tr>
-							 <th>用户ID</th>
-							 <th>姓名</th>
-							 <th>电话号码</th>
-							 <th>体温</th>
-						     <th>进入小区时间</th>
-							 <th>出小区时间</th>
-						     <th>备注</th>
-						    </tr> 
-						  </thead>
-						  <tbody>
-							<tr th:each="report:${reportList}">
-								<td th:text="${report.getUserId()}"></td>
-								<td th:text="${report.getUserName()}"></td>
-								<td th:text="${report.getUserPhone()}"></td>
-								<td th:text="${report.getTemperature()}"></td>
-								<td th:text="${#dates.format(report.getInTime(),'yyyy-MM-dd HH:mm:ss')}"></td>
-								<td th:text="${#dates.format(report.getOutTime(),'yyyy-MM-dd HH:mm:ss')}"></td>
-								<td th:text="${report.getRemarks()}"></td>
-							</tr>
-						  </tbody>
-					</table>
+					<table id="reportList" lay-filter="test"></table>
 			 	</div>
-                   
-           		<!--分页-->
-           		<div id="page"></div>
-           		<!--分页-->
             </div>           
         </div>
     </div>
     <script src="../assets/jquery.min.js"></script>
     <script src="../assets/layui.all.js"></script>    
-    <script>
+    <script th:inline="none">
     	var element = layui.element;
 		layui.use('laydate', function(){
 			var laydate = layui.laydate;
@@ -92,19 +65,54 @@
 				type: 'datetime'
 			});
 		});
-    	layui.use(['laypage', 'layer'], function(){
-		  var laypage = layui.laypage
-		  ,layer = layui.layer;		  
-		  
-		  //页码完整功能
-		  laypage.render({
-		    elem: 'page'
-		    ,count: 100
-		    ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
-		    ,jump: function(obj){
-		      console.log(obj)
-		    }
-		  });	 
+
+		function dateToStr(date) {
+			var time = new Date(date.time);
+			var y = time.getFullYear();
+			var M = time.getMonth() + 1;
+			M = M < 10 ? ("0" + M) : M;
+			var d = time.getDate();
+			d = d < 10 ? ("0" + d) : d;
+			var h = time.getHours();
+			h = h < 10 ? ("0" + h) : h;
+			var m = time.getMinutes();
+			m = m < 10 ? ("0" + m) : m;
+			var s = time.getSeconds();
+			s = s < 10 ? ("0" + s) : s;
+			var str = y + "-" + M + "-" + d + " " + h + ":" + m + ":" + s;
+			return str;
+		}
+
+		layui.use('table', function(){
+			var table = layui.table;
+
+			//第一个实例
+			table.render({
+				elem: '#reportList'
+				,height: 466
+				,url: '/admin/reportList' //数据接口
+				,page: true //开启分页
+				,method: 'post'
+				,cols: [[ //表头
+					{field: 'userId', title: '用户ID', sort: true, fixed: 'left'}
+					,{field: 'userName', title: '姓名', sort: true}
+					,{field: 'userPhone', title: '电话号码', sort: true}
+					,{field: 'temperature', title: '体温', sort: true}
+					,{field: 'inTime', title: '进小区时间', sort: true,
+						templet: function (d){
+							return dateToStr(d.inTime);
+						}
+					}
+					,{field: 'outTime', title: '出小区时间', sort: true,
+						templet: function (d){
+							return dateToStr(d.outTime);
+						}
+					}
+					,{field: 'remarks', title: '备注', sort: true}
+
+				]]
+			});
+
 		});
 
 		 layui.use('form', function(){

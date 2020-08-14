@@ -17,9 +17,6 @@
     			 <i class="layui-icon">&#xe656;</i>
     			 <p>管理员首页 > 疫情防控 > <span>防控信息发布</span></p>
     		</div>
-    		<div class="mbrt layui-col-xs6 layui-col-md6">
-    			<a href="javascript:;" class="layui-btn layui-btn-normal" id="fabu">添加报告</a>    			     			 
-    		</div>
     	</div>
     	<!--面包屑导航-->
         <div class="layui-row">
@@ -84,25 +81,6 @@
 		    }
 		  });	 
 		});
-		
-		//弹框		
-		$('#fabu').on('click', function(){			
-		  layui.use('layer', function(){
-          var layer = layui.layer;
-          layer.open({
-                type: 2,
-                title: '发布完成情况',
-                fix: false,
-                shadeClose: true,
-                shade: 0.8,
-                area: ['660px', '420px'],
-                content: 'ManagerRecordPage-Release.html',
-                end: function () {
-                   location.reload();
-                }
-            });
-        });
-      })
 		
 		//判断弹框
 		$(".delete").click(function(){

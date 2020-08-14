@@ -7,18 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/*
-* 101010201
-* 111111
-* */
 @Controller
 @RequestMapping("/user")
 @SessionAttributes(value = {"volunag","OneVolunter","ssign","usigninlist","user","umsglist","usermessage","ureportList","opilist","Oneopinion","myoplist","oppage"})
@@ -36,10 +30,11 @@ public class UserHandler {
 
         Users users = (Users)model.getAttribute("user");
 
-        if(users == null)
+        if(users == null) {
             return "ErrorPage";
+        }
 
-        return "views/UserViewPersonalInformationPage";
+        return "views/User/UserViewPersonalInformationPage";
     }
 
     /**
@@ -54,21 +49,25 @@ public class UserHandler {
     @RequestMapping(path="/changeUser")
     public String ChangeUser(@RequestParam(name = "userName") String userName,@RequestParam(name = "userAge") Integer userAge,@RequestParam(name = "userPhone") Long userPhone,@RequestParam(name = "userSex") String userSex,Model model){
         Users user=(Users) model.getAttribute("user");
-        if(!userName.equals("")&&userName!=null)
+        if(!userName.equals("")&&userName!=null) {
             user.setUserName(userName);
+        }
         if(userAge!=null){
             user.setUserAge(userAge);
         }
-        if(userPhone!=null)
+        if(userPhone!=null) {
             user.setUserPhone(userPhone);
-        if(!userSex.equals(" ")&&userSex!=null)
+        }
+        if(!userSex.equals(" ")&&userSex!=null) {
             user.setUserSex(userSex);
+        }
         int numbers = userService.ChangeUser(user);
 
-        if(numbers == 0)
-            return "views/UserModifyPersonalInformationPage";
+        if(numbers == 0) {
+            return "views/User/UserModifyPersonalInformationPage";
+        }
 
-        return "views/UserViewPersonalInformationPage";
+        return "views/User/UserViewPersonalInformationPage";
     }
 
     /**
@@ -79,7 +78,7 @@ public class UserHandler {
     @RequestMapping(path="/changeUserPage")
     public String ChangeUserPage(Model model){
 
-        return "views/UserModifyPersonalInformationPage";
+        return "views/User/UserModifyPersonalInformationPage";
     }
 
     /**
@@ -90,7 +89,7 @@ public class UserHandler {
     @RequestMapping(path="/ChangePassWordPage")
     public String ChangePassWordPage(Model model){
 
-        return "views/UserChangePasswordPage";
+        return "views/User/UserChangePasswordPage";
     }
 
     /**
@@ -104,8 +103,9 @@ public class UserHandler {
         Users user=(Users) model.getAttribute("user");
         boolean isChange = userService.ChangePassword(user.getUserId(), user.getUserPW(), newPW);
 
-        if(!isChange)
-            return "views/UserChangePasswordPage";
+        if(!isChange) {
+            return "views/User/UserChangePasswordPage";
+        }
 
         return "redirect:/UserLoginPage.html";
     }
@@ -120,7 +120,7 @@ public class UserHandler {
 
         List<Message> messageList=userService.FindMessageAll();
         model.addAttribute("umsglist",messageList);
-        return "views/UserViewEpidemicPreventionInformationPage";
+        return "views/User/UserViewEpidemicPreventionInformationPage";
     }
 
     /**
@@ -135,7 +135,7 @@ public class UserHandler {
         Message message=userService.FindMessageOne(meId);
         model.addAttribute("usermessage",message);
 
-        return "views/UserRecordPage-Details";
+        return "views/User/UserRecordPage-Details";
     }
 
     /**
@@ -149,12 +149,13 @@ public class UserHandler {
 
         List<Report> reportList= userService.FindReportAll(meId);
 
-        if(reportList == null)
-            return "views/UserRecordPage-Details";
+        if(reportList == null) {
+            return "views/User/UserRecordPage-Details";
+        }
 
         model.addAttribute("ureportList", reportList);
 
-        return "views/UserFindOneReportPage";
+        return "views/User/UserFindOneReportPage";
     }
 
     /**
@@ -164,7 +165,7 @@ public class UserHandler {
      */
     @RequestMapping(path="/feedback")
     public String feedback(Model model){
-        return "views/UserFeedbackPage";
+        return "views/User/UserFeedbackPage";
     }
 
     /**
@@ -184,12 +185,13 @@ public class UserHandler {
         opinion.setUserId(i);
         opinion.setUserName(users.getUserName());
         boolean t=userService.AddOpinion(opinion);
-        if(t==false)
-            return "views/UserFeedbackPage";
+        if(t==false) {
+            return "views/User/UserFeedbackPage";
+        }
         //重新获取数据
         List<Opinion> opinionList=userService.FindOpinionAll();
         model.addAttribute("opilist",opinionList);
-        return "views/UserViewOpinionInformationPage";
+        return "views/User/UserViewOpinionInformationPage";
     }
 
     /**
@@ -202,7 +204,7 @@ public class UserHandler {
         List<Opinion> opinionList=userService.FindOpinionAll();
         model.addAttribute("opilist",opinionList);
         model.addAttribute("oppage","UserViewOpinionInformationPage");
-        return "views/UserViewOpinionInformationPage";
+        return "views/User/UserViewOpinionInformationPage";
     }
 
     /**
@@ -217,7 +219,7 @@ public class UserHandler {
         Opinion opinion=userService.FindOpinionOne(meId);
         model.addAttribute("Oneopinion",opinion);
 
-        return "views/UserViewOneOpinionInformationPage";
+        return "views/User/UserViewOneOpinionInformationPage";
     }
 
     /**
@@ -231,7 +233,7 @@ public class UserHandler {
         List<Opinion> opinionList=userService.SelectOpinionOne(users.getUserId());
         model.addAttribute("opilist",opinionList);
         model.addAttribute("oppage","selfOpinion");
-        return "views/UserViewOpinionInformationPage";
+        return "views/User/UserViewOpinionInformationPage";
     }
 
     /**
@@ -241,7 +243,7 @@ public class UserHandler {
      */
     @RequestMapping(path="/ReturnPage")
     public String ReturnPage(Model model){
-        return "views/UserViewOpinionInformationPage";
+        return "views/User/UserViewOpinionInformationPage";
     }
 
     /**
@@ -251,7 +253,7 @@ public class UserHandler {
      */
     @RequestMapping(path="/GotoSignIn")
     public String GotoSignIn(Model model){
-        return "views/UserSignInPage";
+        return "views/User/UserSignInPage";
     }
 
     /**
@@ -274,7 +276,7 @@ public class UserHandler {
             return "ErrorPage";
         List<SignIn> signInList=userService.SelectSignInOne(users.getUserId());
         model.addAttribute("usigninlist",signInList);
-        return "views/UserViewSignInPage";
+        return "views/User/UserViewSignInPage";
     }
 
     /**
@@ -288,7 +290,7 @@ public class UserHandler {
         List<SignIn> signInList=userService.SelectSignInOne(users.getUserId());
         model.addAttribute("usigninlist",signInList);
         model.addAttribute("ssign","all");
-        return "views/UserViewSignInPage";
+        return "views/User/UserViewSignInPage";
     }
 
     /**
@@ -304,7 +306,7 @@ public class UserHandler {
         List<SignIn> reportList = userService.FindSignInTime(beginTime, endTime,users.getUserId());
         model.addAttribute("usigninlist", reportList);
         model.addAttribute("ssign","time");
-        return "views/UserViewSignInPage";
+        return "views/User/UserViewSignInPage";
     }
 
     /**
@@ -317,7 +319,7 @@ public class UserHandler {
         Users users=(Users)model.getAttribute("user");
         List<Volunte> volunteList=userService.FindVolunterOne(users.getUserId());
         model.addAttribute("OneVolunter",volunteList);
-        return "views/GotoVolunterEnd";
+        return "views/User/GotoVolunterEnd";
     }
 
     /**
@@ -333,9 +335,14 @@ public class UserHandler {
             volunag.put(volunteList.get(i).getTaskTime(),volunteList.get(i));
         }
         model.addAttribute("volunag",volunag);
-        return "views/UserApplyForVolunteerPage";
+        return "views/User/UserApplyForVolunteerPage";
     }
-    //跳转志愿服务安排页面
+
+    /**
+     * 跳转志愿服务安排页面
+     * @param model 模型
+     * @return 志愿服务安排页面
+     */
     @RequestMapping(path="/UserForVolunteerPage")
     public String UserForVolunteerPage(Model model){
         List<Volunte> volunteList=userService.SelectVolunteAgree();
@@ -344,8 +351,9 @@ public class UserHandler {
             volunag.put(volunteList.get(i).getTaskTime(),volunteList.get(i));
         }
         model.addAttribute("volunag",volunag);
-        return "views/UserForVolunteerPage";
+        return "views/User/UserForVolunteerPage";
     }
+
     /**
      * 跳转申请志愿页面
      * @param model 模型
@@ -354,6 +362,13 @@ public class UserHandler {
     @RequestMapping(path="/UserApplyForVolunteer")
     public String UserApplyForVolunteer(@RequestParam(name = "taskTime") String taskTime,Model model){
         Users users=(Users)model.getAttribute("user");
+        List<Volunte> voluntes=userService.FindVolunterOne(users.getUserId());
+        for (int i=0;i<voluntes.size();i++){
+            if(voluntes.get(i).getTaskTime().equals(taskTime)){
+                model.addAttribute("OneVolunter",voluntes);
+                return "views/User/GotoVolunterEnd";
+            }
+        }
         Volunte volunte=new Volunte();
         volunte.setTaskTime(taskTime);
         volunte.setUserId(users.getUserId());
@@ -361,7 +376,7 @@ public class UserHandler {
         userService.InsertVolunte(volunte);
         List<Volunte> volunteList=userService.FindVolunterOne(users.getUserId());
         model.addAttribute("OneVolunter",volunteList);
-        return "views/GotoVolunterEnd";
+        return "views/User/GotoVolunterEnd";
     }
 
 }

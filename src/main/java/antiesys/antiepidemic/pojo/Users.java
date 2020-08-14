@@ -1,20 +1,25 @@
 package antiesys.antiepidemic.pojo;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class Users {
-    private int userId;
+    @NotNull(message = "用户ID不能为空")
+    private Integer userId;
     private String userName;
     private String userSex;
-    private int userAge;
+    private Integer userAge;
     private Long userPhone;
+    @NotBlank(message = "用户ID不能为空")
     private String userPW;
     private String userIdCard;
     private String temperature;
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -34,11 +39,11 @@ public class Users {
         this.userSex = userSex;
     }
 
-    public int getUserAge() {
+    public Integer getUserAge() {
         return userAge;
     }
 
-    public void setUserAge(int userAge) {
+    public void setUserAge(Integer userAge) {
         this.userAge = userAge;
     }
 
