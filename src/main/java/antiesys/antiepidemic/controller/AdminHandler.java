@@ -37,7 +37,6 @@ public class AdminHandler {
     /**
      * 管理员签到
      * @param temperature 体温
-     * @param model 模型
      * @return 签到结果
      */
     @RequestMapping(path="/adminSignIn", produces="text/html;charset=utf-8")
@@ -132,15 +131,16 @@ public class AdminHandler {
         if(!goodsName.equals("")&&goodsName!=null) {
             goods.setGoodsName(goodsName);
         }
-        if(goodsNum!=null) {
-            goods.setGoodsNum(goodsNum);
-        }
         if(!goodsSource.equals("")&&goodsSource!=null) {
             goods.setGoodsSource(goodsSource);
         }
         if(intime.equals("入库")) {
+            Integer i=goods.getGoodsNum()+goodsNum;
+            goods.setGoodsNum(i);
             goods.setGoodsInTime(new Date());
         } else {
+            Integer i=goods.getGoodsNum()-goodsNum;
+            goods.setGoodsNum(i);
             goods.setGoodsOutTime(new Date());
         }
         boolean isChange = adminService.ChangeGoods(goods);

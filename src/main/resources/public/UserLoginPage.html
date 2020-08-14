@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,7 +20,7 @@
             <div class="input-group">
                 <input type="text" name="userId" id="userId" class="input-field">
                 <label for="userId" class="input-label">
-                    <span class="label-title">用户账号</span>
+                    <span class="label-title">用户账号</span><font color="red"><span th:text="${error}"/></font>
                 </label>
             </div>
             <div class="input-group">
