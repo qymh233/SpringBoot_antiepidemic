@@ -323,8 +323,9 @@ public class UserHandler {
         signIn.setUserId(users.getUserId());
         signIn.setUserName(users.getUserName());
         boolean i=userService.AddSignIn(signIn);
-        if(i==false)
+        if(i==false) {
             return "ErrorPage";
+        }
         List<SignIn> signInList=userService.SelectSignInOne(users.getUserId());
         model.addAttribute("usigninlist",signInList);
         return "views/User/UserViewSignInPage";
