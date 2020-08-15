@@ -315,8 +315,6 @@ public class AdminHandler {
             report.setOutTime(new Date());
         }
 
-        //System.out.println(report.getInTime());
-
         int numbers = adminService.AddReport(report);
 
         if(numbers == 0)

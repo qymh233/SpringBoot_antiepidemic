@@ -9,7 +9,7 @@
 	</delete>
     <!-- 插入信息 - -->
     <insert id="InsertReport">
-		insert into T_Report(userId,orderNum,inTime,outTime,temperature,remarks) values(#{report.userId,jdbcType=NUMERIC},#{report.orderNum,jdbcType=NUMERIC},#{report.inTime,jdbcType=TIMESTAMP},#{report.outTime,jdbcType=TIMESTAMP},#{report.temperature,jdbcType=VARCHAR},#{report.remarks,jdbcType=VARCHAR})
+		insert into T_Report(userId,inTime,outTime,temperature,remarks) values(#{report.userId,jdbcType=NUMERIC},#{report.inTime,jdbcType=TIMESTAMP},#{report.outTime,jdbcType=TIMESTAMP},#{report.temperature,jdbcType=VARCHAR},#{report.remarks,jdbcType=VARCHAR})
 	</insert>
     <!--查询有多少信息-->
     <select id="SelectNum" resultType="int">
