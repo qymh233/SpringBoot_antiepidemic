@@ -107,7 +107,16 @@
 	layui.use('layedit', function(){
 	  var layedit = layui.layedit;
 	  layedit.build('demo2'); //建立编辑器
-	});	
+	});
+	layui.use('laydate', function(){
+		var laydate = layui.laydate;
+
+		//执行一个laydate实例
+		laydate.render({
+			elem: '#test_n1'
+			,position: 'static'
+		});
+	});
 	</script>
 </body>
 </html>
