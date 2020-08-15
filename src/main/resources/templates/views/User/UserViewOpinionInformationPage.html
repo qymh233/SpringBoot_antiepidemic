@@ -26,69 +26,66 @@
         <div class="layui-row">
             <div class="layui-card">
             	<div class="table-responsive">
-			 		  <table class="layui-table" lay-skin="line" lay-size="lg" id="table">						  
-						  <thead>
-						    <tr>
-						      <th>反馈标题</th>
-						      <th>反馈者</th>
-						      <th>反馈时间</th>
-							  <th>&nbsp&nbsp&nbsp&nbsp操作</th>
-							  <th>&nbsp&nbsp&nbsp&nbsp状态</th>
-						    </tr> 
-						  </thead>
-						  <tbody>
-						  <!--#循环打印<tr>标签 修改删除向后端传递数据 id值#-->
-						  <tr th:each="message:${opilist}">
-							  <td th:text="${message.getTitle()}"></td>
-							  <td th:text="${message.getUserName()}"></td>
-							  <td th:text="${#dates.format(message.getPuDate(),'yyyy-MM-dd')}"></td>
-							  <td>
-								  <div class="layui-table-cell laytable-cell-1-0-10">
-									  <!--#添加脚本#-->
-									  <a th:href="@{/user/taskOpinion(meId=${message.getMeID()})}" class="layui-btn layui-btn-normal layui-btn-xs update">查看</a>
-								  </div>
-							  </td>
-							  <td th:text="${message.getStat()}"></td>
-						  </tr>
-						  </tbody>
-					</table>
+					<table id="opinionList" lay-filter="test"></table>
 			 	</div>
-                   
-           		<!--分页-->
-           		<div id="page"></div>
-           		<!--分页-->
             </div>           
         </div>
     </div>
     <script src="../assets/jquery.min.js"></script>
-    <script src="../assets/layui.all.js"></script>    
+    <script src="../assets/layui.all.js"></script>
+	<script type="text/html" id="doBar">
+		<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="check">查看</a>
+	</script>
     <script>
     	var element = layui.element;
-    	layui.use(['laypage', 'layer'], function(){
-		  var laypage = layui.laypage
-		  ,layer = layui.layer;		  
-		  
-		  //页码完整功能
-		  laypage.render({
-		    elem: 'page'
-		    ,count: 100
-		    ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
-		    ,jump: function(obj){
-		      console.log(obj)
-		    }
-		  });	 
-		});
-		
-		//判断弹框
-		$(".delete").click(function(){
-			layer.confirm('确定要删除此任务？', {
-			  btn: ['是','否'] //按钮
-			}, function(){
-			  layer.msg('已删除', {icon: 1});
-			}, function(){
-			  layer.msg('已取消',  {icon: 2});
+
+		function dateToStr(date) {
+			if(date==="") return "";
+			var time = new Date(date.time);
+			var y = time.getFullYear();
+			var M = time.getMonth() + 1;
+			M = M < 10 ? ("0" + M) : M;
+			var d = time.getDate();
+			d = d < 10 ? ("0" + d) : d;
+			var str = y + "-" + M + "-" + d;
+			return str;
+		}
+
+		layui.use('table', function(){
+			var table = layui.table;
+
+			//第一个实例
+			table.render({
+				elem: '#opinionList'
+				,height: 466
+				,url: '/user/opinionList' //数据接口
+				,page: true //开启分页
+				,method: 'post'
+				,cols: [
+					[ //表头
+						{field: 'title', title: '反馈标题', sort: true, fixed: 'left'}
+						,{field: 'userName', title: '反馈者', sort: true}
+						,{field: 'puDate', title: '反馈时间', sort: true,
+						templet: function (d) {
+							return dateToStr(d.puDate);
+						}
+					}
+						,{title: '操作', toolbar:"#doBar", width:120}
+						,{field: 'stat', title: '状态', sort: true}
+					]
+				]
 			});
-		})			
+
+			table.on('tool(test)', function(obj){
+				var data = obj.data;
+				var layEvent = obj.event;
+
+				if(layEvent === 'check'){ //同意
+					location.href="/user/taskOpinion?meId="+data.meID;
+				}
+			});
+
+		});
 		
 		 layui.use('form', function(){
 		  var form = layui.form; 
