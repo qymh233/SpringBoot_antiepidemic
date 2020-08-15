@@ -432,9 +432,8 @@ public class UserHandler {
     public String UserApplyForVolunteer(@RequestParam(name = "taskTime") String taskTime,Model model){
         Users users=(Users)model.getAttribute("user");
         List<Volunte> voluntes=userService.FindVolunterOne(users.getUserId());
-        for (int i=0;i<voluntes.size();i++){
-            if(voluntes.get(i).getTaskTime().equals(taskTime)){
-                model.addAttribute("OneVolunter",voluntes);
+        for (Volunte value : voluntes) {
+            if (value.getTaskTime().equals(taskTime)) {
                 return "views/User/GotoVolunterEnd";
             }
         }
@@ -443,8 +442,7 @@ public class UserHandler {
         volunte.setUserId(users.getUserId());
         volunte.setUserName(users.getUserName());
         userService.InsertVolunte(volunte);
-        List<Volunte> volunteList=userService.FindVolunterOne(users.getUserId());
-        model.addAttribute("OneVolunter",volunteList);
+        volunteList=userService.FindVolunterOne(users.getUserId());
         return "views/User/GotoVolunterEnd";
     }
 
