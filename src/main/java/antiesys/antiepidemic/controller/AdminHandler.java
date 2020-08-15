@@ -3,9 +3,11 @@ package antiesys.antiepidemic.controller;
 import antiesys.antiepidemic.pojo.*;
 import antiesys.antiepidemic.service.AdminService;
 import antiesys.antiepidemic.util.NullToEmpty;
+import antiesys.antiepidemic.util.ObjectToJson;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +24,8 @@ import java.util.*;
 @Controller
 @RequestMapping("/admin")
 @SessionAttributes(value = {"manager","nummap","admuser","goodslist","good","userlist","msglist","adminmessage"})
+@Scope("session")
 public class AdminHandler {
-
     @Autowired
     AdminService adminService;
 
@@ -168,19 +170,11 @@ public class AdminHandler {
         List<Goods> goodsListSub;
         JSONObject result = new JSONObject();
         result.put("code", 0);
-        if(goodsList == null) return result;
-
-        if(((page - 1) * limit + limit) <= goodsList.size()) {
-            goodsListSub = goodsList.subList((page - 1) * limit, (page - 1) * limit + limit);
-        }else{
-            goodsListSub = goodsList.subList((page - 1) * limit, goodsList.size());
+        if(goodsList == null) {
+            return result;
         }
-
-        JSONArray jsonArray = JSONArray.fromObject(goodsListSub);
-        NullToEmpty.filterNull(jsonArray);
-        result.put("msg", "");
-        result.put("count", goodsList.size());
-        result.put("data", jsonArray);
+        goodsListSub = (List<Goods>) ObjectToJson.listSub(goodsList, page, limit);
+        ObjectToJson.filterObject(result, goodsListSub, goodsList.size());
         return result;
     }
 
@@ -283,18 +277,13 @@ public class AdminHandler {
         List<Users> userListSub;
         JSONObject result = new JSONObject();
         result.put("code", 0);
-        if(userList == null) return result;
-        if(((page - 1) * limit + limit) <= userList.size()) {
-            userListSub = userList.subList((page - 1) * limit, (page - 1) * limit + limit);
-        }else{
-            userListSub = userList.subList((page - 1) * limit, userList.size());
+        if(userList == null) {
+            return result;
         }
 
-        JSONArray jsonArray = JSONArray.fromObject(userListSub);
-        NullToEmpty.filterNull(jsonArray);
-        result.put("msg", "");
-        result.put("count", userList.size());
-        result.put("data", jsonArray);
+        userListSub = (List<Users>) ObjectToJson.listSub(userList, page, limit);
+
+        ObjectToJson.filterObject(result, userListSub, userList.size());
         return result;
     }
 
@@ -368,18 +357,12 @@ public class AdminHandler {
         List<Report> reportListSub;
         JSONObject result = new JSONObject();
         result.put("code", 0);
-        if(reportList == null) return result;
-        if(((page - 1) * limit + limit) <= reportList.size()) {
-            reportListSub = reportList.subList((page - 1) * limit, (page - 1) * limit + limit);
-        }else{
-            reportListSub = reportList.subList((page - 1) * limit, reportList.size());
+        if(reportList == null) {
+            return result;
         }
+        reportListSub = (List<Report>) ObjectToJson.listSub(reportList, page, limit);
 
-        JSONArray jsonArray = JSONArray.fromObject(reportListSub);
-        NullToEmpty.filterNull(jsonArray);
-        result.put("msg", "");
-        result.put("count", reportList.size());
-        result.put("data", jsonArray);
+        ObjectToJson.filterObject(result, reportListSub, reportList.size());
         return result;
     }
 
@@ -463,18 +446,12 @@ public class AdminHandler {
         List<Message> messageListSub;
         JSONObject result = new JSONObject();
         result.put("code", 0);
-        if(messageList == null) return result;
-        if(((page - 1) * limit + limit) <= messageList.size()) {
-            messageListSub = messageList.subList((page - 1) * limit, (page - 1) * limit + limit);
-        }else{
-            messageListSub = messageList.subList((page - 1) * limit, messageList.size());
+        if(messageList == null) {
+            return result;
         }
+        messageListSub = (List<Message>) ObjectToJson.listSub(messageList, page, limit);
 
-        JSONArray jsonArray = JSONArray.fromObject(messageListSub);
-        NullToEmpty.filterNull(jsonArray);
-        result.put("msg", "");
-        result.put("count", messageList.size());
-        result.put("data", jsonArray);
+        ObjectToJson.filterObject(result, messageListSub, messageList.size());
         return result;
     }
 
@@ -546,18 +523,12 @@ public class AdminHandler {
         List<Opinion> opinionListSub;
         JSONObject result = new JSONObject();
         result.put("code", 0);
-        if(opinionList == null) return result;
-        if(((page - 1) * limit + limit) <= opinionList.size()) {
-            opinionListSub = opinionList.subList((page - 1) * limit, (page - 1) * limit + limit);
-        }else{
-            opinionListSub = opinionList.subList((page - 1) * limit, opinionList.size());
+        if(opinionList == null) {
+            return result;
         }
+        opinionListSub = (List<Opinion>) ObjectToJson.listSub(opinionList, page, limit);
 
-        JSONArray jsonArray = JSONArray.fromObject(opinionListSub);
-        NullToEmpty.filterNull(jsonArray);
-        result.put("msg", "");
-        result.put("count", opinionList.size());
-        result.put("data", jsonArray);
+        ObjectToJson.filterObject(result, opinionListSub, opinionList.size());
         return result;
     }
 
@@ -601,18 +572,11 @@ public class AdminHandler {
         List<SignIn> signInListSub;
         JSONObject result = new JSONObject();
         result.put("code", 0);
-        if(signInList == null) return result;
-        if(((page - 1) * limit + limit) <= signInList.size()) {
-            signInListSub = signInList.subList((page - 1) * limit, (page - 1) * limit + limit);
-        }else{
-            signInListSub = signInList.subList((page - 1) * limit, signInList.size());
+        if(signInList == null) {
+            return result;
         }
-
-        JSONArray jsonArray = JSONArray.fromObject(signInListSub);
-        NullToEmpty.filterNull(jsonArray);
-        result.put("msg", "");
-        result.put("count", signInList.size());
-        result.put("data", jsonArray);
+        signInListSub = (List<SignIn>) ObjectToJson.listSub(signInList, page, limit);
+        ObjectToJson.filterObject(result, signInListSub, signInList.size());
         return result;
     }
 
@@ -649,19 +613,11 @@ public class AdminHandler {
         List<Volunte> volunteListSub;
         JSONObject result = new JSONObject();
         result.put("code", 0);
-        if(volunteList == null) return result;
-        if(((page - 1) * limit + limit) <= volunteList.size()) {
-            volunteListSub = volunteList.subList((page - 1) * limit, (page - 1) * limit + limit);
-        }else{
-            volunteListSub = volunteList.subList((page - 1) * limit, volunteList.size());
+        if(volunteList == null) {
+            return result;
         }
-
-
-        JSONArray jsonArray = JSONArray.fromObject(volunteListSub);
-        NullToEmpty.filterNull(jsonArray);
-        result.put("msg", "");
-        result.put("count", volunteList.size());
-        result.put("data", jsonArray);
+        volunteListSub = (List<Volunte>) ObjectToJson.listSub(volunteList, page, limit);
+        ObjectToJson.filterObject(result, volunteListSub, volunteList.size());
         return result;
     }
 }
