@@ -12,6 +12,48 @@
 		.layui-elem-quote{ font-size: 18px; margin-bottom: 20px;}
 		.layui-input-block img{ max-height: 160px; width: auto;}
 	</style>
+	<script>
+	window.onload = function(){
+
+		var userIdInput = document.getElementById("userIdInput");
+		var userTemInput = document.getElementById("userTemInput");
+		var submitBtn = document.getElementById("submitBtn");
+
+		var tag = new Array(2);
+
+		//设置输入不能为空值
+		userIdInput.onblur = function(){
+			if(userIdInput.value != "" && !isNaN(userTemInput.value)){
+				tag[0] = true;
+			}else{
+				alert("请输入合法的id");
+			}
+		}
+		userTemInput.onblur = function(){
+			//判断输入是不是数字
+			if(userTemInput.value != "" && !isNaN(userTemInput.value) && (33 < Number(userTemInput.value) && Number(userTemInput.value) < 42)){
+				tag[1] = true;
+			}else{
+				alert("请输入合法的体温");
+			}
+		}
+		submitBtn.onclick = function(){
+			var num = 0;
+			for(var i = 0;i < 2;i++) {
+				if(tag[i] == true){
+					num++;
+				}
+			}
+			if(num == tag.length){
+				document.getElementById("submitForm").action="/admin/addReport";
+				document.getElementById("submitForm").submit();
+			}else{
+
+				alert("请检查输入字段是否正确或是否为空");
+			}
+		}
+	}
+</script>
 </head>
 <body class="layui-view-body">
 <div class="layui-content">

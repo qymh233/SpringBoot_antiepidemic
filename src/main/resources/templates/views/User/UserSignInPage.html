@@ -40,6 +40,33 @@
 		overflow:hidden;
 	}
 </style>
+<script>
+	window.onload = function(){
+
+		var userTemInput = document.getElementById("userTemInput");
+		var submitBtn = document.getElementById("submitBtn");
+
+		var tag = false;
+
+		userTemInput.onblur = function(){
+			//判断输入是不是数字
+			if(userTemInput.value != "" && !isNaN(userTemInput.value) && (33 < Number(userTemInput.value) && Number(userTemInput.value) < 42)){
+				tag = true;
+			}else{
+				alert("请输入合法的体温");
+			}
+		}
+		submitBtn.onclick = function(){
+			if(tag){
+				document.getElementById("submitForm").action="/user/UserSignIn";
+				document.getElementById("submitForm").submit();
+			}else{
+
+				alert("请检查输入字段是否正确或是否为空");
+			}
+		}
+	}
+</script>
 <body class="layui-view-body">
     <div id="bbox" class="layui-content">
     	<!--面包屑导航-->
@@ -61,7 +88,7 @@
             <div class="layui-card positionbox">
 				<div class="lform">
 				<!--#填写action的值确定提交的url#-->
-				<form  class="layui-form">
+				<form id="submitForm" class="layui-form">
 
 					<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
 					    <legend>请填写体温</legend>
@@ -71,7 +98,7 @@
 						<div class="layui-inline">
 							<label class="layui-form-label">体温</label>
 							<div class="layui-input-inline" style="width: 200px;">
-								<input type="text" name="temperature" placeholder="体温" autocomplete="off" class="layui-input">
+								<input id="userTemInput" type="text" name="temperature" placeholder="体温" autocomplete="off" class="layui-input">
 							</div>
 						</div>
 					</div>
@@ -87,7 +114,7 @@
 					</div>
 					<div class="layui-form-item">
 						<div class="layui-input-block">
-							<button type="submit" formaction="/user/UserSignIn" class="layui-btn layui-btn-primary">签到</button>
+							<button id="submitBtn" class="layui-btn layui-btn-primary">签到</button>
 						</div>
 					</div>
 				</form>

@@ -34,11 +34,8 @@
                 }
             }
             submitBtn.onclick = function(){
-                alert("test");
                 if(userIdTag == true && userPwTag == true){
-                    //alert(userIdTag);
-                    //alert(loginFormElt.method);
-                    //alert(loginFormElt.method);
+
                     loginFormElt.action = "/userLogin";
                     loginFormElt.submit();
                 }else{
