@@ -4,13 +4,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class Users {
-    @NotNull(message = "用户ID不能为空")
     private Integer userId;
     private String userName;
     private String userSex;
     private Integer userAge;
     private Long userPhone;
-    @NotBlank(message = "用户ID不能为空")
     private String userPW;
     private String userIdCard;
     private String temperature;
