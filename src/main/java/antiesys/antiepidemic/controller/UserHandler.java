@@ -2,11 +2,15 @@ package antiesys.antiepidemic.controller;
 
 import antiesys.antiepidemic.pojo.*;
 import antiesys.antiepidemic.service.UserService;
+import antiesys.antiepidemic.util.ObjectToJson;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.HashMap;
@@ -16,9 +20,16 @@ import java.util.Map;
 @Controller
 @RequestMapping("/user")
 @SessionAttributes(value = {"volunag","OneVolunter","ssign","usigninlist","user","umsglist","usermessage","ureportList","opilist","Oneopinion","myoplist","oppage"})
+@Scope("session")
 public class UserHandler {
     @Autowired
     UserService userService;
+
+    List<SignIn> signInList;
+    List<Message> messageList;
+    List<Report> reportList;
+    List<Opinion> opinionList;
+    List<Volunte> volunteList;
 
     /**
      * 查询用户信息
@@ -118,8 +129,7 @@ public class UserHandler {
     @RequestMapping(path="/releaseInformation")
     public String ReleaseInformation(Model model){
 
-        List<Message> messageList=userService.FindMessageAll();
-        model.addAttribute("umsglist",messageList);
+        messageList=userService.FindMessageAll();
         return "views/User/UserViewEpidemicPreventionInformationPage";
     }
 
@@ -138,6 +148,21 @@ public class UserHandler {
         return "views/User/UserRecordPage-Details";
     }
 
+    @RequestMapping(path = "/messageList")
+    @ResponseBody
+    public JSONObject messageList(Integer page, Integer limit){
+
+        List<Message> messageListSub;
+        JSONObject result = new JSONObject();
+        result.put("code", 0);
+        if(messageList == null) {
+            return result;
+        }
+        messageListSub = (List<Message>) ObjectToJson.listSub(messageList, page, limit);
+        ObjectToJson.filterObject(result, messageListSub, messageList.size());
+        return result;
+    }
+
     /**
      * 用户查看自己的统计报表信息
      * @param meId 信息ID
@@ -147,15 +172,28 @@ public class UserHandler {
     @RequestMapping(path = "/UserFindOneReportPage")
     public String UserFindOneReportPage(@RequestParam(name = "meId") Integer meId, Model model){
 
-        List<Report> reportList= userService.FindReportAll(meId);
+        reportList= userService.FindReportAll(meId);
 
         if(reportList == null) {
             return "views/User/UserRecordPage-Details";
         }
 
-        model.addAttribute("ureportList", reportList);
-
         return "views/User/UserFindOneReportPage";
+    }
+
+    @RequestMapping(path = "/reportList")
+    @ResponseBody
+    public JSONObject reportList(Integer page, Integer limit){
+
+        List<Report> reportListSub;
+        JSONObject result = new JSONObject();
+        result.put("code", 0);
+        if(reportList == null) {
+            return result;
+        }
+        reportListSub = (List<Report>) ObjectToJson.listSub(reportList, page, limit);
+        ObjectToJson.filterObject(result, reportListSub, reportList.size());
+        return result;
     }
 
     /**
@@ -189,8 +227,7 @@ public class UserHandler {
             return "views/User/UserFeedbackPage";
         }
         //重新获取数据
-        List<Opinion> opinionList=userService.FindOpinionAll();
-        model.addAttribute("opilist",opinionList);
+        opinionList=userService.FindOpinionAll();
         return "views/User/UserViewOpinionInformationPage";
     }
 
@@ -201,7 +238,7 @@ public class UserHandler {
      */
     @RequestMapping(path="/UserViewOpinionInformationPage")
     public String UserViewOpinionInformationPage(Model model){
-        List<Opinion> opinionList=userService.FindOpinionAll();
+        opinionList=userService.FindOpinionAll();
         model.addAttribute("opilist",opinionList);
         model.addAttribute("oppage","UserViewOpinionInformationPage");
         return "views/User/UserViewOpinionInformationPage";
@@ -230,8 +267,7 @@ public class UserHandler {
     @RequestMapping(path = "/selfOpinion")
     public String selfOpinion(Model model){
         Users users=(Users)model.getAttribute("user");
-        List<Opinion> opinionList=userService.SelectOpinionOne(users.getUserId());
-        model.addAttribute("opilist",opinionList);
+        opinionList=userService.SelectOpinionOne(users.getUserId());
         model.addAttribute("oppage","selfOpinion");
         return "views/User/UserViewOpinionInformationPage";
     }
@@ -244,6 +280,21 @@ public class UserHandler {
     @RequestMapping(path="/ReturnPage")
     public String ReturnPage(Model model){
         return "views/User/UserViewOpinionInformationPage";
+    }
+
+    @RequestMapping(path = "/opinionList")
+    @ResponseBody
+    public JSONObject opinionList(Integer page, Integer limit){
+
+        List<Opinion> opinionListSub;
+        JSONObject result = new JSONObject();
+        result.put("code", 0);
+        if(opinionList == null) {
+            return result;
+        }
+        opinionListSub = (List<Opinion>) ObjectToJson.listSub(opinionList, page, limit);
+        ObjectToJson.filterObject(result, opinionListSub, opinionList.size());
+        return result;
     }
 
     /**
@@ -272,8 +323,9 @@ public class UserHandler {
         signIn.setUserId(users.getUserId());
         signIn.setUserName(users.getUserName());
         boolean i=userService.AddSignIn(signIn);
-        if(i==false)
+        if(i==false) {
             return "ErrorPage";
+        }
         List<SignIn> signInList=userService.SelectSignInOne(users.getUserId());
         model.addAttribute("usigninlist",signInList);
         return "views/User/UserViewSignInPage";
@@ -287,9 +339,7 @@ public class UserHandler {
     @RequestMapping(path="/findSignInAll")
     public String findSignInAll(Model model) {
         Users users=(Users)model.getAttribute("user");
-        List<SignIn> signInList=userService.SelectSignInOne(users.getUserId());
-        model.addAttribute("usigninlist",signInList);
-        model.addAttribute("ssign","all");
+        signInList=userService.SelectSignInOne(users.getUserId());
         return "views/User/UserViewSignInPage";
     }
 
@@ -303,10 +353,31 @@ public class UserHandler {
     @RequestMapping(path="/findSignInTime")
     public String findSignInTime(String beginTime, String endTime, Model model) {
         Users users=(Users)model.getAttribute("user");
-        List<SignIn> reportList = userService.FindSignInTime(beginTime, endTime,users.getUserId());
-        model.addAttribute("usigninlist", reportList);
-        model.addAttribute("ssign","time");
+
+        System.out.println(beginTime);
+
+        if("".equals(beginTime) || beginTime == null){
+            signInList = userService.SelectSignInOne(users.getUserId());
+        }else{
+            signInList = userService.FindSignInTime(beginTime, endTime,users.getUserId());
+        }
+
         return "views/User/UserViewSignInPage";
+    }
+
+    @RequestMapping(path = "/signInList")
+    @ResponseBody
+    public JSONObject signInList(Integer page, Integer limit){
+
+        List<SignIn> signInListSub;
+        JSONObject result = new JSONObject();
+        result.put("code", 0);
+        if(signInList == null) {
+            return result;
+        }
+        signInListSub = (List<SignIn>) ObjectToJson.listSub(signInList, page, limit);
+        ObjectToJson.filterObject(result, signInListSub, signInList.size());
+        return result;
     }
 
     /**
@@ -317,8 +388,7 @@ public class UserHandler {
     @RequestMapping(path="/GotoVolunterEnd")
     public String GotoVolunterEnd(Model model){
         Users users=(Users)model.getAttribute("user");
-        List<Volunte> volunteList=userService.FindVolunterOne(users.getUserId());
-        model.addAttribute("OneVolunter",volunteList);
+        volunteList=userService.FindVolunterOne(users.getUserId());
         return "views/User/GotoVolunterEnd";
     }
 
@@ -363,9 +433,8 @@ public class UserHandler {
     public String UserApplyForVolunteer(@RequestParam(name = "taskTime") String taskTime,Model model){
         Users users=(Users)model.getAttribute("user");
         List<Volunte> voluntes=userService.FindVolunterOne(users.getUserId());
-        for (int i=0;i<voluntes.size();i++){
-            if(voluntes.get(i).getTaskTime().equals(taskTime)){
-                model.addAttribute("OneVolunter",voluntes);
+        for (Volunte value : voluntes) {
+            if (value.getTaskTime().equals(taskTime)) {
                 return "views/User/GotoVolunterEnd";
             }
         }
@@ -374,9 +443,23 @@ public class UserHandler {
         volunte.setUserId(users.getUserId());
         volunte.setUserName(users.getUserName());
         userService.InsertVolunte(volunte);
-        List<Volunte> volunteList=userService.FindVolunterOne(users.getUserId());
-        model.addAttribute("OneVolunter",volunteList);
+        volunteList=userService.FindVolunterOne(users.getUserId());
         return "views/User/GotoVolunterEnd";
+    }
+
+    @RequestMapping(path = "/volunteList")
+    @ResponseBody
+    public JSONObject volunteList(Integer page, Integer limit){
+
+        List<Volunte> volunteListSub;
+        JSONObject result = new JSONObject();
+        result.put("code", 0);
+        if(volunteList == null) {
+            return result;
+        }
+        volunteListSub = (List<Volunte>) ObjectToJson.listSub(volunteList, page, limit);
+        ObjectToJson.filterObject(result, volunteListSub, volunteList.size());
+        return result;
     }
 
 }

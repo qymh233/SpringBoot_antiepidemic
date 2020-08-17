@@ -15,103 +15,74 @@
     	<div class="mianb">
     		<div class="mblf layui-col-xs6 layui-col-md6">
     			 <i class="layui-icon">&#xe656;</i>
-    			 <p>首页管理 > <span>查看防疫信息</span></p>
+    			 <p>管理员首页 > <span>疫情防控信息查询</span></p>
     		</div>
-    		<!--<div class="mbrt layui-col-xs6 layui-col-md6">
-    			<a href="javascript:;" class="layui-btn layui-btn-normal">查看防疫信息</a>
-    		</div>-->
     	</div>
     	<!--面包屑导航-->
         <div class="layui-row">
             <div class="layui-card">
             	<div class="table-responsive">
-			 		  <table class="layui-table" lay-skin="line" lay-size="lg" id="table">						  
-						  <thead>
-						    <tr>
-						      <th>消息标题</th>
-						      <th>发布者</th>	
-						      <th>发布时间</th>
-							  <th>&nbsp&nbsp&nbsp&nbsp操作</th>
-							  <th>&nbsp&nbsp&nbsp&nbsp状态</th>
-						    </tr> 
-						  </thead>
-						  <tbody>
-						  <!--#循环打印<tr>标签 修改删除向后端传递数据 id值#-->
-						  <tr th:each="message:${umsglist}">
-							  <td th:text="${message.getTitle()}"></td>
-							  <td th:text="${message.getPuBer()}"></td>
-							  <td th:text="${#dates.format(message.getPuDate(),'yyyy-MM-dd')}"></td>
-							  <td>
-								  <div class="layui-table-cell laytable-cell-1-0-10">
-									  <!--#添加脚本#-->
-									  <a th:href="@{/user/taskCompletion(meId=${message.getMeID()})}" class="layui-btn layui-btn-normal layui-btn-xs update">查看</a>
-								  </div>
-							  </td>
-							  <td th:text="${message.getStat()}"></td>
-						  </tr>
-						  </tbody>
-					</table>
+                    <table id="messageList" lay-filter="test"></table>
 			 	</div>
-                   
-           		<!--分页-->
-           		<div id="page"></div>
-           		<!--分页-->
             </div>           
         </div>
     </div>
     <script src="../assets/jquery.min.js"></script>
-    <script src="../assets/layui.all.js"></script>    
+    <script src="../assets/layui.all.js"></script>
+    <script type="text/html" id="doBar">
+        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="check">查看</a>
+    </script>
     <script>
     	var element = layui.element;
-    	layui.use(['laypage', 'layer'], function(){
-		  var laypage = layui.laypage
-		  ,layer = layui.layer;		  
-		  
-		  //页码完整功能
-		  laypage.render({
-		    elem: 'page'
-		    ,count: 100
-		    ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
-		    ,jump: function(obj){
-		      console.log(obj)
-		    }
-		  });	 
-		});
-		
-		//弹框		
-		$('#fabu').on('click', function(){			
-		  layui.use('layer', function(){
-          var layer = layui.layer;
-          layer.open({
-                type: 2,
-                title: '发布任务',
-                fix: false,
-                shadeClose: true,
-                shade: 0.8,
-                area: ['660px', '420px'],
-                content: '02任务发布-发布任务.html',
-                end: function () {
-                   location.reload();
+
+        function dateToStr(date) {
+            if(date==="") return "";
+            var time = new Date(date.time);
+            var y = time.getFullYear();
+            var M = time.getMonth() + 1;
+            M = M < 10 ? ("0" + M) : M;
+            var d = time.getDate();
+            d = d < 10 ? ("0" + d) : d;
+            var str = y + "-" + M + "-" + d;
+            return str;
+        }
+
+        layui.use('table', function(){
+            var table = layui.table;
+
+            //第一个实例
+            table.render({
+                elem: '#messageList'
+                ,height: 466
+                ,url: '/user/messageList' //数据接口
+                ,page: true //开启分页
+                ,method: 'post'
+                ,cols: [
+                    [ //表头
+                        {field: 'title', title: '消息标题', sort: true, fixed: 'left'}
+                        ,{field: 'puBer', title: '发布者', sort: true}
+                        ,{field: 'puDate', title: '发布时间', sort: true,
+                            templet: function (d) {
+                                return dateToStr(d.puDate);
+                            }
+                        }
+                        ,{title: '操作', toolbar:"#doBar", width:120}
+                        ,{field: 'stat', title: '状态', sort: true}
+                    ]
+                ]
+            });
+
+            table.on('tool(test)', function(obj){
+                var data = obj.data;
+                var layEvent = obj.event;
+
+                if(layEvent === 'check'){ //同意
+                    location.href="/user/taskCompletion?meId="+data.meID;
                 }
             });
+
         });
-      })
-		
-		//判断弹框
-		$(".delete").click(function(){
-			layer.confirm('确定要删除此任务？', {
-			  btn: ['是','否'] //按钮
-			}, function(){
-			  layer.msg('已删除', {icon: 1});
-			}, function(){
-			  layer.msg('已取消',  {icon: 2});
-			});
-		})			
-		
-		 layui.use('form', function(){
-		  var form = layui.form; 
-		  form.render();
-		}); 
+
 	</script>
 	
 </body>
