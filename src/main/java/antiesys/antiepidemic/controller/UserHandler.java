@@ -88,7 +88,8 @@ public class UserHandler {
      */
     @RequestMapping(path="/changeUserPage")
     public String ChangeUserPage(Model model){
-
+        Users users = (Users)model.getAttribute("user");
+        model.addAttribute("user",users);
         return "views/User/UserModifyPersonalInformationPage";
     }
 
