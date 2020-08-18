@@ -62,7 +62,6 @@ public class AdminPageHandler {
     @RequestMapping(path="/userLogin")
     public String UserLogin(@Validated @RequestParam(name = "userId") int userId, @Validated @RequestParam(name = "userPW") String userPW, Model model){
         boolean isLogin = userService.UserLogin(userId, userPW);
-        System.out.println("test");
         if(!isLogin){
             return "redirect:/UserLoginPage.html";
         }
