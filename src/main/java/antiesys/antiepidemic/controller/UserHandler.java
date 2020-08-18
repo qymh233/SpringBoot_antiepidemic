@@ -174,10 +174,6 @@ public class UserHandler {
 
         reportList= userService.FindReportAll(meId);
 
-        if(reportList == null) {
-            return "views/User/UserRecordPage-Details";
-        }
-
         return "views/User/UserFindOneReportPage";
     }
 
