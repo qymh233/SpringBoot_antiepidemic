@@ -262,4 +262,6 @@ public interface AdminService {
      * @return 查询到的申请列表
      */
     List<Volunte> SelectVolunteAgree();
+
+    int VolunteComplete();
 }

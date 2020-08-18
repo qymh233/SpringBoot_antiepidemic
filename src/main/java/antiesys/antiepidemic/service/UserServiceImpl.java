@@ -309,4 +309,13 @@ public class UserServiceImpl implements UserService{
         return 1;
     }
 
+    @Override
+    public int CompleteOne(Integer meID){
+        int t=volunteInter.CompleteOne(meID);
+        if(t==0){
+            return 0;
+        }
+        return 1;
+    }
+
 }

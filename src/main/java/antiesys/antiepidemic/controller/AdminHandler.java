@@ -618,4 +618,18 @@ public class AdminHandler {
         ObjectToJson.filterObject(result, volunteListSub, volunteList.size());
         return result;
     }
+
+    @RequestMapping(path = "/volunteComplete")
+    public String volunteComplete(Model model){
+        adminService.VolunteComplete();
+        List<Volunte> volunteList=adminService.SelectVolunteAgree();
+        Map<String,Volunte> volunag=new HashMap<>();
+        if(volunteList != null){
+            for(int i=0;i<volunteList.size();i++){
+                volunag.put(volunteList.get(i).getTaskTime(),volunteList.get(i));
+            }
+        }
+        model.addAttribute("volunag",volunag);
+        return "views/Manager/ManagerForVolunteerPage";
+    }
 }
