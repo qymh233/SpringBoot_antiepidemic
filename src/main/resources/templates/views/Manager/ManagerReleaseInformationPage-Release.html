@@ -10,6 +10,19 @@
 	    <link rel="stylesheet" href="../assets/css/style.css"/>
 		<link rel="stylesheet" href="../assets/css/admin.css"/>
 	</head>
+	<style>
+		#form-bg{
+			background-image: url("../img/gly1.png");
+			opacity:0.5;
+			background-size: 100%,100%;
+		}
+		#form-box{
+			padding-top: calc(5vw);
+			padding-bottom: calc(5vw);
+			width: calc(58vw);
+			margin: auto;
+		}
+	</style>
 	<script>
 		window.onload = function(){
 
@@ -43,26 +56,28 @@
 				<p>管理员首页 > 疫情防控 > <span>发布疫情防控信息</span></p>
 			</div>
 		</div>
-		<div class="layui-card">
+		<div id="form-bg" class="layui-card">
+			<div id="form-box">
 		 	<form id="submitForm" class="layui-form" method="POST">
 			   <div class="layui-form-item">
-				    <label class="layui-form-label">防控信息</label>
+				    <label class="layui-form-label" style="font-size:18px; color:#ffffff; font-weight: bold;">防控信息</label>
 				    <div class="layui-input-block">
-				        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input">
+				        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width: calc(50vw)">
 				    	<!--<div class="layui-form-mid layui-word-aux">数字越小越靠前</div>-->
 				    </div>					    
 				</div>
 				<div class="layui-form-item layui-form-text">
-				    <label class="layui-form-label">具体信息</label>
+				    <label class="layui-form-label" style="font-size:18px;color:#ffffff; font-weight: bold;">具体信息</label>
 				    <div class="layui-input-block">
-						<textarea id="mesInput" name="content" placeholder="请输入" class="layui-textarea"></textarea>
+						<textarea id="mesInput" name="content" placeholder="请输入" class="layui-textarea" style="width: calc(50vw); height: calc(40vh);"></textarea>
 						<!--<button type="button" class="layui-btn layui-btn-danger" id="test7">上传信息</button>-->
 				    </div>
 				</div>
 				<div >
-					<button id="submitBtn" class="layui-btn layui-btn-normal float-right">确定</button>
+					<button id="submitBtn" class="layui-btn layui-btn-normal float-right" style="background: #0000FF">确定</button>
 				</div>
 			</form>
+			</div>
 		</div>
 	</div>
 
