@@ -38,17 +38,11 @@ public class AdminPageHandler {
         manager.setAdminId(adminId);
         manager.setAdminPW(adminPW);
         boolean isLogin = adminService.AdminLogin(manager);
-
         session.setAttribute("adminId", manager.getAdminId());
-
         model.addAttribute("manager",manager);
-        Map<Integer,Integer> nummap=new HashMap<>();
-        model.addAttribute("nummap",nummap);
-
         if(!isLogin) {
             return "ManagerLoginPage";
         }
-
         return "ManagerMainPage";
     }
 
@@ -59,8 +53,8 @@ public class AdminPageHandler {
      * @param model 模型
      * @return 用户主界面
      */
-    @RequestMapping(path="/userLogin")
-    public String UserLogin(@Validated @RequestParam(name = "userId") int userId, @Validated @RequestParam(name = "userPW") String userPW, Model model){
+    @RequestMapping(path="/userLogin" )
+    public String UserLogin(@RequestParam(name = "userId") int userId,@RequestParam(name = "userPW") String userPW, Model model){
         boolean isLogin = userService.UserLogin(userId, userPW);
         if(!isLogin){
             return "redirect:/UserLoginPage.html";
