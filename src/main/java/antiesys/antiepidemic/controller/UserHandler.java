@@ -431,7 +431,7 @@ public class UserHandler {
         Users users=(Users)model.getAttribute("user");
         List<Volunte> voluntes=userService.FindVolunterOne(users.getUserId());
         for (Volunte value : voluntes) {
-            if (value.getTaskTime().equals(taskTime)) {
+            if (value.getTaskTime().equals(taskTime) && value.getStat().equals("未处理")) {
                 return "views/User/GotoVolunterEnd";
             }
         }
