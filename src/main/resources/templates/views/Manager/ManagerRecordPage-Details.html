@@ -41,32 +41,32 @@
 				<div id="form-box">
 				<form class="layui-form" action="">
 					<div class="layui-form-item">
-					<label class="layui-form-label" style="font-size:18px; font-weight: bold;"><span class="col-red"></span>消息标题</label>
+					<label class="layui-form-label" style="font-size:18px; font-weight: bold;padding-right: calc(5vw);"><span class="col-red"></span>消息标题</label>
 						<!-- #下面每一个div内部使用表达式进行数据获取填充# -->
 						<div class="layui-input-block">
 							<span style="font-size:18px; color: #000000;" th:text="${adminmessage.getTitle()}"></span>
 						</div>
 					</div>
 					<div class="layui-form-item">
-						<label class="layui-form-label" style="font-size:18px; font-weight: bold;">发布者</label>
+						<label class="layui-form-label" style="font-size:18px; font-weight: bold;padding-right: calc(5vw);">发布者</label>
 						<div class="layui-input-inline">
 							<span style="font-size:18px; color: #000000;  " th:text="${adminmessage.getPuBer()}"></span>
 						</div>							    
 					</div>
 					<div class="layui-form-item">
-						<label class="layui-form-label" style="font-size:18px; font-weight: bold;">内容</label>
+						<label class="layui-form-label" style="font-size:18px; font-weight: bold;padding-right: calc(5vw);">内容</label>
 						<div class="layui-input-block">
 							<span style="font-size:18px; color: #000000;  " th:text="${adminmessage.getCont()}"></span>
 						</div>						    
 					</div>
 					<div class="layui-form-item">
-						<label class="layui-form-label" style="font-size:18px; font-weight: bold;">发布时间</label>
+						<label class="layui-form-label" style="font-size:18px; font-weight: bold;padding-right: calc(5vw);">发布时间</label>
 						<div class="layui-input-inline">
 							<span style="font-size:18px; color: #000000;  " th:text="${#dates.format(adminmessage.getPuDate(),'yyyy-MM-dd')}"></span>
 						</div>							    			   
 					</div>
 					<div class="layui-form-item">
-						<label class="layui-form-label" style="font-size:18px; font-weight: bold;">状态</label>
+						<label class="layui-form-label" style="font-size:18px; font-weight: bold;padding-right: calc(5vw);">状态</label>
 						<div class="layui-input-inline">
 							<span style="font-size:18px; color: #000000;  " th:text="${adminmessage.getStat()}"></span>
 						</div>
