@@ -8,7 +8,17 @@
     <link rel="stylesheet" href="../assets/css/layui.css">    
     <link rel="stylesheet" href="../assets/css/view.css"/>
     <link rel="stylesheet" href="../assets/css/admin.css"/>  
-    <link rel="stylesheet" href="../assets/css/style.css"/> 
+    <link rel="stylesheet" href="../assets/css/style.css"/>
+	<style>
+		#form-bg{
+			background-image: url("../img/juxie.jpg");
+			background-size: 100%,100%;
+		}
+		#form-box{
+			width: calc(28vw);
+			padding-left: calc(10vw);
+		}
+	</style>
 </head>
 <body class="layui-view-body">
     <div class="layui-content">
@@ -27,11 +37,12 @@
 		</div>
 		<!--指示条-->
         <div class="layui-row">        	
-            <div class="layui-card positionbox">            	  
+            <div id="form-bg" class="layui-card positionbox">
 				    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
 					    <legend>反馈信息</legend>
 					</fieldset>
 					<!--#修改action提交url#-->
+				<div id="form-box">
 					<form class="layui-form">
 						 <div class="layui-form-item">
 							    <label class="layui-form-label">标题</label>
@@ -81,6 +92,7 @@
 					    	<a href="/user/ReturnPage" class="layui-btn layui-btn-normal" >返回</a>
 					    </div>
 					</div>
+				</div>
             </div>   
 		</div>
     </div>

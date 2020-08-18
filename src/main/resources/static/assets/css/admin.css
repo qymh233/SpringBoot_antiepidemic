@@ -479,12 +479,3 @@ html, body , .app-container{
     background-color: rgba(0,0,0,.3);
     z-index: 1000;
 }
-#form-bg{
-    background-repeat: no-repeat;
-    background-size: 100%,100%;
-    background-origin:content-box;
-}
-#form-box{
-    width: calc(28vw);
-    padding-left: calc(10vw);
-}

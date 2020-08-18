@@ -4,11 +4,21 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>发布疫情防控信息-发布</title>
+		<title>意见反馈</title>
 		<link rel="stylesheet" href="../assets/css/layui.css">
 	    <link rel="stylesheet" href="../assets/css/view.css"/>
 	    <link rel="stylesheet" href="../assets/css/style.css"/>
 		<link rel="stylesheet" href="../assets/css/admin.css"/>
+		<style>
+			#form-bg{
+				background-image: url("../img/chunvzuo.jpg");
+				background-size: 100%,100%;
+			}
+			#form-box{
+				width: calc(35vw);
+				padding-left: calc(10vw);
+			}
+		</style>
 	</head>
 	<body class="layui-tank">
 	<div class="layui-content">
@@ -18,7 +28,7 @@
 				<p>用户首页 > 意见反馈 > <span>意见反馈</span></p>
 			</div>
 		</div>
-		<div class="layui-card">
+		<div id="form-bg" class="layui-card">
 		 	<form class="layui-form" action="" method="POST">
 			   <div class="layui-form-item">
 				    <label class="layui-form-label">意见信息</label>
