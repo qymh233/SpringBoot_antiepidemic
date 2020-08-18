@@ -382,4 +382,13 @@ public class AdminServiceImpl implements AdminService{
         }
         return reportList;
     }
+
+    @Override
+    public int VolunteComplete(){
+        int t = volunteInter.CompleteAll();
+        if(t==0){
+            return 0;
+        }
+        return 1;
+    }
 }

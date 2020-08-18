@@ -460,4 +460,11 @@ public class UserHandler {
         return result;
     }
 
+    @RequestMapping(path="/volunteComplete")
+    public String volunteComplete(@RequestParam(name = "meID") Integer meID,Model model){
+        Users users=(Users)model.getAttribute("user");
+        userService.CompleteOne(meID);
+        volunteList=userService.FindVolunterOne(users.getUserId());
+        return "views/User/GotoVolunterEnd";
+    }
 }

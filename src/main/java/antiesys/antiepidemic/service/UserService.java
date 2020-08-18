@@ -133,5 +133,5 @@ public interface UserService {
     //提交申请
     int InsertVolunte(Volunte volunte);
 
-
+    int CompleteOne(Integer meID);
 }

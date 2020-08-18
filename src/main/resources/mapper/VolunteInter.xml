@@ -16,10 +16,13 @@
 	  update T_VOLUNTE set userId = #{volunte.userId} , userName = #{volunte.userName} , puDate = #{volunte.puDate} ,taskTime= #{volunte.taskTime} , stat = #{volunte.stat}  where meID=#{volunte.meID}
 	</update>
 	<!-- 更新信息 -->
-	<update id="UpdateAll">
-	  update T_VOLUNTE set stat = '拒绝'
+	<update id="CompleteAll">
+	  update T_VOLUNTE set stat = '任务结束' where stat = '同意'
 	</update>
-	<!-- 查询所有信息 -->
+    <update id="CompleteOne">
+		update T_VOLUNTE set stat = '任务完成' where meID = #{meID}
+	</update>
+    <!-- 查询所有信息 -->
 	<resultMap type="antiesys.antiepidemic.pojo.Volunte" id="SelectAll">
 		<result property="userId" column="userId"/>
 		<result property="userName" column="userName"/>
