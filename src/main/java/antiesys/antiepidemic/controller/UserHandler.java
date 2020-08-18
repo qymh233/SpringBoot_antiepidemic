@@ -398,9 +398,12 @@ public class UserHandler {
     public String UserApplyForVolunteerPage(Model model){
         List<Volunte> volunteList=userService.SelectVolunteAgree();
         Map<String,Volunte> volunag=new HashMap<>();
-        for(int i=0;i<volunteList.size();i++){
-            volunag.put(volunteList.get(i).getTaskTime(),volunteList.get(i));
+        if(volunteList!=null){
+            for(int i=0;i<volunteList.size();i++){
+                volunag.put(volunteList.get(i).getTaskTime(),volunteList.get(i));
+            }
         }
+
         model.addAttribute("volunag",volunag);
         return "views/User/UserApplyForVolunteerPage";
     }
@@ -414,8 +417,10 @@ public class UserHandler {
     public String UserForVolunteerPage(Model model){
         List<Volunte> volunteList=userService.SelectVolunteAgree();
         Map<String,Volunte> volunag=new HashMap<>();
-        for(int i=0;i<volunteList.size();i++){
-            volunag.put(volunteList.get(i).getTaskTime(),volunteList.get(i));
+        if(volunteList!=null){
+            for(int i=0;i<volunteList.size();i++){
+                volunag.put(volunteList.get(i).getTaskTime(),volunteList.get(i));
+            }
         }
         model.addAttribute("volunag",volunag);
         return "views/User/UserForVolunteerPage";
