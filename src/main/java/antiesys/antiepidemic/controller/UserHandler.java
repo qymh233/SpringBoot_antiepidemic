@@ -432,6 +432,7 @@ public class UserHandler {
         List<Volunte> voluntes=userService.FindVolunterOne(users.getUserId());
         for (Volunte value : voluntes) {
             if (value.getTaskTime().equals(taskTime) && value.getStat().equals("未处理")) {
+                volunteList=userService.FindVolunterOne(users.getUserId());
                 return "views/User/GotoVolunterEnd";
             }
         }
