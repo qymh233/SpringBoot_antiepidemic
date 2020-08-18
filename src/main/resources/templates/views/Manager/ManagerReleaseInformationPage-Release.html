@@ -10,7 +10,31 @@
 	    <link rel="stylesheet" href="../assets/css/style.css"/>
 		<link rel="stylesheet" href="../assets/css/admin.css"/>
 	</head>
+	<script>
+		window.onload = function(){
 
+			var mesInput = document.getElementById("mesInput");
+			var submitBtn = document.getElementById("submitBtn");
+
+			var tag = false;
+
+			mesInput.onblur = function(){
+				if(mesInput.value != ""){
+					tag = true;
+				}else{
+					alert("输入信息不能为空");
+				}
+			}
+			submitBtn.onclick = function(){
+				if(tag){
+					document.getElementById("submitForm").action="/admin/releaseInformation";
+					document.getElementById("submitForm").submit();
+				}else{
+					alert("请检查输入字段是否正确或是否为空");
+				}
+			}
+		}
+	</script>
 	<body class="layui-tank">
 	<div class="layui-content">
 		<div class="mianb">
@@ -20,7 +44,7 @@
 			</div>
 		</div>
 		<div class="layui-card">
-		 	<form class="layui-form" action="" method="POST">
+		 	<form id="submitForm" class="layui-form" method="POST">
 			   <div class="layui-form-item">
 				    <label class="layui-form-label">防控信息</label>
 				    <div class="layui-input-block">
@@ -31,12 +55,12 @@
 				<div class="layui-form-item layui-form-text">
 				    <label class="layui-form-label">具体信息</label>
 				    <div class="layui-input-block">
-						<textarea name="content" placeholder="请输入" class="layui-textarea"></textarea>
+						<textarea id="mesInput" name="content" placeholder="请输入" class="layui-textarea"></textarea>
 						<!--<button type="button" class="layui-btn layui-btn-danger" id="test7">上传信息</button>-->
 				    </div>
 				</div>
 				<div >
-					<button type="submit" formaction="/admin/releaseInformation" class="layui-btn layui-btn-normal float-right">确定</button>
+					<button id="submitBtn" class="layui-btn layui-btn-normal float-right">确定</button>
 				</div>
 			</form>
 		</div>
