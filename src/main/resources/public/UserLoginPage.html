@@ -35,8 +35,8 @@
             }
             submitBtn.onclick = function(){
                 if(userIdTag == true && userPwTag == true){
-
                     loginFormElt.action = "/userLogin";
+                    loginFormElt.method = "post";
                     loginFormElt.submit();
                 }else{
                     alert("请检查用户名和密码");
@@ -50,8 +50,7 @@
 </head>
 <body class="login-wrap">
     <div class="login-container">
-        <div class="login-form">
-            <form id="loginForm" class="layui-form layui-form-item" method="post">
+            <form id="loginForm" class="login-form">
                 <div class="input-group">
                     <input id="userIdInput" type="text" name="userId" class="input-field" value="">
                     <label for="userIdInput" class="input-label">
@@ -64,9 +63,8 @@
                         <span class="label-title">密码</span>
                     </label>
                 </div>
-                <button id="submitBtn" class="layui-btn layui-btn-fluid">登录</button>
+                <button id="submitBtn" class="login-button">登录</button>
             </form>
-        </div>
     </div>
 </body>
 <script src="../assets/layui.js"></script>
