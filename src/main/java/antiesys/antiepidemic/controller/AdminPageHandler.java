@@ -170,8 +170,10 @@ public class AdminPageHandler {
     public String ManagerForVolunteerPage(Model model){
         List<Volunte> volunteList=adminService.SelectVolunteAgree();
         Map<String,Volunte> volunag=new HashMap<>();
-        for(int i=0;i<volunteList.size();i++){
-            volunag.put(volunteList.get(i).getTaskTime(),volunteList.get(i));
+        if(volunteList != null){
+            for(int i=0;i<volunteList.size();i++){
+                volunag.put(volunteList.get(i).getTaskTime(),volunteList.get(i));
+            }
         }
         model.addAttribute("volunag",volunag);
         return "views/Manager/ManagerForVolunteerPage";

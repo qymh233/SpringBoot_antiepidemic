@@ -61,5 +61,7 @@ public interface VolunteInter {
      * 一键拒绝
      * @return 查询到的信息对象
      */
-    List<Volunte> UpdateAll();
+    int CompleteAll();
+
+    int CompleteOne(@Param("meID")int meID);
 }

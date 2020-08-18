@@ -54,6 +54,16 @@
 			}
 		}
 	</script>
+	<style>
+		#form-bg{
+			background-image: url("../img/bg8.png");
+			background-size: 100%,100%;
+		}
+		#form-box{
+			width: calc(28vw);
+			padding-left: calc(10vw);
+		}
+	</style>
 </head>
 <body class="layui-view-body">
     <div class="layui-content">
@@ -75,10 +85,11 @@
 		
 		<!--指示条-->
         <div class="layui-row">        	
-            <div class="layui-card positionbox">            	  
+            <div id="form-bg" class="layui-card positionbox">
 				    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
 					    <legend>物资信息</legend>
 					</fieldset>
+				<div id="form-box">
 					<form id="registerForm" class="layui-form" method="post">
 						<div class="layui-form-item">							    
 							<div class="layui-inline">
@@ -113,6 +124,7 @@
 							</div>
 						</div>
 					</form>
+				</div>
             </div>   
 		</div>
     </div>

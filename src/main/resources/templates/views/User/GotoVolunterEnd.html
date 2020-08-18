@@ -28,7 +28,12 @@
         </div>
     </div>
     <script src="../assets/jquery.min.js"></script>
-    <script src="../assets/layui.all.js"></script>    
+    <script src="../assets/layui.all.js"></script>
+    <script type="text/html" id="doBar">
+        {{#  if(d.stat == "同意"){ }}
+        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="complete">完成</a>
+        {{#  } }}
+    </script>
     <script>
     	var element = layui.element;
 
@@ -90,9 +95,19 @@
 							}
 						}
 						,{field: 'stat', title: '状态', sort: true}
+                        ,{title: '操作', toolbar:"#doBar", width:120}
 					]
 				]
 			});
+
+            table.on('tool(test)', function(obj){
+                var data = obj.data;
+                var layEvent = obj.event;
+
+                if(layEvent === 'complete'){ //同意
+                    location.href="/user/volunteComplete?meID="+data.meID;
+                }
+            });
 
 		});
 		
