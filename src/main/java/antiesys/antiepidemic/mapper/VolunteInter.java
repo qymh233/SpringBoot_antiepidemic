@@ -64,4 +64,6 @@ public interface VolunteInter {
     int CompleteAll();
 
     int CompleteOne(@Param("meID")int meID);
+
+    int RefuseAll(@Param("taskTime")String taskTime);
 }

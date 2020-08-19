@@ -22,6 +22,9 @@
     <update id="CompleteOne">
 		update T_VOLUNTE set stat = '任务完成' where meID = #{meID}
 	</update>
+    <update id="RefuseAll">
+		update T_VOLUNTE set stat = '拒绝' where taskTime = #{taskTime} and stat = '未处理'
+	</update>
     <!-- 查询所有信息 -->
 	<resultMap type="antiesys.antiepidemic.pojo.Volunte" id="SelectAll">
 		<result property="userId" column="userId"/>
