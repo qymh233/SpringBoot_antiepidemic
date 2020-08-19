@@ -1,4 +1,4 @@
-package antiesys.antiepidemic.config;
+package antiesys.antiepidemic.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
