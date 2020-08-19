@@ -18,6 +18,18 @@
 			width: calc(35vw);
 			padding-left: calc(10vw);
 		}
+		.font-style
+		{
+			font-size:18px;
+			color:#FFFFFF;
+			font-weight: bold;
+			padding-right: calc(7vw);
+		}
+		.span-style{
+			font-size:18px;
+			color:#ffff66;
+			font-weight: bold;
+		}
 	</style>
 </head>
 <body class="layui-view-body">
@@ -26,7 +38,7 @@
     	<div class="mianb">
     		<div class="mblf layui-col-xs6 layui-col-md6">
     			 <i class="layui-icon">&#xe656;</i>
-				<p><font color="#fff8dc">用户首页 > 个人信息 > </font><span><font color="#fff8dc">查看个人信息<font></span></p>
+				<p>用户首页 > 个人信息 > <span>查看个人信息</span></p>
     		</div>    		
     	</div>
     	<!--面包屑导航-->
@@ -39,45 +51,45 @@
         <div class="layui-row">
             <div id="form-bg" class="layui-card positionbox">
 				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-					<legend>个人信息</legend>
+					<legend style="font-weight: bold">个人信息</legend>
 				</fieldset>
 				<!--#修改action提交url#-->
 				<div id="form-box">
 					<form class="layui-form">
 						 <div class="layui-form-item">
-							    <label class="layui-form-label">卡号</label>
+							    <label class="layui-form-label font-style">卡号</label>
 							    <label class="layui-form-label">
-									<span th:text="${user.userId}"></span>
+									<span class="span-style" th:text="${user.userId}"></span>
 								</label>
 						  </div>
 						  <div class="layui-form-item">
-							    <label class="layui-form-label">姓名</label>
+							    <label class="layui-form-label font-style">姓名</label>
 							    <label class="layui-form-label">
-									<span th:text="${user.userName}"></span>
+									<span class="span-style" th:text="${user.userName}"></span>
 								</label>
 						  </div>
 						  <div class="layui-form-item">
-							    <label class="layui-form-label">性别</label>
+							    <label class="layui-form-label font-style">性别</label>
 							    <label class="layui-form-label">
-									<span th:text="${user.userSex}"></span>
+									<span class="span-style" th:text="${user.userSex}"></span>
 								</label>
 						  </div>
 						  <div class="layui-form-item">
-							    <label class="layui-form-label">年龄</label>
+							    <label class="layui-form-label font-style">年龄</label>
 							    <label class="layui-form-label">
-									<span th:text="${user.userAge}"></span>
+									<span class="span-style" th:text="${user.userAge}"></span>
 								</label>
 						  </div>
 						  <div class="layui-form-item">
-							    <label class="layui-form-label">电话</label>
+							    <label class="layui-form-label  font-style">电话</label>
 							    <label class="layui-form-label">
-									<span th:text="${user.userPhone}"></span>
+									<span class="span-style" th:text="${user.userPhone}"></span>
 								</label>
 						  </div>
 						  <div class="layui-form-item">
-							    <label class="layui-form-label">身份证号码</label>
+							    <label class="layui-form-label" style="font-size:16px;color:#FFFFFF;font-weight: bold;padding-right: calc(7vw);">身份证号码</label>
 							    <label class="layui-form-label">
-									<span th:text="${user.userIdCard}"></span>
+									<span class="span-style" th:text="${user.userIdCard}"></span>
 								</label>
 						  </div>
 					</form>

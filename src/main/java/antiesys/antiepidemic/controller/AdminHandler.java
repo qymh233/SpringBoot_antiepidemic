@@ -600,6 +600,8 @@ public class AdminHandler {
         Volunte volunte = adminService.FindVolunteOne(meId);;
         adminService.UpdateVolunteStat(volunte, stat);
 
+        adminService.RefuseVolunteAll(volunte.getTaskTime());
+
         volunteList = adminService.FindIncompleteVolunte();
         return "views/Manager/ManagerCheckForVolunteerPage";
     }
