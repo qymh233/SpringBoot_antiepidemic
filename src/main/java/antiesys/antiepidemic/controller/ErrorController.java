@@ -17,9 +17,4 @@ public class ErrorController {
     public String error_500() {
         return "error/error500";
     }
-    @RequestMapping(value = "/00")
-    public String error_00() {
-        return "error/erro";
-    }
-
 }
