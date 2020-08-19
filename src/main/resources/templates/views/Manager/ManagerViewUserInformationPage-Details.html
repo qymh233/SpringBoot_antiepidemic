@@ -12,7 +12,7 @@
     	.layui-elem-quote{ font-size: 18px; margin-bottom: 20px;}
     	.layui-input-block img{ max-height: 160px; width: auto;}
 		#form-bg{
-			background-image: url("../img/bg8.png");
+			background-image: url("../img/gly4.png");
 			background-size: 100%,100%;
 		}
 		#form-box{
@@ -36,7 +36,7 @@
         <div class="layui-row">
             <div id="form-bg" class="layui-card positionbox">
             	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-					<legend>详细信息</legend>
+					<legend style="font-weight: bold;">详细信息</legend>
 				</fieldset>
 				<div id="form-box">
 				<form class="layui-form" action="">
@@ -44,30 +44,30 @@
 					<label class="layui-form-label" style="font-size:18px; font-weight: bold;"><span class="col-red"></span>姓名</label>
 						<!-- #下面每一个div内部使用表达式进行数据获取填充# -->
 						<div class="layui-input-block">
-							<span style="font-size:18px; color: #000000;" th:text="${admuser.userName}"></span>
+							<span style="font-size:18px; color: #000000;padding-left: calc(2vw)" th:text="${admuser.userName}"></span>
 						</div>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label" style="font-size:18px; font-weight: bold;">年龄</label>
 						<div class="layui-input-inline">
-							<span style="font-size:18px; color: #000000;" th:text="${admuser.userAge}"></span>
+							<span style="font-size:18px; color: #000000;padding-left: calc(2vw)" th:text="${admuser.userAge}"></span>
 						</div>							    
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label" style="font-size:18px; font-weight: bold;">电话号码</label>
 						<div class="layui-input-block">
-							<span style="font-size:18px; color: #000000;" th:text="${admuser.userPhone}"></span>
+							<span style="font-size:18px; color: #000000;padding-left: calc(2vw)" th:text="${admuser.userPhone}"></span>
 						</div>						    
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label" style="font-size:18px; font-weight: bold;">性别</label>
 						<div class="layui-input-inline">
-							<span style="font-size:18px; color: #000000;" th:text="${admuser.userSex}"></span>
+							<span style="font-size:18px; color: #000000;padding-left: calc(2vw)" th:text="${admuser.userSex}"></span>
 						</div>							    			   
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label"></label>
-						<div class="layui-input-inline">
+						<div class="layui-input-inline" style="padding-top: calc(3vh)">
 							<button type="button" class="layui-btn layui-btn-normal"><a th:href="@{/ManagerModifyUserInformationPage(userId=${admuser.getUserId()})}"><font color="white">修改信息</font></a></button>
 						</div>
 					</div>

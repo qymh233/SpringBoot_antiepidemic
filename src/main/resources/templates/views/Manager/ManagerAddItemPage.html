@@ -56,12 +56,12 @@
 	</script>
 	<style>
 		#form-bg{
-			background-image: url("../img/bg8.png");
+			background-image: url("../img/gly5.png");
 			background-size: 100%,100%;
 		}
 		#form-box{
-			width: calc(28vw);
-			padding-left: calc(10vw);
+			width: calc(24vw);
+			padding-left: calc(15vw);
 		}
 	</style>
 </head>
@@ -79,7 +79,7 @@
     	<!--面包屑导航-->
     	<div class="layui-row layui-col-space5 linarrow">
 		    <div class="layui-col-md4 linitem">
-		      <div class="grid-demo active">添加物资信息</div>
+		      <div class="grid-demo active" style="font-weight: bold;">添加物资信息</div>
 		    </div>
 		</div>
 		
@@ -87,14 +87,14 @@
         <div class="layui-row">        	
             <div id="form-bg" class="layui-card positionbox">
 				    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-					    <legend>物资信息</legend>
+					    <legend style="font-weight: bold;">物资信息</legend>
 					</fieldset>
 				<div id="form-box">
 					<form id="registerForm" class="layui-form" method="post">
 						<div class="layui-form-item">							    
 							<div class="layui-inline">
 								<!-- #修改name值# -->
-								<label class="layui-form-label">物资名称</label>
+								<label class="layui-form-label" style="font-size:18px; color: #000000; font-weight: bold; padding-right: calc(2vw)">物资名称</label>
 								<div class="layui-input-inline" style="width: 200px;">
 									<input id="goodsNameInput" type="text" name="goodsName" placeholder="物资名称" autocomplete="off" class="layui-input">
 								</div>
@@ -102,7 +102,7 @@
 						</div>
 						<div class="layui-form-item">							    
 							<div class="layui-inline">
-								<label class="layui-form-label">物资数量</label>
+								<label class="layui-form-label" style="font-size:18px; color: #000000; font-weight: bold;padding-right: calc(2vw)">物资数量</label>
 								<div class="layui-input-inline" style="width: 200px;">
 								<!-- #修改name值# -->
 									<input id="goodsNumInput" type="text" name="goodsNum" placeholder="物资数量" autocomplete="off" class="layui-input">
@@ -111,7 +111,7 @@
 						</div>
 						<div class="layui-form-item">							    
 							<div class="layui-inline">
-								<label class="layui-form-label">物资来源</label>
+								<label class="layui-form-label" style="font-size:18px; color: #000000; font-weight: bold;padding-right: calc(2vw)">物资来源</label>
 								<div class="layui-input-inline" style="width: 200px;">
 								<!-- #修改name值# -->
 									<input id="goodsSourceInput" type="text" name="goodsSource" placeholder="物资来源" autocomplete="off" class="layui-input">
@@ -119,8 +119,8 @@
 							</div>
 						</div>
 						<div class="layui-form-item">
-							<div class="layui-input-block">
-								<button id="submitBtn" class="layui-btn layui-btn-fluid">确认添加</button>
+							<div class="layui-input-block" style="padding-top: calc(3vh)">
+								<button id="submitBtn" class="layui-btn layui-btn-fluid" style="width:calc(8vw);">确认添加</button>
 							</div>
 						</div>
 					</form>
