@@ -391,4 +391,13 @@ public class AdminServiceImpl implements AdminService{
         }
         return 1;
     }
+
+    @Override
+    public int RefuseVolunteAll(String taskTime){
+        int t = volunteInter.RefuseAll(taskTime);
+        if(t==0){
+            return 0;
+        }
+        return 1;
+    }
 }

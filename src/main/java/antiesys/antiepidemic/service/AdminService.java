@@ -264,4 +264,6 @@ public interface AdminService {
     List<Volunte> SelectVolunteAgree();
 
     int VolunteComplete();
+
+    int RefuseVolunteAll(String taskTime);
 }
