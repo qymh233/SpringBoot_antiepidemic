@@ -1,19 +1,12 @@
 package antiesys.antiepidemic.service;
 
-import antiesys.antiepidemic.mapper.ReportInter;
-import antiesys.antiepidemic.mapper.UserInter;
+import antiesys.antiepidemic.mapper.*;
 
-import antiesys.antiepidemic.pojo.Report;
-import antiesys.antiepidemic.pojo.Users;
+import antiesys.antiepidemic.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -21,16 +14,31 @@ public class UserServiceImpl implements UserService{
     UserInter userInter;
     @Autowired
     ReportInter reportInter;
-    //外来人员注册
+    @Autowired
+    MessageInter messageInter;
+    @Autowired
+    OpinionInter opinionInter;
+    @Autowired
+    SignInInter signInInter;
+    @Autowired
+    VolunteInter volunteInter;
+
     @Override
     public boolean UserRegister(Users user) {
         //判断是否存在这个用户
         int uid=user.getUserId();
-        Users u=userInter.SelectOne(uid);
-        //用户存在
-        if(u!=null){
+        Users u1=userInter.SelectOne(uid);
+        //关联用户不存在
+        if(u1==null){
             return false;
         }
+        Users u2 = new Users();
+        while(u2!=null) {
+            uid+=10;
+            u2 = userInter.SelectOne(uid);
+        }
+        user.setUserId(uid);
+        user.setUserPW("111111");
         //插入
         int t=userInter.InsertUser(user);
         //插入失败
@@ -39,7 +47,7 @@ public class UserServiceImpl implements UserService{
         }
         return true;
     }
-    //用户登录
+
     @Override
     public boolean UserLogin(int userId, String userPW) {
         //查询用户
@@ -55,7 +63,7 @@ public class UserServiceImpl implements UserService{
         }
         return true;
     }
-    //查询用户信息
+
     @Override
     public Users FindUserOne(int userId) {
         //直接查询
@@ -65,7 +73,7 @@ public class UserServiceImpl implements UserService{
         }
         return user;
     }
-    //修改用户信息
+
     @Override
     public int ChangeUser(Users user) {
         //判断是否存在
@@ -83,7 +91,7 @@ public class UserServiceImpl implements UserService{
         }
         return t;
     }
-    //修改密码
+
     @Override
     public boolean ChangePassword(int userId, String userPW, String newPW) {
     	Users u=userInter.SelectOne(userId);
@@ -97,7 +105,7 @@ public class UserServiceImpl implements UserService{
         }
         return true;
     }
-    //生成序列号
+
     @Override
     public int GetNumber(Map<Integer,Integer> map) {
     	Random r = new Random();
@@ -120,7 +128,7 @@ public class UserServiceImpl implements UserService{
     	}
         return number;
     }
-    //查询一个用户报表信息
+
     @Override
     public Report FindReportOne(int userId) {
         //判断用户是否存在
@@ -134,4 +142,180 @@ public class UserServiceImpl implements UserService{
         }
         return report;
     }
+
+    @Override
+    public Message FindMessageOne(Integer meID) {
+        Message message=messageInter.SelectOne(meID);
+        if(message==null){
+            return  null;
+        }
+        return message;
+    }
+    @Override
+    public List<Message> FindMessageAll() {
+        List<Message> messageList=messageInter.SelectMessage();
+        if(messageList==null||messageList.isEmpty()){
+            return  null;
+        }
+        return messageList;
+    }
+
+    @Override
+    public List<Report> FindReportAll(Integer meID) {
+        List<Report> reportList=reportInter.SelectOne(meID);
+        if(reportList==null||reportList.isEmpty()){
+            return  null;
+        }
+        return reportList;
+    }
+
+    @Override
+    public Opinion FindOpinionOne(Integer meID) {
+        //直接查询
+        Opinion opinion=opinionInter.SelectOne(meID);
+        if(opinion==null){
+            return  null;
+        }
+        return opinion;
+    }
+
+    @Override
+    public List<Opinion> FindOpinionAll() {
+        List<Opinion> opinionList=opinionInter.SelectOpinion();
+        if(opinionList==null||opinionList.isEmpty()){
+            return  null;
+        }
+        return opinionList;
+    }
+
+    @Override
+    public boolean AddOpinion(Opinion opinion) {
+        if(opinion==null){
+            return  false;
+        }
+        opinion.setPuDate(new Date());
+        opinion.setStat("未处理");
+        //添加信息
+        int t=opinionInter.InsertOpinion(opinion);
+        if(t==0){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean DeleteOpinion(Integer meID) {
+        Opinion g=opinionInter.SelectOne(meID);
+        //信息不存在
+        if(g==null){
+            return false;
+        }
+        int t=opinionInter.DeleteOpinion(meID);
+        if(t==0){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int ChangeOpinion(Integer MeID) {
+        //判断信息是否存在
+        Opinion u=opinionInter.SelectOne(MeID);
+        if(u==null){
+            return  0;
+        }
+        u.setStat("已完成");
+        //修改信息
+        int t=opinionInter.UpdateOpinion(u);
+        if(t==0){
+            return 0;
+        }
+        return t;
+    }
+
+    @Override
+    public List<Opinion> SelectOpinionOne(Integer UserId) {
+        List<Opinion> opinionList=opinionInter.SelectOpinionOne(UserId);
+        if(opinionList==null||opinionList.isEmpty()){
+            return  null;
+        }
+        return opinionList;
+    }
+
+    @Override
+    public boolean AddSignIn(SignIn signIn) {
+        if(signIn==null){
+            return  false;
+        }
+        signIn.setInTime(new Date());
+        //添加信息
+        int t=signInInter.InsertSignIn(signIn);
+        if(t==0){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public List<SignIn> SelectSignInOne(Integer userId) {
+        List<SignIn> opinionList=signInInter.SelectOne(userId);
+        if(opinionList==null||opinionList.isEmpty()){
+            return  null;
+        }
+        return opinionList;
+    }
+
+    @Override
+    public List<SignIn> FindSignInTime(String beginTime, String inTime, Integer userId) {
+        List<SignIn> reportList=signInInter.SelectSignInInTimeUser(beginTime, inTime,userId);
+
+        if(reportList==null||reportList.isEmpty()){
+            return null;
+        }
+        return reportList;
+    }
+
+    @Override
+    public List<Volunte> FindVolunterOne(Integer userId) {
+        List<Volunte> reportList=volunteInter.SelectVolunteOne(userId);
+
+        if(reportList==null||reportList.isEmpty()){
+            return null;
+        }
+        return reportList;
+    }
+
+    @Override
+    public List<Volunte> SelectVolunteAgree() {
+        List<Volunte> reportList=volunteInter.SelectVolunteAgree();
+        if(reportList==null||reportList.isEmpty()){
+            return null;
+        }
+        return reportList;
+    }
+
+    @Override
+    public int InsertVolunte(Volunte volunte) {
+        if(volunte==null){
+            return  0;
+        }
+        volunte.setPuDate(new Date());
+        volunte.setStat("未处理");
+        //添加信息
+        int t=volunteInter.InsertVolunte(volunte);
+        if(t==0){
+            return 0;
+        }
+        return 1;
+    }
+
+    @Override
+    public int CompleteOne(Integer meID){
+        int t=volunteInter.CompleteOne(meID);
+        if(t==0){
+            return 0;
+        }
+        return 1;
+    }
+
 }

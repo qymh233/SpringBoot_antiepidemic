@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>查看意见反馈</title>
+    <link rel="stylesheet" href="../assets/css/layui.css">    
+    <link rel="stylesheet" href="../assets/css/view.css"/>
+    <link rel="stylesheet" href="../assets/css/admin.css"/> 
+    <link rel="stylesheet" href="../assets/css/style.css"/>
+    <style type="text/css">
+    	.layui-form-item{ margin-bottom: 0;}
+    </style>
+</head>
+<body class="layui-view-body">
+    <div class="layui-content">
+    	<!--面包屑导航-->
+    	<div class="mianb">
+    		<div class="mblf layui-col-xs6 layui-col-md6">
+    			 <i class="layui-icon">&#xe656;</i>
+    			 <p>管理员首页 > 意见反馈管理 ><span>查看意见反馈</span></p>
+    		</div>
+			<div class="mbrt layui-col-xs6 layui-col-md6">
+				<form method="post">
+					<div class="layui-input-inline" style="width: 200px;">
+						<input type="text" name="userId" placeholder="用户ID" autocomplete="off" class="layui-input">
+					</div>
+					<button type="submit" formaction="/admin/findOpinion" class="layui-btn layui-btn-normal">搜索</button>
+				</form>
+			</div>
+    	</div>
+    	<!--面包屑导航-->
+        <div class="layui-row">
+            <div class="layui-card">
+            	<div class="table-responsive">
+					<table id="opinionList" lay-filter="test"></table>
+			 	</div>
+            </div>           
+        </div>
+    </div>
+    <script src="../assets/jquery.min.js"></script>
+    <script src="../assets/layui.all.js"></script>
+
+	<script type="text/html" id="doBar">
+		{{#  if(d.stat == "未处理"){ }}
+		<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="reply">回复</a>
+		{{#  } }}
+	</script>
+
+    <script>
+    	var element = layui.element;
+
+		function dateToStr(date) {
+			if(date==="") return "";
+			var time = new Date(date.time);
+			var y = time.getFullYear();
+			var M = time.getMonth() + 1;
+			M = M < 10 ? ("0" + M) : M;
+			var d = time.getDate();
+			d = d < 10 ? ("0" + d) : d;
+			var h = time.getHours();
+			var str = y + "-" + M + "-" + d;
+			return str;
+		}
+
+		layui.use('table', function(){
+			var table = layui.table;
+
+			//第一个实例
+			table.render({
+				elem: '#opinionList'
+				,height: 466
+				,url: '/admin/opinionList' //数据接口
+				,page: true //开启分页
+				,method: 'post'
+				,cols: [
+					[ //表头
+						{field: 'title', title: '标题', sort: true, fixed: 'left'}
+						,{field: 'userId', title: '反馈者Id', sort: true}
+						,{field: 'userName', title: '反馈者姓名', sort: true}
+						, {
+						field: 'puDate', title: '反馈时间', sort: true,
+							templet: function (d) {
+								return dateToStr(d.puDate);
+							}
+						}
+						,{field: 'stat', title: '状态', sort: true}
+						,{title: '操作', toolbar:"#doBar", width:65}
+					]
+				]
+			});
+
+			table.on('tool(test)', function(obj){
+				var data = obj.data;
+				var layEvent = obj.event;
+
+				if(layEvent === 'reply'){ //查看
+					location.href="/admin/findOpinionOne?meID="+data.meID;
+				}
+			});
+
+		});
+
+		 layui.use('form', function(){
+		  var form = layui.form; 
+		  form.render();
+		}); 
+	</script>
+	
+</body>
+</html>

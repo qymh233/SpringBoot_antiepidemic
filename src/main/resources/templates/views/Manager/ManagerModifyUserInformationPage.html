@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>修改用户信息</title>
+    <link rel="stylesheet" href="../assets/css/layui.css">    
+    <link rel="stylesheet" href="../assets/css/view.css"/>
+    <link rel="stylesheet" href="../assets/css/admin.css"/>  
+    <link rel="stylesheet" href="../assets/css/style.css"/>
+	<style>
+		#form-bg{
+			background-image: url("../img/gly22.png");
+			background-size: 100%,100%;
+		}
+		#form-box{
+			width: calc(28vw);
+			padding-left: calc(10vw);
+		}
+	</style>
+</head>
+<body class="layui-view-body">
+    <div class="layui-content">
+	
+    	<!--面包屑导航-->
+    	<div class="mianb">
+    		<div class="mblf layui-col-xs6 layui-col-md6">
+    			 <i class="layui-icon">&#xe656;</i>
+    			 <p>管理员首页 > 用户信息管理 > 查看用户信息 > <span>修改用户信息</span></p>
+    		</div>    		
+    	</div>
+		
+    	<!--面包屑导航-->
+    	<div class="layui-row layui-col-space5 linarrow">
+		    <div class="layui-col-md4 linitem">
+		      <div class="grid-demo active">修改用户信息</div>
+		    </div>
+		</div>
+		
+		<!--指示条-->
+        <div class="layui-row">        	
+            <div id="form-bg" class="layui-card positionbox">
+				    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+					    <legend style="font-weight: bold;color:#ffffff">请填写基本信息</legend>
+					</fieldset>
+				<div id="form-box">
+					<form class="layui-form" method="post">
+						<div class="layui-form-item">							    
+							<div class="layui-inline">
+								<label class="layui-form-label" style="font-size:18px; color:#ffffff; font-weight: bold;">姓名</label>
+								<label class="layui-form-label" style="font-size:18px; color:#ffffff; font-weight: bold;">
+									<span th:text="${admuser.getUserName()}"></span>
+								</label>
+								<div class="layui-input-inline" style="width: 200px;">
+									<input id="userNameInput" type="text" name="userName" placeholder="姓名" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">							    
+							<div class="layui-inline">
+								<label class="layui-form-label" style="font-size:18px; color:#ffffff; font-weight: bold;">电话号码</label>
+								<label class="layui-form-label" style="font-size:18px; color:#ffffff; font-weight: bold;">
+									<span th:text="${admuser.getUserPhone()}"></span>
+								</label>
+								<div class="layui-input-inline" style="width: 200px;">
+									<input type="text" name="userPhone" placeholder="电话号码" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">							    
+							<div class="layui-inline">
+								<label class="layui-form-label" style="font-size:18px; color:#ffffff; font-weight: bold;">年龄</label>
+								<label class="layui-form-label" style="font-size:18px; color:#ffffff; font-weight: bold;">
+									<span th:text="${admuser.getUserAge()}"></span>
+								</label>
+								<div class="layui-input-inline" style="width: 200px;">
+									<input type="text" name="userAge" placeholder="年龄" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="font-size:18px; color:#ffffff; font-weight: bold;">性别</label>
+							<div class="layui-input-block" style="padding-left: calc(7vw)">
+							  <input type="radio" name="userSex" value="男" title="男" th:checked="${admuser.getUserSex()=='男'}">
+							  <input type="radio" name="userSex" value="女" title="女" th:checked="${admuser.getUserSex()=='女'}">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button type="submit" formaction="/admin/changeUser" class="layui-btn layui-btn-primary">确认修改</button>
+								<a th:href="@{/ManagerModifyUserPasswordPage}" class="layui-btn layui-btn-primary">修改密码</a>
+							</div>
+						</div>
+					</form>
+				</div>
+            </div>   
+		</div>
+    </div>
+    <script src="../assets/jquery.min.js"></script>
+    <script src="../assets/layui.all.js"></script>   
+    <script>
+	layui.use('layedit', function(){
+	  var layedit = layui.layedit;
+	  layedit.build('demo'); //建立编辑器
+	});
+	layui.use('layedit', function(){
+	  var layedit = layui.layedit;
+	  layedit.build('demo2'); //建立编辑器
+	});	
+	</script>>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="antiesys.antiepidemic.mapper.OpinionInter">
+	<!-- 查询一个信息 -->
+	<select id="SelectOne" parameterType="int" resultType="antiesys.antiepidemic.pojo.Opinion">
+    select * from T_OPINION where meID = #{meID}
+  </select>
+	<!--查询有多少信息-->
+	<select id="SelectNum" resultType="int">
+    	select count(*) from T_OPINION
+  	</select>
+	<!-- 删除信息 -->
+	<delete id="DeleteOpinion">
+		delete from T_OPINION where meID=#{meID}
+	</delete>
+	<!-- 插入信息 -->
+	<insert id="InsertOpinion" parameterType="antiesys.antiepidemic.pojo.Opinion" >
+		insert into T_OPINION(title,UserId,UserName,cont,puDate,stat) values(#{title},#{userId},#{userName},#{cont},#{puDate,jdbcType=DATE},#{stat})
+	</insert>
+	<!-- 更新信息 -->
+	<update id="UpdateOpinion">
+	  update T_OPINION set title=#{opinion.title} , UserId = #{opinion.userId} , UserName = #{opinion.userName} ,cont= #{opinion.cont} , puDate = #{opinion.puDate} , stat = #{opinion.stat} ,adminId= #{opinion.adminId} , adCont = #{opinion.adCont} , adDate = #{opinion.adDate} where meID=#{opinion.meID}
+	</update>
+	<!-- 查询所有信息 -->
+	<resultMap type="antiesys.antiepidemic.pojo.Opinion" id="SelectAll">
+		<result property="title" column="title"/>
+		<result property="userId" column="UserId"/>
+		<result property="userName" column="UserName"/>
+		<result property="cont" column="cont"/>
+		<result property="puDate" column="puDate"/>
+		<result property="meID" column="meID"/>
+		<result property="stat" column="stat"/>
+		<result property="adminId" column="adminId"/>
+		<result property="adCont" column="adCont"/>
+		<result property="adDate" column="adDate"/>
+	</resultMap>
+	<select id="SelectOpinion" resultMap="SelectAll">
+    	select * from T_OPINION order by puDate DESC
+  	</select>
+	<select id="SelectOpinionOne" resultMap="SelectAll">
+    	select * from T_OPINION where UserId=#{UserId} order by puDate DESC
+  	</select>
+</mapper>

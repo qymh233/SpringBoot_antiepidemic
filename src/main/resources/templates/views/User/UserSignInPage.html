@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>签到页面</title>
+    <link rel="stylesheet" href="../assets/css/layui.css">    
+    <link rel="stylesheet" href="../assets/css/view.css"/>
+    <link rel="stylesheet" href="../assets/css/admin.css"/>  
+    <link rel="stylesheet" href="../assets/css/style.css"/> 
+</head>
+<style type="text/css">
+	#test_n1{
+		float: left;
+		opacity:0.6;
+		position:relative;
+		left:51%;
+		top:calc(15vh);
+	}
+	.lform{
+		width: 400px;
+		height: 324px;
+		float: right;
+		background-color: #21B4E2;
+		opacity:0.6;
+		position:relative;
+		right:51.5%;
+		top:calc(15vh);
+	}
+	#lbox{
+		height: 800px;
+		background-image: url("../img/signin2.png");
+		background-repeat: no-repeat;
+		background-size: 100%,100%;
+		background-origin:content-box;
+	}
+	#bbox{
+		min-height: 400px;
+		height: calc(90vh);
+		overflow:hidden;
+	}
+</style>
+<script>
+	window.onload = function(){
+
+		var userTemInput = document.getElementById("userTemInput");
+		var submitBtn = document.getElementById("submitBtn");
+
+		var tag = false;
+
+		userTemInput.onblur = function(){
+			//判断输入是不是数字
+			if(userTemInput.value != "" && !isNaN(userTemInput.value) && (33 < Number(userTemInput.value) && Number(userTemInput.value) < 42)){
+				tag = true;
+			}else{
+				alert("请输入合法的体温");
+			}
+		}
+		submitBtn.onclick = function(){
+			if(tag){
+				document.getElementById("submitForm").action="/user/UserSignIn";
+				document.getElementById("submitForm").submit();
+			}else{
+
+				alert("请检查输入字段是否正确或是否为空");
+			}
+		}
+	}
+</script>
+<body class="layui-view-body">
+    <div id="bbox" class="layui-content">
+    	<!--面包屑导航-->
+    	<div class="mianb">
+    		<div class="mblf layui-col-xs6 layui-col-md6">
+    			 <i class="layui-icon">&#xe656;</i>
+    			 <p>用户首页 > <span>签到</span></p>
+    		</div>    		
+    	</div>
+    	<!--面包屑导航-->
+    	<div class="layui-row layui-col-space5 linarrow">
+		    <div class="layui-col-md4 linitem">
+		      <div class="grid-demo active">签到信息</div>
+		    </div>
+		</div>
+		<!--指示条-->
+		<div id="lbox">
+        <div class="layui-row">
+            <div class="layui-card positionbox">
+				<div class="lform">
+				<!--#填写action的值确定提交的url#-->
+				<form id="submitForm" class="layui-form">
+
+					<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+					    <legend style="font-size:18px; color:#000000; font-weight: bold;padding-right: calc(2vw)">请填写体温</legend>
+					</fieldset>
+					<!--#修改name值 替换为变量名#-->
+					<div class="layui-form-item">							    
+						<div class="layui-inline">
+							<label class="layui-form-label" style="font-size:18px; color:#000000; font-weight: bold;padding-right: calc(2vw)">体温</label>
+							<div class="layui-input-inline" style="width: 200px;">
+								<input id="userTemInput" type="text" name="temperature" placeholder="体温" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="font-size:18px; color:#000000; font-weight: bold;padding-right: calc(2vw)">体温备注</label>
+						<div class="layui-input-inline">
+							<select name="remake" lay-filter="aihao">
+								<option value="发烧" style="font-size:18px; color:#000000; font-weight: bold;padding-right: calc(2vw)">发烧</option>
+								<option value="高温" style="font-size:18px; color:#000000; font-weight: bold;padding-right: calc(2vw)">高温</option>
+								<option value="正常" style="font-size:18px; color:#000000; font-weight: bold;padding-right: calc(2vw)">正常</option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button id="submitBtn" class="layui-btn layui-btn-primary" >签到</button>
+						</div>
+					</div>
+				</form>
+				</div>
+				<div class="layui-inline" id="test_n1"></div>
+            </div>   
+		</div>
+		</div>
+    </div>
+    <script src="../assets/jquery.min.js"></script>
+    <script src="../assets/layui.all.js"></script>   
+    <script>
+	layui.use('layedit', function(){
+	  var layedit = layui.layedit;
+	  layedit.build('demo'); //建立编辑器
+	});
+	layui.use('layedit', function(){
+	  var layedit = layui.layedit;
+	  layedit.build('demo2'); //建立编辑器
+	});
+	layui.use('laydate', function(){
+		var laydate = layui.laydate;
+
+		//执行一个laydate实例
+		laydate.render({
+			elem: '#test_n1'
+			,position: 'static'
+		});
+	});
+	</script>
+</body>
+</html>

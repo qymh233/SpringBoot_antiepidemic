@@ -1,0 +1,72 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../assets/css/layui.css">
+    <link rel="stylesheet" href="../assets/css/login.css">
+    <link rel="icon" href="/favicon.ico">
+    <title>管理后台</title>
+    <script>
+        //初始化加载函数
+        window.onload = function(){
+
+            var userIdInputElt = document.getElementById("userIdInput");
+            var userPwInputElt = document.getElementById("userPwInput");
+            var submitBtn = document.getElementById("submitBtn");
+            var loginFormElt = document.getElementById("loginForm");
+
+            var userIdTag = false;
+            var userPwTag = false;
+
+            userIdInputElt.onblur = function(){
+                if(userIdInputElt.value == ""){
+                    userIdTag = false;
+                }else{
+                    userIdTag = true;
+                }
+            }
+            userPwInputElt.onblur = function(){
+                if(userPwInputElt.value == ""){
+                    userPwTag = false;
+                }else{
+                    userPwTag = true;
+                }
+            }
+            submitBtn.onclick = function(){
+                if(userIdTag == true && userPwTag == true){
+                    loginFormElt.action = "/userLogin";
+                    loginFormElt.method = "post";
+                    loginFormElt.submit();
+                }else{
+                    alert("请检查用户名和密码");
+                }
+            }
+        }
+        if(window != top){
+            top.location.href=location.href;
+        }
+    </script>
+</head>
+<body class="login-wrap">
+    <div class="login-container">
+            <form id="loginForm" class="login-form">
+                <div class="input-group">
+                    <input id="userIdInput" type="text" name="userId" class="input-field" value="">
+                    <label for="userIdInput" class="input-label">
+                        <span class="label-title">用户账号</span>
+                    </label>
+                </div>
+                <div class="input-group">
+                    <input id="userPwInput" type="password" name="userPW" class="input-field" value="">
+                    <label for="userPwInput" class="input-label">
+                        <span class="label-title">密码</span>
+                    </label>
+                </div>
+                <button id="submitBtn" class="login-button">登录</button>
+            </form>
+    </div>
+</body>
+<script src="../assets/layui.js"></script>
+<script src="../index.js" data-main="login"></script>
+</html>

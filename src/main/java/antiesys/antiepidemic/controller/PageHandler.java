@@ -18,21 +18,42 @@ import java.util.Map;
 public class PageHandler {
 
 
+    /**
+     * 系统主界面
+     * @return 系统主界面
+     */
     @RequestMapping("/")
     public String mypage(){
-        return "login";
+        return "SystemMainPage";
     }
+
     @RequestMapping("/he")
     public String mypag(){
         return "hello";
     }
+
+    /**
+     * 用户登录
+     * @return 用户登录界面
+     */
     @RequestMapping("/u")
     public String upage(){
-        return "UserLoginPage";
+        return "redirect:UserLoginPage.html";
     }
+
+    /**
+     * 管理员登录
+     * @return 管理员登录界面
+     */
     @RequestMapping("/m")
-    public String mpage(){
-        return "ManagerLoginPage";
-    }
+    public String mpage(){ return "ManagerLoginPage"; }
+
+    /**
+     * 外来人员注册
+     * @return 外来人员登录界面
+     */
+    @RequestMapping("/r")
+    public String rpage(){ return "RegistrationOfOutsidersPage"; }
+
 
 }

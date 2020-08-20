@@ -1,6 +1,7 @@
 package antiesys.antiepidemic.pojo;
 
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class Goods {

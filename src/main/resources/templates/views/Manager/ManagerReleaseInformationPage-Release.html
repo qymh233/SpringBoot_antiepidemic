@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>发布疫情防控信息-发布</title>
+		<link rel="stylesheet" href="../assets/css/layui.css">
+	    <link rel="stylesheet" href="../assets/css/view.css"/>
+	    <link rel="stylesheet" href="../assets/css/style.css"/>
+		<link rel="stylesheet" href="../assets/css/admin.css"/>
+	</head>
+	<style>
+		#form-bg{
+			background-image: url("../img/gly1.png");
+			opacity:0.5;
+			background-size: 100%,100%;
+		}
+		#form-box{
+			padding-top: calc(5vw);
+			padding-bottom: calc(5vw);
+			width: calc(58vw);
+			margin: auto;
+		}
+	</style>
+	<script>
+		window.onload = function(){
+
+			var mesInput = document.getElementById("mesInput");
+			var submitBtn = document.getElementById("submitBtn");
+
+			var tag = false;
+
+			mesInput.onblur = function(){
+				if(mesInput.value != ""){
+					tag = true;
+				}else{
+					alert("输入信息不能为空");
+				}
+			}
+			submitBtn.onclick = function(){
+				if(tag){
+					document.getElementById("submitForm").action="/admin/releaseInformation";
+					document.getElementById("submitForm").submit();
+				}else{
+					alert("请检查输入字段是否正确或是否为空");
+				}
+			}
+		}
+	</script>
+	<body class="layui-tank">
+	<div class="layui-content">
+		<div class="mianb">
+			<div class="mblf layui-col-xs6 layui-col-md6">
+				<i class="layui-icon">&#xe656;</i>
+				<p>管理员首页 > 疫情防控 > <span>发布疫情防控信息</span></p>
+			</div>
+		</div>
+		<div id="form-bg" class="layui-card">
+			<div id="form-box">
+		 	<form id="submitForm" class="layui-form" method="POST">
+			   <div class="layui-form-item">
+				    <label class="layui-form-label" style="font-size:18px; color:#ffffff; font-weight: bold;">防控信息</label>
+				    <div class="layui-input-block">
+				        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="" class="layui-input" style="width: calc(50vw)">
+				    	<!--<div class="layui-form-mid layui-word-aux">数字越小越靠前</div>-->
+				    </div>					    
+				</div>
+				<div class="layui-form-item layui-form-text">
+				    <label class="layui-form-label" style="font-size:18px;color:#ffffff; font-weight: bold;">具体信息</label>
+				    <div class="layui-input-block">
+						<textarea id="mesInput" name="content" placeholder="请输入" class="layui-textarea" style="width: calc(50vw); height: calc(40vh);"></textarea>
+						<!--<button type="button" class="layui-btn layui-btn-danger" id="test7">上传信息</button>-->
+				    </div>
+				</div>
+				<div >
+					<button id="submitBtn" class="layui-btn layui-btn-normal float-right" style="background: #0000FF">确定</button>
+				</div>
+			</form>
+			</div>
+		</div>
+	</div>
+
+	    
+	<script src="../assets/layui.all.js"></script>    
+	<script>
+		layui.use('upload', function(){
+		  var $ = layui.jquery
+		  ,upload = layui.upload; 
+		
+		//设定文件大小限制
+		  upload.render({
+		    elem: '#test7'
+		    ,url: '/upload/'
+//		    ,size: 60 //限制文件大小，单位 KB
+		    ,done: function(res){
+		      console.log(res)
+		    }
+		  });
+		});
+		</script>
+	</body>
+</html>

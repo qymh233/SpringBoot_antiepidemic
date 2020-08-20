@@ -8,42 +8,98 @@
     <link rel="stylesheet" href="../assets/css/login.css">
     <link rel="icon" href="/favicon.ico">
     <title>管理后台</title>
+    <script>
+        window.onload = function(){
+
+            var userNameElt = document.getElementById("userName");
+            var userAgeElt = document.getElementById("userAge");
+            var userPhoneElt = document.getElementById("userPhone");
+            var userIdCardElt = document.getElementById("userIdCard");
+            var submitBtn = document.getElementById("submitBtn");
+
+            var tag = new Array(4);
+
+            userNameElt.onblur = function(){
+                if(userNameElt.value != ""){
+                    tag[0] = true;
+                }
+            }
+            userAgeElt.onblur = function(){
+                if(userAgeElt.value != "" && (Number(userAgeElt.value) > 0 && Number(userAgeElt.value) < 100)){
+                    tag[1] = true;
+                }else{
+                    alert("请输入合法的年龄");
+                }
+            }
+            userPhoneElt.onblur = function(){
+                if(userPhoneElt.value != ""){
+                    tag[2] = true;
+                }
+            }
+            userIdCardElt.onblur = function(){
+                if(userIdCardElt.value != ""){
+                    tag[3] = true;
+                }
+            }
+            submitBtn.onclick = function(){
+                var num = 0;
+                for(var i = 0;i < 4;i++) {
+                    if(tag[i] == true){
+                        num++;
+                    }
+                }
+                if(num == tag.length){
+                    document.getElementById("registerForm").action="/userRegister";
+                    document.getElementById("registerForm").submit();
+                }else{
+                    alert("请检查输入字段是否正确");
+                }
+            }
+        }
+    </script>
 </head>
 <body class="login-wrap">
     <div class="login-container">
-        <form class="login-form">
-            <div class="input-group">
-                <input type="text" name="userName" class="input-field">
-                <label for="text" class="input-label">
-                    <span class="label-title">姓名</span>
-                </label>
-            </div>
-            <div class="input-group">
-                <input type="text" name="userSex" class="input-field">
-                <label for="text" class="input-label">
-                    <span class="label-title">性别</span>
-                </label>
-            </div>
-            <div class="input-group">
-                <input type="text" name="userAge" class="input-field">
-                <label for="text" class="input-label">
-                    <span class="label-title"> 年龄</span>
-                </label>
-            </div>
-            <div class="input-group">
-                <input type="text" name="userPhone" class="input-field">
-                <label for="text" class="input-label">
-                    <span class="label-title">电话</span>
-                </label>
-            </div>
-	<div class="input-group">
-                <input type="text" name="userIdCard" class="input-field">
-                <label for="text" class="input-label">
-                    <span class="label-title">身份证号码</span>
-                </label>
-            </div>
-            <button type="button" class="login-button">注册<i class="ai ai-enter"></i></button>
-        </form>
+            <form id="registerForm" class="login-form" method="POST">
+                <div class="input-group">
+                    <input type="text" id="userName" name="userName" class="input-field">
+                    <label for="userName" class="input-label">
+                        <span class="label-title">姓名</span>
+                    </label>
+                </div>
+                <div class="layui-form-item">
+                    <div class="input-group">
+                        <a>&nbsp;性别：</a>
+                        <input type="radio" name="userSex" value="男" checked="checked"> 男&emsp;&emsp;
+                        <input type="radio" name="userSex" value="女"> 女
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input type="number" id="userAge" name="userAge" class="input-field">
+                    <label for="userAge" class="input-label">
+                        <span class="label-title">年龄</span>
+                    </label>
+                </div>
+                <div class="input-group">
+                    <input type="number" id="userPhone" name="userPhone" class="input-field">
+                    <label for="userPhone" class="input-label">
+                        <span class="label-title">电话</span>
+                    </label>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="userIdCard" name="userIdCard" class="input-field">
+                    <label for="userIdCard" class="input-label">
+                        <span class="label-title">身份证号码</span>
+                    </label>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="userId" name="userId" class="input-field">
+                    <label for="userId" class="input-label">
+                        <span class="label-title">关联账号</span>
+                    </label>
+                </div>
+                <button id="submitBtn" class="layui-btn layui-btn-fluid">注册</button>
+            </form>
     </div>
 </body>
 <script src="../assets/layui.js"></script>

@@ -3,11 +3,27 @@ package antiesys.antiepidemic.pojo;
 import java.util.Date;
 
 public class Message {
-    private String title;//标题
-    private String puBer;//发布者
-    private String cont;//具体内容
-    private Date puDate;//发布时间
-    private Integer meID;//编号
+    /**
+     * 标题
+     */
+    private String title;
+    /**
+     * 发布者
+     */
+    private Integer puBer;
+    /**
+     * 具体内容
+     */
+    private String cont;
+    /**
+     * 发布时间
+     */
+    private Date puDate;
+    /**
+     * 编号
+     */
+    private Integer meID;
+    private String stat;//状态
 
     public Integer getMeID() {
         return meID;
@@ -27,11 +43,11 @@ public class Message {
         this.title = title;
     }
 
-    public String getPuBer() {
+    public Integer getPuBer() {
         return puBer;
     }
 
-    public void setPuBer(String puBer) {
+    public void setPuBer(Integer puBer) {
         this.puBer = puBer;
     }
 
@@ -51,6 +67,14 @@ public class Message {
         this.puDate = puDate;
     }
 
+    public String getStat() {
+        return stat;
+    }
+
+    public void setStat(String stat) {
+        this.stat = stat;
+    }
+
     @Override
     public String toString() {
         return "Message{" +
@@ -58,6 +82,8 @@ public class Message {
                 ", puBer='" + puBer + '\'' +
                 ", cont='" + cont + '\'' +
                 ", puDate=" + puDate +
+                ", meID=" + meID +
+                ", stat='" + stat + '\'' +
                 '}';
     }
 }

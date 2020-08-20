@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>查看全部签到记录</title>
+    <link rel="stylesheet" href="../assets/css/layui.css">
+    <link rel="stylesheet" href="../assets/css/view.css"/>
+    <link rel="stylesheet" href="../assets/css/admin.css"/>
+</head>
+<body class="layui-view-body">
+<div class="layui-content">
+    <!--面包屑导航-->
+    <div class="mianb">
+        <div class="mblf layui-col-xs6 layui-col-md6">
+            <i class="layui-icon">&#xe656;</i>
+            <p>用户首页 > 签到 > <span>查看全部签到记录</span></p>
+        </div>
+        <div class="mbrt layui-col-xs6 layui-col-md6">
+            <form method="post">
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input type="text" id="beginTime" name="beginTime" placeholder="起始时间" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input type="text" id="endTime" name="endTime" placeholder="结束时间" autocomplete="off" class="layui-input">
+                </div>
+                <button type="submit" formaction="/user/findSignInTime" class="layui-btn layui-btn-normal">搜索</button>
+            </form>
+        </div>
+    </div>
+    <!--面包屑导航-->
+    <div class="layui-row">
+        <div class="layui-card">
+            <div class="table-responsive">
+                <table id="signInList" lay-filter="test"></table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/jquery.min.js"></script>
+<script src="../assets/layui.all.js"></script>
+<script>
+    var element = layui.element;
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#beginTime', //指定元素
+            type: 'datetime'
+        });
+
+        laydate.render({
+            elem: '#endTime', //指定元素
+            type: 'datetime'
+        });
+    });
+
+    function dateToStr(date) {
+        if(date==="") return "";
+        var time = new Date(date.time);
+        var y = time.getFullYear();
+        var M = time.getMonth() + 1;
+        M = M < 10 ? ("0" + M) : M;
+        var d = time.getDate();
+        d = d < 10 ? ("0" + d) : d;
+        var h = time.getHours();
+        h = h < 10 ? ("0" + h) : h;
+        var m = time.getMinutes();
+        m = m < 10 ? ("0" + m) : m;
+        var s = time.getSeconds();
+        s = s < 10 ? ("0" + s) : s;
+        var str = y + "-" + M + "-" + d + " " + h + ":" + m + ":" + s;
+        return str;
+    }
+
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#signInList'
+            ,height: 466
+            ,url: '/user/signInList' //数据接口
+            ,page: true //开启分页
+            ,method: 'post'
+            ,cols: [
+                [ //表头
+                    {field: 'userName', title: '姓名', sort: true, fixed: 'left'}
+                    ,{field: 'temperature', title: '体温', sort: true}
+                    , {
+                    field: 'inTime', title: '签到时间', sort: true,
+                        templet: function (d) {
+                            return dateToStr(d.inTime);
+                        }
+                    }
+                    ,{field: 'remarks', title: '备注', sort: true}
+                ]
+            ]
+        });
+
+    });
+
+    layui.use('form', function(){
+        var form = layui.form;
+        form.render();
+    });
+</script>
+
+</body>
+</html>

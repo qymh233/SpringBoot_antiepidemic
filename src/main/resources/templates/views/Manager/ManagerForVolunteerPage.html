@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>志愿服务安排</title>
+    <link rel="stylesheet" href="../assets/css/layui.css">    
+    <link rel="stylesheet" href="../assets/css/view.css"/>
+    <link rel="stylesheet" href="../assets/css/admin.css"/>  
+    <link rel="stylesheet" href="../assets/css/style.css"/> 
+	<style type="text/css">
+	td{
+		word-break:break-all;
+		text-align:center;
+		height:110px;
+	}
+	table{
+		opacity:0.8;
+		table-layout: fixed;
+		word-break: break-all;
+	}
+	#imgDiv{
+		background-image: url("../img/bg1.png");
+		background-size:cover;
+	}
+	#td-img{
+		max-width: calc(9.5vw);
+	}
+	</style>
+</head>
+<body class="layui-view-body">
+    <div class="layui-content">
+    	<!--面包屑导航-->
+    	<div class="mianb">
+    		<div class="mblf layui-col-xs6 layui-col-md6">
+    			 <i class="layui-icon">&#xe656;</i>
+    			 <p>管理员首页 > 志愿工作管理 > <span>志愿服务安排</span></p>
+    		</div>
+			<div class="mbrt layui-col-xs6 layui-col-md6">
+				<a href="/admin/volunteComplete" class="layui-btn layui-btn-normal">任务结束</a>
+			</div>
+    	</div>
+		<!--指示条-->
+        <div class="layui-row">   
+            <div id="imgDiv" class="layui-card positionbox">     		
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 5px; color: #ffffff; font-weight: bold">
+					<legend>志愿服务安排</legend>
+				</fieldset>
+				<table class="layui-table">
+					<thead>
+						<tr>
+							<td title="任务表" class="topth" bgcolor="#55aaff"style="color: #ffffff;font-size: 20px;font-weight: bold;">任务表</th>
+							<td bgcolor="#55aaff"style="color: #ffffff;font-size: 20px">周一
+							<td bgcolor="#55aaff"style="color: #ffffff;font-size: 20px">周二
+							<td bgcolor="#55aaff"style="color: #ffffff;font-size: 20px">周三
+							<td bgcolor="#55aaff"style="color: #ffffff;font-size: 20px">周四
+							<td bgcolor="#55aaff"style="color: #ffffff;font-size: 20px">周五
+							<td bgcolor="#55aaff"style="color: #ffffff;font-size: 20px">周六
+							<td bgcolor="#55aaff"style="color: #ffffff;font-size: 20px">周日
+						</tr>
+					</thead>
+
+				    <tbody>
+						<tr>
+							<td class="toptd" bgcolor="#55aaff" style="color: #ffffff;font-size: 20px">上午</td>
+							<td th:if="${volunag.containsKey('1')}" style="color:#000000;font-size: 15px"><img id="td-img" src="../img/one1.png"/></br>
+								<span th:text="${volunag.get('1').getUserName()}"></span>
+							</td>
+							<td th:if="${not volunag.containsKey('1')}"><img id="td-img" src="../img/noone1.png"/>
+							</td>
+							<td th:if="${volunag.containsKey('2')}" style="color:#000000;font-size: 15px"><img id="td-img" src="../img/one1.png"/></br>
+								<span th:text="${volunag.get('2').getUserName()}"></span>
+							</td>
+							<td th:if="${not volunag.containsKey('2')}"><img id="td-img" src="../img/noone1.png"/>
+							</td>
+							<td th:if="${volunag.containsKey('3')}" style="color:#000000;font-size: 15px"><img id="td-img" src="../img/one1.png"/></br>
+								<span th:text="${volunag.get('3').getUserName()}"></span>
+							</td>
+							<td th:if="${not volunag.containsKey('3')}"><img id="td-img" src="../img/noone1.png"/>
+							</td>
+							<td th:if="${volunag.containsKey('4')}" style="color:#000000;font-size: 15px"><img id="td-img" src="../img/one1.png"/></br>
+								<span th:text="${volunag.get('4').getUserName()}"></span>
+							</td>
+							<td th:if="${not volunag.containsKey('4')}"><img id="td-img" src="../img/noone1.png"/>
+
+							</td>
+							<td th:if="${volunag.containsKey('5')}" style="color:#000000;font-size: 15px"><img id="td-img" src="../img/one1.png"/></br>
+								<span th:text="${volunag.get('5').getUserName()}"></span>
+							</td>
+							<td th:if="${not volunag.containsKey('5')}"><img id="td-img" src="../img/noone1.png"/>
+
+							</td>
+							<td th:if="${volunag.containsKey('6')}" style="color:#000000;font-size: 15px"><img id="td-img" src="../img/one1.png"/></br>
+								<span th:text="${volunag.get('6').getUserName()}"></span>
+							</td>
+							<td th:if="${not volunag.containsKey('6')}"><img id="td-img" src="../img/noone1.png"/>
+
+							</td>
+							<td th:if="${volunag.containsKey('7')}" style="color:#000000;font-size: 15px"><img id="td-img" src="../img/one1.png"/></br>
+								<span th:text="${volunag.get('7').getUserName()}"></span>
+							</td>
+							<td th:if="${not volunag.containsKey('7')}"><img id="td-img" src="../img/noone1.png"/>
+
+							</td>
+						</tr>
+						<tr>
+							<td class="toptd" bgcolor="#55aaff" style="color: #ffffff;font-size: 20px">下午</td>
+							<td th:if="${volunag.containsKey('8')}" style="color:#000000;font-size: 15px"><img id="td-img" src="../img/one1.png"/></br>
+								<span th:text="${volunag.get('8').getUserName()}"></span>
+							</td>
+							<td th:if="${not volunag.containsKey('8')}"><img id="td-img" src="../img/noone1.png"/>
+
+							</td>
+							<td th:if="${volunag.containsKey('9')}" style="color:#000000;font-size: 15px"><img id="td-img" src="../img/one1.png"/></br>
+								<span th:text="${volunag.get('9').getUserName()}"></span>
+							</td>
+							<td th:if="${not volunag.containsKey('9')}"><img id="td-img" src="../img/noone1.png"/>
+
+							</td>
+							<td th:if="${volunag.containsKey('10')}" style="color:#000000;font-size: 15px"><img id="td-img" src="../img/one1.png"/></br>
+								<span th:text="${volunag.get('10').getUserName()}"></span>
+							</td>
+							<td th:if="${not volunag.containsKey('10')}"><img id="td-img" src="../img/noone1.png"/>
+
+							</td>
+							<td th:if="${volunag.containsKey('11')}" style="color:#000000;font-size: 15px"><img id="td-img" src="../img/one1.png"/></br>
+								<span th:text="${volunag.get('11').getUserName()}"></span>
+							</td>
+							<td th:if="${not volunag.containsKey('11')}"><img id="td-img" src="../img/noone1.png"/>
+
+							</td>
+							<td th:if="${volunag.containsKey('12')}" style="color:#000000;font-size: 15px"><img id="td-img" src="../img/one1.png"/></br>
+								<span th:text="${volunag.get('12').getUserName()}"></span>
+							</td>
+							<td th:if="${not volunag.containsKey('12')}"><img id="td-img" src="../img/noone1.png"/>
+
+							</td>
+							<td th:if="${volunag.containsKey('13')}" style="color:#000000;font-size: 15px"><img id="td-img" src="../img/one1.png"/></br>
+								<span th:text="${volunag.get('13').getUserName()}"></span>
+							</td>
+							<td th:if="${not volunag.containsKey('13')}"><img id="td-img" src="../img/noone1.png"/>
+
+							</td>
+							<td th:if="${volunag.containsKey('14')}" style="color:#000000;font-size: 15px"><img id="td-img" src="../img/one1.png"/></br>
+								<span th:text="${volunag.get('14').getUserName()}"></span>
+							</td>
+							<td th:if="${not volunag.containsKey('14')}"><img id="td-img" src="../img/noone1.png"/>
+
+							</td>
+						</tr>
+				    </tbody>
+				</table>
+            </div>   
+		</div>
+    </div>
+    <script src="../assets/jquery.min.js"></script>
+    <script src="../assets/layui.all.js"></script>   
+    <script>
+	layui.use('layedit', function(){
+	  var layedit = layui.layedit;
+	  layedit.build('demo'); //建立编辑器
+	});
+	layui.use('layedit', function(){
+	  var layedit = layui.layedit;
+	  layedit.build('demo2'); //建立编辑器
+	});	
+	</script>
+</body>
+</html>

@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="../assets/css/layui.css">
     <link rel="stylesheet" href="../assets/css/admin.css">
     <link rel="icon" href="../favicon.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
     <title>管理员主界面</title>
 </head>
 <body class="layui-layout-body">
@@ -22,7 +24,6 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" th:text="${manager.getAdminId()}"></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="">帮助中心</a></dd>
                         <dd><a href="/m">退出</a></dd>
                     </dl>
                 </li>
@@ -32,41 +33,80 @@
         <div class="layui-side custom-admin">
             <div class="layui-side-scroll">
                 <div class="custom-logo">                   
-                    <h1>防疫管理系统</h1>
+                    <h1></h1>
                 </div>
                 <ul id="Nav" class="layui-nav layui-nav-tree">
                     <li class="layui-nav-item" >
-                        <a href="javascript:;">
-                            <i class="layui-icon">&#xe857;</i>
+                        <a class="layui-nav-item-a" href="javascript:;">
+                            <i class="layui-icon">&#xe770;</i>
 							<em>管理员信息</em>
                         </a>
                         <dl class="layui-nav-child">
                             <dd><a href="/admin/adminSignInPage">签到</a></dd>
-                            <dd><a href="">查看个人信息</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item" >
-                        <a href="javascript:;">
-                            <i class="layui-icon">&#xe663;</i>
+                        <a class="layui-nav-item-a" href="javascript:;">
+                            <i class="layui-icon">&#xe667;</i>
 							<em>疫情防控</em>
                         </a>
                         <dl class="layui-nav-child">
                             <dd><a href="/ManagerReleaseInformationPage_Release">发布疫情防控信息</a></dd>
-                            <dd><a href="/ManagerRecordPage">防控任务完成情况</a></dd>
-							<dd><a href="/ManagerNotificationPreventionTimePage">防控时间通知</a></dd>
+                            <dd><a href="/admin/ManagerRecordPage">防控任务完成情况</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;">
+                        <a class="layui-nav-item-a" href="javascript:;">
                             <i class="layui-icon">&#xe653;</i>
-                            <em>管理员业务</em>
+                            <em>用户信息管理</em>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a href="/ManagerViewUserInformationPage">查看用户信息</a></dd>
-                            <dd><a href="/ManagerEnterStatisticsPage">录入统计信息</a></dd>
-                            <dd><a href="/ManagerMaterialInformationDisplayPage">物资管理</a></dd>
-                            <dd><a href="views/05生成统计报表.html">生成统计报表</a></dd>
+                            <dd><a href="/admin/ManagerViewUserInformationPage">查看用户信息</a></dd>
                         </dl>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/admin/ManagerCheckSignInPage">查看用户签到情况</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a class="layui-nav-item-a" href="javascript:;">
+                            <i class="layui-icon">&#xe663;</i>
+                            <em>统计信息管理</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/ManagerEnterStatisticsPage">录入统计信息</a></dd>
+                            <dd><a href="/admin/ManagerGenerateStatisticalReportPage">生成统计报表</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a class="layui-nav-item-a" href="javascript:;">
+                            <i class="layui-icon">&#xe665;</i>
+                            <em>物资管理</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/admin/ManagerMaterialInformationDisplayPage">查看物资信息</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a class="layui-nav-item-a" href="javascript:;">
+                            <i class="layui-icon">&#xe63a;</i>
+                            <em>意见反馈管理</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/admin/ManagerFeedbackDisplayPage">查看意见反馈</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a class="layui-nav-item-a" href="javascript:;">
+                            <i class="layui-icon">&#xe6c6;</i>
+                            <em>志愿工作管理</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/admin/ManagerCheckForVolunteerPage">处理志愿申请</a></dd>
+                        </dl>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/ManagerForVolunteerPage">志愿服务安排</a></dd>
+                        </dl>
+                    </li>
                 </ul>
             </div>
         </div>

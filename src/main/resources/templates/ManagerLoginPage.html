@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -8,24 +7,69 @@
     <link rel="stylesheet" href="../assets/css/login.css">
     <link rel="icon" href="/favicon.ico">
     <title>管理后台</title>
+    <style>
+        img{
+            width:auto;
+            height:auto;
+            max-width:100%;
+            max-height:80%;
+        }
+    </style>
+    <script>
+        //初始化加载函数
+        window.onload = function(){
+
+            var adminIdInputElt = document.getElementById("adminIdInput");
+            var passwordInputElt = document.getElementById("passwordInput");
+            var submitBtn = document.getElementById("submitBtn");
+
+            var adminIdTag = false;
+            var passwordTag = false;
+
+            adminIdInputElt.onblur = function(){
+                if(adminIdInputElt.value == ""){
+                    adminIdTag = false;
+                }else{
+                    adminIdTag = true;
+                }
+            }
+            passwordInputElt.onblur = function(){
+                if(passwordInputElt.value == ""){
+                    passwordTag = false;
+                }else{
+                    passwordTag = true;
+                }
+            }
+            submitBtn.onclick = function(){
+                if(adminIdTag == true && passwordTag == true){
+                    document.getElementById("loginForm").action = "/adminLogin";
+                    document.getElementById("loginForm").submit();
+                }else{
+                    alert("请检查用户名和密码");
+                }
+            }
+        }
+    </script>
 </head>
 <body class="login-wrap">
     <div class="login-container">
-        <form class="login-form">
-            <div class="input-group">
-                <input type="text" name="adminId" id="adminId" class="input-field">
-                <label for="adminId" class="input-label">
-                    <span class="label-title">用户账号</span>
-                </label>
-            </div>
-            <div class="input-group">
-                <input type="password" name="adminPW" id="adminPW" class="input-field">
-                <label for="adminPW" class="input-label">
-                    <span class="label-title">密码</span>
-                </label>
-            </div>
-            <button type="submit" formaction="/adminLogin" class="login-button">登录<i class="ai ai-enter"></i></button>
-        </form>
+        <div class="login-form">
+            <form id="loginForm" class="layui-form-item layui-form" method="post" action="">
+                <div class="input-group">
+                    <input id="adminIdInput" type="text" name="adminId" value="" class="input-field">
+                    <label for="adminIdInput" class="input-label">
+                        <span class="label-title">管理员账号</span>
+                    </label>
+                </div>
+                <div class="input-group">
+                    <input id="passwordInput" type="password" name="adminPW" value="" class="input-field">
+                    <label for="passwordInput" class="input-label">
+                        <span class="label-title">密码</span>
+                    </label>
+                </div>
+                <button id="submitBtn" class="layui-btn layui-btn-fluid">登录</button>
+            </form>
+        </div>
     </div>
 </body>
 <script src="../assets/layui.js"></script>

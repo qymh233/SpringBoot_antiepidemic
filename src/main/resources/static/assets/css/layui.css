@@ -1786,7 +1786,7 @@ a cite {
 	height: 38px;
 	line-height: 38px;
 	padding: 0 18px;
-	background-color: #009688;
+	background-color: #29adeb;
 	color: #fff;
 	white-space: nowrap;
 	text-align: center;
@@ -1954,6 +1954,10 @@ a cite {
 	border-style: solid;
 	background-color: #fff;
 	border-radius: 2px
+}
+
+.layui-input{
+	margin: 3px;
 }
 
 .layui-input::-webkit-input-placeholder,.layui-select::-webkit-input-placeholder,.layui-textarea::-webkit-input-placeholder {

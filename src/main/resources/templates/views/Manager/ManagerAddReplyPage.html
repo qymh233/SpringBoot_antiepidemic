@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>回复意见反馈</title>
+	<link rel="stylesheet" href="../assets/css/layui.css">
+	<link rel="stylesheet" href="../assets/css/view.css"/>
+	<link rel="stylesheet" href="../assets/css/admin.css"/>
+	<link rel="stylesheet" href="../assets/css/style.css"/>
+	<style type="text/css">
+		.layui-elem-quote{ font-size: 18px; margin-bottom: 20px;}
+		.layui-input-block img{ max-height: 160px; width: auto;}
+		#form-bg{
+			background-image: url("../img/gly7.png");
+			background-size: 100%,100%;
+			opacity: 0.7;
+		}
+		#form-box{
+			width: calc(28vw);
+			margin: auto;
+		}
+	</style>
+	<script>
+	window.onload = function(){
+
+		var userIdInput = document.getElementById("userIdInput");
+		var userTemInput = document.getElementById("userTemInput");
+		var submitBtn = document.getElementById("submitBtn");
+
+		var tag = new Array(2);
+
+		//设置输入不能为空值
+		userIdInput.onblur = function(){
+			if(userIdInput.value != "" && !isNaN(userTemInput.value)){
+				tag[0] = true;
+			}else{
+				alert("请输入合法的id");
+			}
+		}
+		userTemInput.onblur = function(){
+			//判断输入是不是数字
+			if(userTemInput.value != "" && !isNaN(userTemInput.value) && (33 < Number(userTemInput.value) && Number(userTemInput.value) < 42)){
+				tag[1] = true;
+			}else{
+				alert("请输入合法的体温");
+			}
+		}
+		submitBtn.onclick = function(){
+			var num = 0;
+			for(var i = 0;i < 2;i++) {
+				if(tag[i] == true){
+					num++;
+				}
+			}
+			if(num == tag.length){
+				document.getElementById("submitForm").action="/admin/addReport";
+				document.getElementById("submitForm").submit();
+			}else{
+
+				alert("请检查输入字段是否正确或是否为空");
+			}
+		}
+	}
+</script>
+</head>
+<body class="layui-view-body">
+<div class="layui-content">
+	<!--面包屑导航-->
+	<div class="mianb">
+		<div class="mblf layui-col-xs6 layui-col-md6">
+			<i class="layui-icon">&#xe656;</i>
+			<p>管理员首页 > 意见反馈管理 > 查看意见反馈 ><span>回复</span></p>
+		</div>
+	</div>
+	<!--面包屑导航-->
+
+	<!--岗位标题-->
+	<div class="layui-row">
+		<div id="form-bg" class="layui-card positionbox">
+			<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+				<legend style="font-weight: bold;color: #ffffff">详细信息</legend>
+			</fieldset>
+			<div id="form-box">
+			<form class="layui-form">
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="font-size:18px; color:#000000; font-weight: bold;padding-right: calc(3vw)"><span class="col-red"></span>标题</label>
+					<!-- #下面每一个div内部使用表达式进行数据获取填充# -->
+					<div class="layui-input-block">
+						<span th:text="${opinion.getTitle()}" style="font-size:18px; color:#000000; font-weight: bold;"></span>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="font-size:18px; color:#000000; font-weight: bold;padding-right: calc(3vw)"><span class="col-red"></span>发布者</label>
+					<!-- #下面每一个div内部使用表达式进行数据获取填充# -->
+					<div class="layui-input-block">
+						<span th:text="${opinion.getUserName()}" style="font-size:18px; color:#000000; font-weight: bold;"></span>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="font-size:18px; color:#000000; font-weight: bold;padding-right: calc(3vw)"><span class="col-red"></span>具体内容</label>
+					<!-- #下面每一个div内部使用表达式进行数据获取填充# -->
+					<div class="layui-input-block">
+						<span th:text="${opinion.cont}" style="font-size:18px; color:#000000; font-weight: bold;"></span>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="font-size:18px; color:#000000; font-weight: bold;padding-right: calc(3vw)"><span class="col-red"></span>状态</label>
+					<!-- #下面每一个div内部使用表达式进行数据获取填充# -->
+					<div class="layui-input-block">
+						<span th:text="${opinion.getStat()}" style="font-size:18px; color:#000000; font-weight: bold;"></span>
+					</div>
+				</div>
+				<input type="hidden" name="meID" th:value="${opinion.getMeID()}">
+				<input type="hidden" name="adminId" th:value="${manager.getAdminId()}">
+				<div class="layui-form-item layui-form-text">
+					<label class="layui-form-label" style="font-size:18px; color:#000000; font-weight: bold;padding-right: calc(3vw)">回复信息</label>
+					<div class="layui-input-block">
+						<textarea name="reply" placeholder="请输入" class="layui-textarea" style="height: calc(20vh)"></textarea>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-input-block" style="padding-top:calc(3vh);padding-left: calc(6vw)">
+						<button type="submit" formaction="/admin/addReply" class="layui-btn layui-btn-primary" style="color:#000000;font-weight: bold">确认回复</button>
+					</div>
+				</div>
+
+			</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="../assets/jquery.min.js"></script>
+<script src="../assets/layui.all.js"></script>
+<script>
+	layui.use('form', function(){
+		var form = layui.form;
+		form.render();
+	});
+</script>
+
+</body>
+</html>

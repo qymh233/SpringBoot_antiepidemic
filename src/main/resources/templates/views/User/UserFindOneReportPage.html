@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>生成统计报表页面</title>
+    <link rel="stylesheet" href="../assets/css/layui.css">    
+    <link rel="stylesheet" href="../assets/css/view.css"/>
+    <link rel="stylesheet" href="../assets/css/admin.css"/>    
+</head>
+<body class="layui-view-body">
+    <div class="layui-content">
+    	<!--面包屑导航-->
+    	<div class="mianb">
+    		<div class="mblf layui-col-xs6 layui-col-md6">
+    			 <i class="layui-icon">&#xe656;</i>
+    			 <p>用户首页 > 个人出入记录 > <span>个人出入记录</span></p>
+    		</div>
+    	</div>
+    	<!--面包屑导航-->
+        <div class="layui-row">
+            <div class="layui-card">
+            	<div class="table-responsive">
+					<table id="reportList" lay-filter="test"></table>
+			 	</div>
+            </div>           
+        </div>
+    </div>
+    <script src="../assets/jquery.min.js"></script>
+    <script src="../assets/layui.all.js"></script>    
+    <script>
+    	var element = layui.element;
+
+		function dateToStr(date) {
+			if(date==="") return "";
+			var time = new Date(date.time);
+			var y = time.getFullYear();
+			var M = time.getMonth() + 1;
+			M = M < 10 ? ("0" + M) : M;
+			var d = time.getDate();
+			d = d < 10 ? ("0" + d) : d;
+			var h = time.getHours();
+			h = h < 10 ? ("0" + h) : h;
+			var m = time.getMinutes();
+			m = m < 10 ? ("0" + m) : m;
+			var s = time.getSeconds();
+			s = s < 10 ? ("0" + s) : s;
+			var str = y + "-" + M + "-" + d + " " + h + ":" + m + ":" + s;
+			return str;
+		}
+
+		layui.use('table', function(){
+			var table = layui.table;
+
+			//第一个实例
+			table.render({
+				elem: '#reportList'
+				,height: 466
+				,url: '/user/reportList' //数据接口
+				,page: true //开启分页
+				,method: 'post'
+				,cols: [
+					[ //表头
+						{field: 'userName', title: '姓名', sort: true, fixed: 'left'}
+						,{field: 'userPhone', title: '电话号码', sort: true}
+						,{field: 'temperature', title: '体温', sort: true}
+						, {field: 'inTime', title: '进小区时间', sort: true,
+							templet: function (d) {
+								return dateToStr(d.inTime);
+							}
+						}
+						, {field: 'outTime', title: '出小区时间', sort: true,
+							templet: function (d) {
+								return dateToStr(d.outTime);
+							}
+						}
+						,{field: 'remarks', title: '备注', sort: true}
+					]
+				]
+			});
+
+		});
+
+		 layui.use('form', function(){
+		  var form = layui.form; 
+		  form.render();
+		}); 
+	</script>
+	
+</body>
+</html>

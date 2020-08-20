@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="antiesys.antiepidemic.mapper.SignInInter">
+    <!-- 插入信息 - -->
+    <insert id="InsertSignIn">
+		insert into T_SignIn(userId,userName,inTime,temperature,remarks) values(#{signIn.userId,jdbcType=NUMERIC},#{signIn.userName,jdbcType=VARCHAR},#{signIn.inTime,jdbcType=TIMESTAMP},#{signIn.temperature,jdbcType=VARCHAR},#{signIn.remarks,jdbcType=VARCHAR})
+	</insert>
+    <!-- 查询所有信息 - -->
+    <resultMap type="antiesys.antiepidemic.pojo.SignIn" id="SelectAll">
+        <result property="userId" column="userId"/>
+        <result property="userName" column="userName"/>
+        <result property="inTime" column="inTime"/>
+        <result property="temperature" column="temperature"/>
+        <result property="remarks" column="remarks"/>
+    </resultMap>
+    <select id="SelectSignIn" resultMap="SelectAll">
+    	select * from T_SignIn order by inTime DESC
+  	</select>
+    <!-- 查询一个信息 -->
+    <select id="SelectOne" resultMap="SelectAll">
+    	select * from T_SignIn where userId=#{userId} order by inTime DESC
+  	</select>
+    <select id="SelectSignInInTime" resultType="antiesys.antiepidemic.pojo.SignIn">
+        select * from T_SignIn where inTime between #{beginTime} and #{endTime} order by inTime DESC
+    </select>
+    <select id="SelectSignInInTimeUser" resultType="antiesys.antiepidemic.pojo.SignIn">
+        select * from T_SignIn where userId=#{userId} and inTime between #{beginTime} and #{endTime} order by inTime DESC
+    </select>
+</mapper>
